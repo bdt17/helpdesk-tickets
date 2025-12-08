@@ -1,0 +1,8 @@
+<h1>Recent Tickets</h1>
+<% @tickets.each do |ticket| %>
+  <div class="card mb-3">
+    <h5><%= ticket.title %> - <%= ticket.status %></h5>
+    <p><%= ticket.description.truncate(100) %></p>
+    <small>From: <%= ticket.email %></small>
+  </div>
+<% end %>
