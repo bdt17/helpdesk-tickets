@@ -19,9 +19,8 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'helpdesk-tickets-yfpr.onrender.com' }
 
   config.active_record.migration_error = :page_load
-  config.active_record.verbose_query_logs = true
-  config.assets.compile = true
-  config.force_ssl = false
   config.log_level = :info
   config.log_tags = [ :request_id ]
+  config.assets.compile = true
+  config.force_ssl = false
 end
