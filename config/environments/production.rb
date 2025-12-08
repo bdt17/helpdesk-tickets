@@ -1,22 +1,27 @@
-config.action_mailer.delivery_method = :smtp
-config.action_mailer.smtp_settings = {
-  address: 'smtp.gmail.com',
-  port: 587,
-  domain: 'gmail.com',
-  user_name: 'brett.thomas29.97@gmail.com',
-  password: ENV['SMTP_PASSWORD'],
-  authentication: 'login',
-  enable_starttls_auto: true
-}
-config.action_mailer.default_url_options = { host: 'helpdesk-tickets-yfpr.onrender.com' }
+Rails.application.configure do
+  config.cache_classes = true
+  config.eager_load = true
+  config.consider_all_requests_local = false
+  config.action_controller.perform_caching = true
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
-config.action_mailer.delivery_method = :smtp
-config.action_mailer.smtp_settings = {
-  address: 'smtp.gmail.com',
-  port: 587,
-  user_name: 'brett.thomas29.97@gmail.com',
-  password: ENV['SMTP_PASSWORD'],
-  authentication: 'login',
-  enable_starttls_auto: true
-}
-config.action_mailer.default_url_options = { host: 'helpdesk-tickets-yfpr.onrender.com' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_caching = false
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.gmail.com',
+    port: 587,
+    domain: 'gmail.com',
+    user_name: 'brett.thomas29.97@gmail.com',
+    password: ENV['SMTP_PASSWORD'],
+    authentication: 'login',
+    enable_starttls_auto: true
+  }
+  config.action_mailer.default_url_options = { host: 'helpdesk-tickets-yfpr.onrender.com' }
+
+  config.active_record.migration_error = :page_load
+  config.active_record.verbose_query_logs = true
+  config.assets.compile = true
+  config.force_ssl = false
+  config.log_level = :info
+  config.log_tags = [ :request_id ]
+end
