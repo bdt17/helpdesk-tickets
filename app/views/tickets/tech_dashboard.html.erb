@@ -41,3 +41,9 @@
     </div>
   <% end %>
 </div>
+
+
+<h3>Quick Networking Fixes</h3>
+<% @knowledge_bases.each do |kb| %>
+  <%= link_to kb.title, tech_kb_path(kb), class: 'btn btn-outline-info btn-sm' %>
+<% end %>
