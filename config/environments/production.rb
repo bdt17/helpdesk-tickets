@@ -54,3 +54,8 @@ config.active_record.database_configurations = {
 
 # Eager load required
 config.eager_load = true
+
+config.eager_load = true
+config.cache_classes = true
+config.consider_all_requests_local = false
+config.public_file_server.enabled = true
