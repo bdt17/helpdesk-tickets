@@ -46,3 +46,11 @@ Rails.application.configure do
   
   config.force_ssl = false  # Render handles SSL
 end
+
+# Rails 8.1 multi-DB fix
+config.active_record.database_configurations = {
+  'production' => { 'primary' => { 'adapter' => 'postgresql', 'database' => ENV['DATABASE_URL'] } }
+}
+
+# Eager load required
+config.eager_load = true
