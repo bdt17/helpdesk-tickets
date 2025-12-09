@@ -24,3 +24,14 @@ Rails.application.configure do
   config.assets.compile = true
   config.force_ssl = false
 end
+
+
+Rails.application.configure do
+  config.eager_load = true  # ← Fix warning
+  
+  # Cache store for production
+  config.cache_store = :memory_store
+  
+  # Render Puma settings
+  config.public_file_server.enabled = true
+end
