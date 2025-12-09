@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+
+devise_for :users
+root to: "tech#dashboard"
+
+
+
+  devise_for :users
   # Knowledge Base
   get '/tech_kb', to: 'tech_kb#index', as: :tech_kb
   get '/tech_kb/search', to: 'tech_kb#search', as: :tech_kb_search
