@@ -15,3 +15,7 @@ def tech_dashboard
   @tickets_by_status = Ticket.all.group_by { |t| t.status || 'new' }
   @knowledge_bases = KnowledgeBase.where(category: 'networking').limit(5)
 end
+def tech_dashboard
+  @tickets_by_status = Ticket.all.group_by { |t| t.status || 'new' }
+  @knowledge_bases = KnowledgeBase.where(category: 'networking').limit(5)  # ← ADD THIS
+end

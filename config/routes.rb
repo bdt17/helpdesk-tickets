@@ -1,20 +1,17 @@
 Rails.application.routes.draw do
-  get "tech_kb/index"
-  get "tech_kb/search"
-
-get '/clients/status/:id', to: 'client_status#show', as: :client_status
-
-
-  get "client_status/show"
-  # Client dashboard
-  get 'dashboard', to: 'tickets#client_dashboard', as: :client_dashboard
+  # Knowledge Base
+  get '/tech_kb', to: 'tech_kb#index', as: :tech_kb
+  get '/tech_kb/search', to: 'tech_kb#search', as: :tech_kb_search
   
-  # Tech dashboard  
+  # Client Status Portal
+  get '/clients/status/:id', to: 'client_status#show', as: :client_status
+  
+  # Dashboards
+  get 'dashboard', to: 'tickets#client_dashboard', as: :client_dashboard
   get 'tech/dashboard', to: 'tickets#tech_dashboard', as: :tech_dashboard
   
-  # Basic ticket routes
+  # Tickets
   resources :tickets, only: [:index, :new, :create, :show]
   
-  # Root path
   root 'tickets#index'
 end
