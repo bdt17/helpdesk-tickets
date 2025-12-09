@@ -1,30 +1,20 @@
-<div class="container mt-5">
-  <h1 class="mb-4">Recent IT Tickets <span class="badge bg-primary"><%= @tickets.count %></span></h1>
-  <% if @tickets.any? %>
-    <div class="row">
-      <% @tickets.each do |ticket| %>
-        <div class="col-md-6 col-lg-4 mb-4">
-          <div class="card h-100 shadow-sm">
-            <div class="card-header bg-light">
-              <h5 class="mb-0"><%= ticket.title %></h5>
-              <span class="badge bg-<%= ticket.status == 'open' ? 'warning' : 'success' %> fs-6">
-                <%= ticket.status.upcase %>
-              </span>
-            </div>
-            <div class="card-body">
-              <p class="card-text"><%= simple_format(ticket.description.truncate(120)) %></p>
-              <p class="text-muted small mb-0">
-                <i class="fas fa-envelope me-1"></i> <%= ticket.email %>
-              </p>
-            </div>
-          </div>
+<h1>All Tickets</h1>
+<div class="row">
+  <% @tickets.each do |ticket| %>
+    <div class="col-md-6 mb-3">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between">
+          <h5 class="mb-0"><%= ticket.title %></h5>
+          <span class="badge bg-<%= ticket.status? ? 'primary' : 'secondary' %> fs-6">
+            <%= ticket.status&.humanize&.titleize || 'New' %>
+          </span>
         </div>
-      <% end %>
-    </div>
-  <% else %>
-    <div class="text-center py-5">
-      <i class="fas fa-ticket-alt fa-3x text-muted mb-3"></i>
-      <h3>No tickets yet</h3>
+        <div class="card-body">
+          <p><%= ticket.description.truncate(100) %></p>
+          <small>Updated <%= time_ago_in_words(ticket.updated_at) %> ago</small>
+        </div>
+      </div>
     </div>
   <% end %>
 </div>
+

@@ -18,3 +18,37 @@
     </div>
   <% end %>
 </div>
+
+<h1>My Helpdesk Tickets</h1>
+
+<% if @tickets.any? %>
+  <div class="row">
+    <% @tickets.each do |ticket| %>
+      <div class="col-md-6 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><%= ticket.title %></h5>
+            <p class="card-text"><%= ticket.description.truncate(100) %></p>
+            <span class="badge bg-secondary"><%= ticket.status&.humanize || 'New' %></span>
+            <p class="card-text"><small>Updated <%= time_ago_in_words(ticket.updated_at) %> ago</small></p>
+            <%= link_to 'View', ticket, class: 'btn btn-primary btn-sm' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p>No tickets yet. <%= link_to 'Create ticket', new_ticket_path %></p>
+<% end %>
+
+
+
+<h1>My Projects</h1>
+<% @tickets.each do |ticket| %>
+  <div class="card mb-3">
+    <div class="card-header">
+      <%= ticket.title %>
+      <span class="badge bg-info"><%= ticket.status&.humanize || 'New' %></span>
+    </div>
+  </div>
+<% end %>

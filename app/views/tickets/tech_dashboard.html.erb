@@ -12,3 +12,32 @@
     </div>
   <% end %>
 </div>
+<h1>Tech Dashboard</h1>
+<div class="row">
+  <% ['new', 'in_progress', 'on_hold', 'completed'].each do |status| %>
+    <div class="col-md-3">
+      <h3><%= status.titleize %> (<%= @tickets_by_status[status.to_sym]&.count || 0 %>)</h3>
+      <% @tickets_by_status[status.to_sym]&.each do |ticket| %>
+        <div class="card mb-2">
+          <div class="card-body">
+            <%= link_to ticket.title, ticket %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<h1>Tech Dashboard</h1>
+<div class="row">
+  <% Ticket.statuses.each do |status_name, status_value| %>
+    <div class="col-md-3">
+      <h3><%= status_name.to_s.titleize %> (<%= @tickets_by_status[status_name]&.count || 0 %>)</h3>
+      <% @tickets_by_status[status_name]&.each do |ticket| %>
+        <div class="card mb-2">
+          <%= link_to ticket.title, ticket, class: 'card-link' %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
