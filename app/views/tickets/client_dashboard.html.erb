@@ -1,0 +1,20 @@
+<h1>My Project Status</h1>
+<div class="row">
+  <% @tickets.each do |ticket| %>
+    <div class="col-md-4 mb-3">
+      <div class="card">
+        <div class="card-header">
+          <%= ticket.title %> 
+          <span class="badge bg-<%= ticket.status %>">
+            <%= ticket.status.titleize %>
+          </span>
+        </div>
+        <div class="card-body">
+          <p><%= ticket.description.truncate(100) %></p>
+          <small>Tech: <%= ticket.tech&.name || 'Unassigned' %></small>
+        </div>
+        <%= link_to "View Details", ticket, class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+</div>

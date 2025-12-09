@@ -1,0 +1,12 @@
+<%= form.fields_for :ticket_updates do |update_form| %>
+  <div class="mb-3">
+    <%= update_form.label :content %>
+    <%= update_form.text_area :content, class: "form-control" %>
+  </div>
+<% end %>
+
+<div class="mb-3">
+  <%= f.label :status %>
+  <%= f.select :status, Ticket.statuses.keys.map { |s| [s.titleize, s] }, 
+               {}, class: "form-control" %>
+</div>

@@ -1,4 +1,23 @@
 class TicketsController < ApplicationController
+
+# Custom scope for tech-assigned tickets
+scope :assigned_to, ->(tech) { where(tech_id: tech.id) }
+
+
+
+def client_dashboard
+  @tickets = current_user.tickets # Assumes client submits tickets
+    .includes(:tech, :ticket_updates)
+    .order(created_at: :desc)
+end
+
+# app/controllers/tickets_controller.rb
+def tech_dashboard
+  @tickets_by_status = Ticket.assigned_to(current_user) # Custom scope below
+    .group_by(&:status)
+end
+
+
   def index
     @tickets = Ticket.all
   end

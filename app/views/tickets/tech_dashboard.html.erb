@@ -1,0 +1,14 @@
+<h1>Tech Dashboard</h1>
+<div class="kanban-container">
+  <% ['new', 'in_progress', 'on_hold', 'completed'].each do |status| %>
+    <div class="kanban-column">
+      <h3><%= status.titleize %> (<%= @tickets_by_status[status.to_sym]&.count || 0 %>)</h3>
+      <% @tickets_by_status[status.to_sym]&.each do |ticket| %>
+        <div class="kanban-card" draggable="true">
+          <%= link_to ticket.title, ticket %>
+          <small>Due: <%= ticket.due_date %></small>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
