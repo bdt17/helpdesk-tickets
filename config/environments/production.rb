@@ -35,3 +35,14 @@ Rails.application.configure do
   # Render Puma settings
   config.public_file_server.enabled = true
 end
+
+
+
+Rails.application.configure do
+  config.eager_load = true
+  
+  # Fix cache_store - use symbol/hash format
+  config.cache_store = :memory_store
+  
+  config.force_ssl = false  # Render handles SSL
+end

@@ -5,4 +5,8 @@ class Ticket < ApplicationRecord
     on_hold: 2,
     completed: 3
   }, prefix: true
+
+  # ← ADD THESE QUALITY FEATURES HERE:
+  accepts_nested_attributes_for :updates
 end
+

@@ -1,4 +1,3 @@
-class TicketUpdate < ApplicationRecord
   belongs_to :ticket
   belongs_to :user   # Who made the update (tech/client)
   

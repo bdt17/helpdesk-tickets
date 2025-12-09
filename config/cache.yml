@@ -1,4 +1,0 @@
-# Rails cache config - Render production
-production: redis
-development: memory_store
-test: memory_store
