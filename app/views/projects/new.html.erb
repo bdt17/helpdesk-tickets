@@ -1,0 +1,36 @@
+<div style="max-width: 600px; margin: 0 auto;">
+  <h2 style="text-align: center; color: #2c3e50; margin-bottom: 30px;">➕ New Networking Project</h2>
+  
+  <%= form_with(model: @project, local: true) do |f| %>
+    <div class="form-group" style="margin-bottom: 20px;">
+      <%= f.label :category, "Category", class: "form-label" %>
+      <%= f.select :category, 
+        options_for_select([
+          ['🔥 Routers', 'Routers'],
+          ['🔌 Switches', 'Switches'], 
+          ['🛡️ Firewalls', 'Firewalls'],
+          ['📡 Wireless', 'Wireless'],
+          ['🔒 Security', 'Security'],
+          ['⚖️ Load Balancers', 'Load Balancers'],
+          ['🌍 SD-WAN', 'SD-WAN']
+        ], @project.category), 
+        { class: "form-select" }, 
+        { style: "width: 100%; padding: 12px; border-radius: 8px; border: 2px solid #e9ecef;" } %>
+    </div>
+    
+    <div class="form-group" style="margin-bottom: 20px;">
+      <%= f.label :equipment, "Equipment (Cisco/Fortinet/Ubiquiti)", class: "form-label" %>
+      <%= f.text_area :equipment, rows: 4, placeholder: "Cisco ISR 4000, Fortinet FortiGate 60F, Ubiquiti UniFi Switch...", class: "form-control", style: "width: 100%; padding: 12px; border-radius: 8px; border: 2px solid #e9ecef;" %>
+    </div>
+    
+    <div class="form-group" style="margin-bottom: 20px;">
+      <%= f.label :priority, "Priority", class: "form-label" %>
+      <%= f.select :priority, options_for_select([['Low', 1], ['Medium', 2], ['High', 3], ['Critical', 4]], @project.priority), { class: "form-select" }, { style: "width: 100%; padding: 12px; border-radius: 8px; border: 2px solid #e9ecef;" } %>
+    </div>
+    
+    <div style="text-align: center;">
+      <%= f.submit "Create Project", class: "btn", style: "background: #28a745; color: white; padding: 15px 40px; font-size: 16px; font-weight: 600;" %>
+      <%= link_to "← Back to Projects", projects_path, class: "btn", style: "background: #6c757d; color: white; padding: 15px 20px; font-size: 16px; font-weight: 600; margin-left: 10px; text-decoration: none;" %>
+    </div>
+  <% end %>
+</div>

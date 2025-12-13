@@ -1,0 +1,29 @@
+<div style="text-align: center; margin-bottom: 30px;">
+  <%= link_to "➕ New Networking Project", new_project_path, class: "new-ticket-btn", style: "position: static; display: inline-block; margin-bottom: 20px;" %>
+</div>
+
+<div class="projects-grid">
+  <% if @projects.any? %>
+    <% @projects.each do |project| %>
+      <div class="project-card">
+        <div class="project-header">
+          <h3><%= project.category&.upcase || 'PROJECT' %> PROJECT</h3>
+          <span class="priority-badge">
+            <%= project.priority || 'Medium' %>
+          </span>
+        </div>
+        <div class="project-equipment">
+          <%= simple_format(truncate(project.equipment || 'Equipment details', 200)) %>
+        </div>
+        <%= link_to "Manage Project", project_path(project), class: "btn" %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<style>
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; min-height: 400px; }
+.project-card { background: white; border: 2px solid #e9ecef; border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.priority-badge { padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 0.8em; background: #d1ecf1; color: #0c5460; }
+.project-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+</style>

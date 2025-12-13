@@ -1,0 +1,26 @@
+<div class="ticket-grid">
+  <% if @tickets.any? %>
+    <% @tickets.each do |ticket| %>
+      <div class="ticket-card">
+        <div class="ticket-header">
+          <h3 class="ticket-title">Ticket #<%= ticket.id %></h3>
+          <span class="status-badge <%= ticket.status || 'open' %>">
+            <%= ticket.status || 'Open' %>
+          </span>
+        </div>
+        <div class="ticket-meta">
+          <%= ticket.created_at.strftime('%H:%M %d/%m') if ticket.created_at %>
+        </div>
+        <div class="ticket-description">
+          <%= simple_format(truncate(ticket.description.presence || 'No description', length: 150)) %>
+
+        </div>
+        <%= link_to "View Details", ticket_path(ticket), class: "btn" %>
+      </div>
+    <% end %>
+  <% else %>
+    <div style="text-align: center; padding: 80px 20px; grid-column: 1 / -1;">
+      <h3 style="color: #6c757d;">No tickets assigned</h3>
+    </div>
+  <% end %>
+</div>

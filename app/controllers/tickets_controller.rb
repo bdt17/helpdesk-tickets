@@ -1,21 +1,32 @@
 class TicketsController < ApplicationController
+  before_action :authenticate_user!, except: [:new, :create]
+  
   def index
-    @tickets = Ticket.all.order(updated_at: :desc)
+    @tickets = Ticket.all.order(created_at: :desc)
   end
-
-  def client_dashboard
-    @tickets = Ticket.all.order(updated_at: :desc)
+  
+  def show
+    @ticket = Ticket.find(params[:id])
   end
-
-  def tech_dashboard
-    @tickets_by_status = Ticket.all.group_by { |t| t.status || 'new' }
+  
+  def new
+    @ticket = Ticket.new
   end
-end
-def tech_dashboard
-  @tickets_by_status = Ticket.all.group_by { |t| t.status || 'new' }
-  @knowledge_bases = KnowledgeBase.where(category: 'networking').limit(5)
-end
-def tech_dashboard
-  @tickets_by_status = Ticket.all.group_by { |t| t.status || 'new' }
-  @knowledge_bases = KnowledgeBase.where(category: 'networking').limit(5)  # ← ADD THIS
+  
+  def create
+    @ticket = Ticket.new(ticket_params)
+    @ticket.email = current_user&.email if user_signed_in?
+    
+    if @ticket.save
+      redirect_to root_path, notice: "Ticket created!"
+    else
+      render :new
+    end
+  end
+  
+  private
+  
+  def ticket_params
+    params.require(:ticket).permit(:title, :description, :email, :status, :project_id)
+  end
 end

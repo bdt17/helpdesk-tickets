@@ -1,13 +1,14 @@
 Rails.application.routes.draw do
   devise_for :users
+  root "tickets#index"
   
-  # Tech routes (require auth later)
-  get '/tech/dashboard', to: 'tech#dashboard'
-  get '/tech_kb', to: 'tech#kb'
+  resources :tickets do
+    resources :comments, only: [:create]
+  end
   
-  # Client dashboard
-  get '/dashboard', to: 'dashboard#show'
+  resources :knowledge_bases
+  resources :projects, only: [:index, :new, :create, :show]
   
-  root to: "tech#dashboard"
+  get 'techs', to: 'techs#index', as: 'techs'
+  get 'clients', to: 'clients#index', as: 'clients'
 end
-
