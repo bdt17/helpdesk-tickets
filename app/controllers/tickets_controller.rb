@@ -1,32 +1,27 @@
 class TicketsController < ApplicationController
-  before_action :authenticate_user!, except: [:new, :create]
-  
   def index
-    @tickets = Ticket.all.order(created_at: :desc)
-  end
-  
-  def show
-    @ticket = Ticket.find(params[:id])
+    @tickets = Ticket.all.order(created_at: :desc).limit(10)
+    @ticket = Ticket.new
   end
   
   def new
     @ticket = Ticket.new
+    render :index
   end
   
   def create
     @ticket = Ticket.new(ticket_params)
-    @ticket.email = current_user&.email if user_signed_in?
-    
+    @ticket.user_id ||= 1  # Default user
     if @ticket.save
-      redirect_to root_path, notice: "Ticket created!"
+      redirect_to root_path, notice: 'Ticket created!'
     else
-      render :new
+      @tickets = Ticket.all.order(created_at: :desc).limit(10)
+      render :index
     end
   end
   
   private
-  
   def ticket_params
-    params.require(:ticket).permit(:title, :description, :email, :status, :project_id)
+    params.require(:ticket).permit(:title, :description, :status)
   end
 end

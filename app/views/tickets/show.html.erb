@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between">
+        <h3><%= @ticket.title %></h3>
+        <span class="badge bg-<%= @ticket.status == 'New' ? 'secondary' : @ticket.status == 'In Progress' ? 'warning' : 'success' %> fs-5">
+          <%= @ticket.status.humanize %>
+        </span>
+      </div>
+      <div class="card-body">
+        <p class="lead"><%= simple_format(@ticket.description) %></p>
+        <hr>
+        <small class="text-muted">
+          Created <%= time_ago_in_words(@ticket.created_at) %> ago 
+          | Updated <%= time_ago_in_words(@ticket.updated_at) %> ago
+          | <%= @ticket.user.email %>
+        </small>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <%= link_to 'New Ticket', new_ticket_path, class: 'btn btn-success w-100 mb-2' %>
+    <%= link_to 'Edit', '#', class: 'btn btn-outline-primary w-100 mb-2' %>
+    <%= link_to 'Back to Tickets', tickets_path, class: 'btn btn-secondary w-100' %>
+  </div>
+</div>

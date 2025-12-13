@@ -1,0 +1,14 @@
+<div class="row g-3">
+<% @articles.each do |kb| %>
+<div class="col-md-6">
+<div class="card">
+<div class="card-header bg-info text-white"><%= kb.device_type %></div>
+<div class="card-body">
+<h6><%= kb.title %></h6>
+<pre class="small p-2 bg-light border rounded"><%= kb.content %></pre>
+<button class="btn btn-sm btn-primary w-100" onclick="navigator.clipboard.writeText(`<%= kb.content.gsub(/`/, "\\`") %>`);alert('Copied!')">📋 Copy</button>
+</div>
+</div>
+</div>
+<% end %>
+</div>

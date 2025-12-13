@@ -2,14 +2,12 @@
 
 one:
   title: MyString
+  content: MyText
   category: MyString
-  steps: MyText
-  commands: MyText
-  client_instructions: MyText
+  device_type: MyString
 
 two:
   title: MyString
+  content: MyText
   category: MyString
-  steps: MyText
-  commands: MyText
-  client_instructions: MyText
+  device_type: MyString
