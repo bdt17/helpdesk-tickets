@@ -1,0 +1,2228 @@
+  [1m[35m (141.6ms)[0m  [1m[35mCREATE DATABASE `pharma_transport_development` DEFAULT CHARACTER SET `utf8mb4` /*application='PharmaTransport'*/[0m
+  [1m[35m (105.6ms)[0m  [1m[35mCREATE DATABASE `pharma_transport_development` DEFAULT CHARACTER SET `utf8mb4` /*application='PharmaTransport'*/[0m
+  [1m[35m (178.5ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY) /*application='PharmaTransport'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2025-12-04 23:47:14.840916', '2025-12-04 23:47:14.840919') RETURNING "key" /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Started GET "/" for ::1 at 2025-12-04 16:51:22 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/zero/.rbenv/versions/3.4.1/lib/ruby/gems/3.4.0/gems/railties-8.1.1/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/zero/.rbenv/versions/3.4.1/lib/ruby/gems/3.4.0/gems/railties-8.1.1/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.5ms | GC: 0.0ms)
+Completed 200 OK in 17ms (Views: 5.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for ::1 at 2025-12-04 16:51:45 -0700
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/zero/.rbenv/versions/3.4.1/lib/ruby/gems/3.4.0/gems/railties-8.1.1/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/zero/.rbenv/versions/3.4.1/lib/ruby/gems/3.4.0/gems/railties-8.1.1/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.1ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for ::1 at 2025-12-04 17:02:21 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Processing by PagesController#home as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.5ms | GC: 0.0ms)
+Completed 200 OK in 33ms (Views: 12.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Migrating to CreateUsers (20251205002121)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar, "password_digest" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='PharmaTransport'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email") /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20251205002121') RETURNING "version" /*application='PharmaTransport'*/[0m
+  [1m[36mTRANSACTION (200.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Started GET "/" for ::1 at 2025-12-04 17:26:50 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Processing by PagesController#home as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 12.1ms | GC: 0.0ms)
+Completed 200 OK in 15ms (Views: 13.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/signup" for ::1 at 2025-12-04 17:26:56 -0700
+Processing by UsersController#new as HTML
+Completed 500 Internal Server Error in 17ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+LoadError (cannot load such file -- bcrypt):
+  
+app/models/user.rb:2:in '<class:User>'
+app/models/user.rb:1:in '<main>'
+app/controllers/users_controller.rb:3:in 'UsersController#new'
+Started GET "/favicon.ico" for ::1 at 2025-12-04 17:26:56 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/login" for ::1 at 2025-12-04 17:27:29 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 5.5ms | GC: 0.8ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.3ms | GC: 0.8ms)
+Completed 200 OK in 9ms (Views: 7.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.8ms)
+
+
+Started GET "/signup" for ::1 at 2025-12-04 17:27:34 -0700
+Processing by UsersController#new as HTML
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+LoadError (cannot load such file -- bcrypt):
+  
+app/models/user.rb:2:in '<class:User>'
+app/models/user.rb:1:in '<main>'
+app/controllers/users_controller.rb:3:in 'UsersController#new'
+Started GET "/signup" for ::1 at 2025-12-04 17:29:28 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Processing by UsersController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering users/new.html.erb within layouts/application
+  Rendered users/new.html.erb within layouts/application (Duration: 8.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 14.4ms | GC: 0.0ms)
+Completed 200 OK in 53ms (Views: 17.2ms | ActiveRecord: 2.5ms (0 queries, 0 cached) | GC: 9.8ms)
+
+
+Started POST "/signup" for ::1 at 2025-12-04 17:29:47 -0700
+Processing by UsersController#create as HTML
+  Parameters: {"authenticity_token" => "[FILTERED]", "user" => {"email" => "[FILTERED]", "password" => "[FILTERED]", "password_confirmation" => "[FILTERED]"}, "commit" => "Sign Up"}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='create',application='PharmaTransport',controller='users'*/[0m
+  ↳ app/controllers/users_controller.rb:9:in 'UsersController#create'
+  [1m[36mUser Exists? (2.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='PharmaTransport',controller='users'*/[0m
+  ↳ app/controllers/users_controller.rb:9:in 'UsersController#create'
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "password_digest", "created_at", "updated_at") VALUES ('brett.thomas29.97@gmail.com', '$2a$12$jApnna8f0PydD.pFw5Rme.TbmMg.prgd7Me1RH7M0xGlvrTnLm072', '2025-12-05 00:29:47.647421', '2025-12-05 00:29:47.647421') RETURNING "id" /*action='create',application='PharmaTransport',controller='users'*/[0m
+  ↳ app/controllers/users_controller.rb:9:in 'UsersController#create'
+  [1m[36mTRANSACTION (314.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='create',application='PharmaTransport',controller='users'*/[0m
+  ↳ app/controllers/users_controller.rb:9:in 'UsersController#create'
+Redirected to http://localhost:3000/
+↳ app/controllers/users_controller.rb:11:in 'UsersController#create'
+Completed 302 Found in 609ms (ActiveRecord: 316.5ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for ::1 at 2025-12-04 17:29:47 -0700
+Processing by PagesController#home as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='home',application='PharmaTransport',controller='pages'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendered layout layouts/application.html.erb (Duration: 4.7ms | GC: 0.0ms)
+Completed 200 OK in 7ms (Views: 5.4ms | ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Migrating to CreateDrivers (20251205003323)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE TABLE "drivers" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "latitude" decimal(10,6), "longitude" decimal(10,6), "status" varchar, "user_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_2492e1bc43"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+) /*application='PharmaTransport'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_drivers_on_user_id" ON "drivers" ("user_id") /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20251205003323') RETURNING "version" /*application='PharmaTransport'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Started DELETE "/logout" for ::1 at 2025-12-04 17:40:30 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Processing by SessionsController#destroy as HTML
+  Parameters: {"authenticity_token" => "[FILTERED]"}
+Redirected to http://localhost:3000/
+↳ app/controllers/sessions_controller.rb:19:in 'SessionsController#destroy'
+Completed 302 Found in 2ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for ::1 at 2025-12-04 17:40:30 -0700
+Processing by PagesController#home as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.3ms | GC: 0.0ms)
+Completed 200 OK in 5ms (Views: 3.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/login" for ::1 at 2025-12-04 17:40:34 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 2.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.0ms | GC: 0.0ms)
+Completed 200 OK in 6ms (Views: 4.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/login" for ::1 at 2025-12-04 17:40:35 -0700
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token" => "[FILTERED]", "email" => "[FILTERED]", "password" => "[FILTERED]", "commit" => "Log In"}
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='PharmaTransport',controller='sessions'*/[0m
+  ↳ app/controllers/sessions_controller.rb:6:in 'SessionsController#create'
+Redirected to http://localhost:3000/
+↳ app/controllers/sessions_controller.rb:10:in 'SessionsController#create'
+Completed 302 Found in 291ms (ActiveRecord: 0.8ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for ::1 at 2025-12-04 17:40:36 -0700
+Processing by PagesController#home as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='home',application='PharmaTransport',controller='pages'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendered layout layouts/application.html.erb (Duration: 3.0ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 3.2ms | ActiveRecord: 0.1ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for ::1 at 2025-12-04 17:41:05 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Processing by PagesController#home as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 0.8ms | GC: 0.0ms)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='home',application='PharmaTransport',controller='pages'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendered layout layouts/application.html.erb (Duration: 37.1ms | GC: 1.3ms)
+Completed 200 OK in 61ms (Views: 40.2ms | ActiveRecord: 2.1ms (1 query, 0 cached) | GC: 11.1ms)
+
+
+Started POST "/api/drivers/1/location" for ::1 at 2025-12-04 17:42:11 -0700
+Processing by Api::DriversController#update_location as */*
+  Parameters: {"latitude" => 40.7128, "longitude" => -74.006, "status" => "active", "id" => "1", "driver" => {"latitude" => 40.7128, "longitude" => -74.006, "status" => "active"}}
+  [1m[36mDriver Load (0.1ms)[0m  [1m[34mSELECT "drivers".* FROM "drivers" WHERE "drivers"."id" = 1 LIMIT 1 /*action='update_location',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/api/drivers_controller.rb:19:in 'Api::DriversController#set_driver'
+Filter chain halted as :set_driver rendered or redirected
+Completed 404 Not Found in 3ms (Views: 0.1ms | ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for ::1 at 2025-12-04 17:42:33 -0700
+Processing by DashboardController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  [1m[36mDriver Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:17
+  [1m[36mDriver Load (0.1ms)[0m  [1m[34mSELECT "drivers".* FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:19
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 7.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.7ms | GC: 0.0ms)
+Completed 200 OK in 27ms (Views: 9.2ms | ActiveRecord: 0.6ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/drivers/new" for ::1 at 2025-12-04 17:42:39 -0700
+Processing by DriversController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='new',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering drivers/new.html.erb within layouts/application
+  Rendered drivers/_form.html.erb (Duration: 10.5ms | GC: 0.0ms)
+  Rendered drivers/new.html.erb within layouts/application (Duration: 11.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 13.1ms | GC: 0.0ms)
+Completed 200 OK in 32ms (Views: 14.4ms | ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/drivers" for ::1 at 2025-12-04 17:42:50 -0700
+Processing by DriversController#create as HTML
+  Parameters: {"authenticity_token" => "[FILTERED]", "driver" => {"name" => "bucky", "status" => "offline", "latitude" => "", "longitude" => ""}, "commit" => "Create Driver"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='create',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='create',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/drivers_controller.rb:16:in 'DriversController#create'
+  [1m[36mDriver Create (2.7ms)[0m  [1m[32mINSERT INTO "drivers" ("name", "latitude", "longitude", "status", "user_id", "created_at", "updated_at") VALUES ('bucky', NULL, NULL, 'offline', 1, '2025-12-05 00:42:50.139448', '2025-12-05 00:42:50.139448') RETURNING "id" /*action='create',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/drivers_controller.rb:16:in 'DriversController#create'
+  [1m[36mTRANSACTION (483.8ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='create',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/drivers_controller.rb:16:in 'DriversController#create'
+Redirected to http://localhost:3000/drivers
+↳ app/controllers/drivers_controller.rb:17:in 'DriversController#create'
+Completed 302 Found in 495ms (ActiveRecord: 486.6ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/drivers" for ::1 at 2025-12-04 17:42:50 -0700
+Processing by DriversController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='index',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering drivers/index.html.erb within layouts/application
+  [1m[36mDriver Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "drivers" WHERE "drivers"."user_id" = 1 LIMIT 1 /*action='index',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/views/drivers/index.html.erb:11
+  [1m[36mDriver Load (0.1ms)[0m  [1m[34mSELECT "drivers".* FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/views/drivers/index.html.erb:23
+  Rendered drivers/index.html.erb within layouts/application (Duration: 6.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.2ms | GC: 0.0ms)
+Completed 200 OK in 11ms (Views: 7.6ms | ActiveRecord: 0.4ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/drivers/1/edit" for ::1 at 2025-12-04 17:43:07 -0700
+Processing by DriversController#edit as HTML
+  Parameters: {"id" => "1"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='edit',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  [1m[36mDriver Load (0.2ms)[0m  [1m[34mSELECT "drivers".* FROM "drivers" WHERE "drivers"."user_id" = 1 AND "drivers"."id" = 1 LIMIT 1 /*action='edit',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/drivers_controller.rb:42:in 'DriversController#set_driver'
+  Rendering layout layouts/application.html.erb
+  Rendering drivers/edit.html.erb within layouts/application
+  Rendered drivers/_form.html.erb (Duration: 4.6ms | GC: 0.0ms)
+  Rendered drivers/edit.html.erb within layouts/application (Duration: 5.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.2ms | GC: 0.0ms)
+Completed 200 OK in 13ms (Views: 6.8ms | ActiveRecord: 0.4ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started PATCH "/drivers/1" for ::1 at 2025-12-04 17:43:12 -0700
+Processing by DriversController#update as HTML
+  Parameters: {"authenticity_token" => "[FILTERED]", "driver" => {"name" => "bucky", "status" => "active", "latitude" => "", "longitude" => ""}, "commit" => "Update Driver", "id" => "1"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='update',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  [1m[36mDriver Load (0.2ms)[0m  [1m[34mSELECT "drivers".* FROM "drivers" WHERE "drivers"."user_id" = 1 AND "drivers"."id" = 1 LIMIT 1 /*action='update',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/drivers_controller.rb:42:in 'DriversController#set_driver'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='update',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/drivers_controller.rb:27:in 'DriversController#update'
+  [1m[36mDriver Update (2.1ms)[0m  [1m[33mUPDATE "drivers" SET "status" = 'active', "updated_at" = '2025-12-05 00:43:12.041775' WHERE "drivers"."id" = 1 /*action='update',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/drivers_controller.rb:27:in 'DriversController#update'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='update',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/drivers_controller.rb:27:in 'DriversController#update'
+Redirected to http://localhost:3000/drivers
+↳ app/controllers/drivers_controller.rb:28:in 'DriversController#update'
+Completed 302 Found in 12ms (ActiveRecord: 2.5ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/drivers" for ::1 at 2025-12-04 17:43:12 -0700
+Processing by DriversController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='index',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering drivers/index.html.erb within layouts/application
+  [1m[36mDriver Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "drivers" WHERE "drivers"."user_id" = 1 LIMIT 1 /*action='index',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/views/drivers/index.html.erb:11
+  [1m[36mDriver Load (0.1ms)[0m  [1m[34mSELECT "drivers".* FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/views/drivers/index.html.erb:23
+  Rendered drivers/index.html.erb within layouts/application (Duration: 3.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.4ms | GC: 0.0ms)
+Completed 200 OK in 7ms (Views: 4.7ms | ActiveRecord: 0.3ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for ::1 at 2025-12-04 17:43:24 -0700
+Processing by DashboardController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  [1m[36mDriver Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:17
+  [1m[36mDriver Load (0.2ms)[0m  [1m[34mSELECT "drivers".* FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:19
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 5.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.9ms | GC: 0.0ms)
+Completed 200 OK in 12ms (Views: 7.3ms | ActiveRecord: 0.6ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/drivers" for ::1 at 2025-12-04 17:43:38 -0700
+Processing by DriversController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='index',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering drivers/index.html.erb within layouts/application
+  [1m[36mDriver Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "drivers" WHERE "drivers"."user_id" = 1 LIMIT 1 /*action='index',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/views/drivers/index.html.erb:11
+  [1m[36mDriver Load (0.2ms)[0m  [1m[34mSELECT "drivers".* FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/views/drivers/index.html.erb:23
+  Rendered drivers/index.html.erb within layouts/application (Duration: 4.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.7ms | GC: 0.0ms)
+Completed 200 OK in 9ms (Views: 5.9ms | ActiveRecord: 0.5ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for ::1 at 2025-12-04 18:09:53 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Processing by PagesController#home as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 0.6ms | GC: 0.0ms)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='home',application='PharmaTransport',controller='pages'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendered layout layouts/application.html.erb (Duration: 34.1ms | GC: 1.3ms)
+Completed 200 OK in 57ms (Views: 36.0ms | ActiveRecord: 1.9ms (1 query, 0 cached) | GC: 10.1ms)
+
+
+Started GET "/dashboard" for ::1 at 2025-12-04 18:09:59 -0700
+Processing by DashboardController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  [1m[36mDriver Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:17
+  [1m[36mDriver Load (0.2ms)[0m  [1m[34mSELECT "drivers".* FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:19
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 15.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 17.9ms | GC: 0.0ms)
+Completed 200 OK in 30ms (Views: 18.2ms | ActiveRecord: 1.1ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for ::1 at 2025-12-04 18:10:07 -0700
+Processing by DashboardController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  [1m[36mDriver Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:17
+  [1m[36mDriver Load (0.1ms)[0m  [1m[34mSELECT "drivers".* FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:19
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 3.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.3ms | GC: 0.0ms)
+Completed 200 OK in 7ms (Views: 4.5ms | ActiveRecord: 0.4ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for ::1 at 2025-12-04 18:10:08 -0700
+Processing by DashboardController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  [1m[36mDriver Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:17
+  [1m[36mDriver Load (0.4ms)[0m  [1m[34mSELECT "drivers".* FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:19
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 4.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.7ms | GC: 0.0ms)
+Completed 200 OK in 9ms (Views: 5.9ms | ActiveRecord: 0.7ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for ::1 at 2025-12-04 18:10:09 -0700
+Processing by DashboardController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  [1m[36mDriver Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:17
+  [1m[36mDriver Load (0.1ms)[0m  [1m[34mSELECT "drivers".* FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:19
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 2.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.5ms | GC: 0.0ms)
+Completed 200 OK in 6ms (Views: 3.7ms | ActiveRecord: 0.3ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/drivers" for ::1 at 2025-12-04 18:10:15 -0700
+Processing by DriversController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='index',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering drivers/index.html.erb within layouts/application
+  [1m[36mDriver Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "drivers" WHERE "drivers"."user_id" = 1 LIMIT 1 /*action='index',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/views/drivers/index.html.erb:11
+  [1m[36mDriver Load (0.4ms)[0m  [1m[34mSELECT "drivers".* FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/views/drivers/index.html.erb:23
+  Rendered drivers/index.html.erb within layouts/application (Duration: 9.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 11.5ms | GC: 0.0ms)
+Completed 200 OK in 17ms (Views: 12.1ms | ActiveRecord: 0.9ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/drivers/new" for ::1 at 2025-12-04 18:10:18 -0700
+Processing by DriversController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='new',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering drivers/new.html.erb within layouts/application
+  Rendered drivers/_form.html.erb (Duration: 8.4ms | GC: 0.0ms)
+  Rendered drivers/new.html.erb within layouts/application (Duration: 9.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 11.0ms | GC: 0.0ms)
+Completed 200 OK in 16ms (Views: 11.8ms | ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/drivers" for ::1 at 2025-12-04 18:10:38 -0700
+Processing by DriversController#create as HTML
+  Parameters: {"authenticity_token" => "[FILTERED]", "driver" => {"name" => "jon", "status" => "active", "latitude" => "-5", "longitude" => "-4"}, "commit" => "Create Driver"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='create',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='create',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/drivers_controller.rb:16:in 'DriversController#create'
+  [1m[36mDriver Create (3.1ms)[0m  [1m[32mINSERT INTO "drivers" ("name", "latitude", "longitude", "status", "user_id", "created_at", "updated_at") VALUES ('jon', -5.0, -4.0, 'active', 1, '2025-12-05 01:10:38.767312', '2025-12-05 01:10:38.767312') RETURNING "id" /*action='create',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/drivers_controller.rb:16:in 'DriversController#create'
+  [1m[36mTRANSACTION (257.4ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='create',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/drivers_controller.rb:16:in 'DriversController#create'
+Redirected to http://localhost:3000/drivers
+↳ app/controllers/drivers_controller.rb:17:in 'DriversController#create'
+Completed 302 Found in 271ms (ActiveRecord: 260.8ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/drivers" for ::1 at 2025-12-04 18:10:39 -0700
+Processing by DriversController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='index',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering drivers/index.html.erb within layouts/application
+  [1m[36mDriver Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "drivers" WHERE "drivers"."user_id" = 1 LIMIT 1 /*action='index',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/views/drivers/index.html.erb:11
+  [1m[36mDriver Load (0.2ms)[0m  [1m[34mSELECT "drivers".* FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='drivers'*/[0m
+  ↳ app/views/drivers/index.html.erb:23
+  Rendered drivers/index.html.erb within layouts/application (Duration: 5.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.9ms | GC: 0.0ms)
+Completed 200 OK in 11ms (Views: 7.3ms | ActiveRecord: 0.5ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for ::1 at 2025-12-04 18:10:43 -0700
+Processing by DashboardController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  [1m[36mDriver Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:17
+  [1m[36mDriver Load (0.1ms)[0m  [1m[34mSELECT "drivers".* FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:19
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 3.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.8ms | GC: 0.0ms)
+Completed 200 OK in 9ms (Views: 5.3ms | ActiveRecord: 0.4ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for ::1 at 2025-12-04 18:12:54 -0700
+Processing by DashboardController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  [1m[36mDriver Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:17
+  [1m[36mDriver Load (0.5ms)[0m  [1m[34mSELECT "drivers".* FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:19
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 5.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.3ms | GC: 0.0ms)
+Completed 200 OK in 10ms (Views: 6.4ms | ActiveRecord: 0.8ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for ::1 at 2025-12-04 18:13:06 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Started GET "/" for ::1 at 2025-12-04 18:16:44 -0700
+Processing by PagesController#home as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='home',application='PharmaTransport',controller='pages'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendered layout layouts/application.html.erb (Duration: 3.2ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 3.6ms | ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for ::1 at 2025-12-04 18:16:44 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Started GET "/" for ::1 at 2025-12-04 19:13:38 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Processing by PagesController#home as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='home',application='PharmaTransport',controller='pages'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendered layout layouts/application.html.erb (Duration: 39.8ms | GC: 1.4ms)
+Completed 200 OK in 61ms (Views: 41.7ms | ActiveRecord: 2.3ms (1 query, 0 cached) | GC: 8.7ms)
+
+
+Started GET "/dashboard" for ::1 at 2025-12-04 19:13:44 -0700
+Processing by DashboardController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  [1m[36mDriver Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:17
+  [1m[36mDriver Load (0.3ms)[0m  [1m[34mSELECT "drivers".* FROM "drivers" WHERE "drivers"."user_id" = 1 /*action='index',application='PharmaTransport',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:19
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 17.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 20.6ms | GC: 0.0ms)
+Completed 200 OK in 32ms (Views: 21.1ms | ActiveRecord: 1.3ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2025-12-04 21:14:12 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Processing by PagesController#home as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 0.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 10.7ms | GC: 0.0ms)
+Completed 200 OK in 23ms (Views: 13.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2025-12-04 21:14:20 -0700
+Processing by PagesController#home as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.6ms | GC: 0.0ms)
+Completed 200 OK in 5ms (Views: 4.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2025-12-04 21:14:22 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 5.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.1ms | GC: 0.0ms)
+Completed 200 OK in 10ms (Views: 8.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/signup" for 127.0.0.1 at 2025-12-04 21:14:23 -0700
+Processing by UsersController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering users/new.html.erb within layouts/application
+  Rendered users/new.html.erb within layouts/application (Duration: 2.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.8ms | GC: 0.0ms)
+Completed 200 OK in 23ms (Views: 3.4ms | ActiveRecord: 1.7ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2025-12-04 21:14:24 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 1.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.5ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 3.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/login" for 127.0.0.1 at 2025-12-04 21:14:36 -0700
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token" => "[FILTERED]", "email" => "[FILTERED]", "password" => "[FILTERED]", "commit" => "Log In"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='PharmaTransport',controller='sessions'*/[0m
+  ↳ app/controllers/sessions_controller.rb:6:in 'SessionsController#create'
+Redirected to http://0.0.0.0:3000/
+↳ app/controllers/sessions_controller.rb:10:in 'SessionsController#create'
+Completed 302 Found in 285ms (ActiveRecord: 0.3ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2025-12-04 21:14:36 -0700
+Processing by PagesController#home as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='home',application='PharmaTransport',controller='pages'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendered layout layouts/application.html.erb (Duration: 3.4ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 3.6ms | ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started DELETE "/logout" for 127.0.0.1 at 2025-12-04 21:15:12 -0700
+Processing by SessionsController#destroy as HTML
+  Parameters: {"authenticity_token" => "[FILTERED]"}
+Redirected to http://0.0.0.0:3000/
+↳ app/controllers/sessions_controller.rb:19:in 'SessionsController#destroy'
+Completed 302 Found in 2ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2025-12-04 21:15:12 -0700
+Processing by PagesController#home as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.1ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2025-12-04 21:15:15 -0700
+Processing by PagesController#home as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.1ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2025-12-04 21:17:26 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 1.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.6ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 3.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/login" for 127.0.0.1 at 2025-12-04 21:17:32 -0700
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token" => "[FILTERED]", "email" => "[FILTERED]", "password" => "[FILTERED]", "commit" => "Log In"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='PharmaTransport',controller='sessions'*/[0m
+  ↳ app/controllers/sessions_controller.rb:6:in 'SessionsController#create'
+Redirected to http://0.0.0.0:3000/
+↳ app/controllers/sessions_controller.rb:10:in 'SessionsController#create'
+Completed 302 Found in 278ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2025-12-04 21:17:33 -0700
+Processing by PagesController#home as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='home',application='PharmaTransport',controller='pages'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in 'ApplicationController#current_user'
+  Rendered layout layouts/application.html.erb (Duration: 2.3ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 2.4ms | ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2025-12-05 14:20:55 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Processing by PagesController#home as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 0.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 13.5ms | GC: 0.0ms)
+Completed 200 OK in 26ms (Views: 16.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2025-12-05 14:21:10 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 10.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 10.8ms | GC: 0.0ms)
+Completed 200 OK in 17ms (Views: 15.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/login" for 127.0.0.1 at 2025-12-05 14:21:25 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 1.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.5ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 3.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2025-12-05 14:21:41 -0700
+Processing by PagesController#home as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.1ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2025-12-06 22:35:58 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Processing by PagesController#home as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 1.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 47.1ms | GC: 0.0ms)
+Completed 200 OK in 80ms (Views: 50.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  [1m[36mActiveRecord::InternalMetadata Load (15.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Migrating to CreateShipments (20251207053719)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE TABLE "shipments" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "tracking_number" varchar, "status" integer, "temperature_logs" text, "pickup_location" varchar, "delivery_location" varchar, "driver_id" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20251207053719') RETURNING "version" /*application='PharmaTransport'*/[0m
+  [1m[36mTRANSACTION (251.6ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Started GET "/shipments" for ::1 at 2025-12-06 22:42:56 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Processing by ShipmentsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering shipments/index.html.erb within layouts/application
+  [1m[36mShipment Load (0.3ms)[0m  [1m[34mSELECT "shipments".* FROM "shipments" WHERE "shipments"."status" IN (0, 1) ORDER BY "shipments"."created_at" DESC /*action='index',application='PharmaTransport',controller='shipments'*/[0m
+  ↳ app/views/shipments/index.html.erb:5
+  Rendered shipments/index.html.erb within layouts/application (Duration: 9.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 61.5ms | GC: 0.0ms)
+Completed 200 OK in 182ms (Views: 74.0ms | ActiveRecord: 2.0ms (1 query, 0 cached) | GC: 11.5ms)
+
+
+Started GET "/shipments" for ::1 at 2025-12-06 22:43:30 -0700
+Processing by ShipmentsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering shipments/index.html.erb within layouts/application
+  [1m[36mShipment Load (0.2ms)[0m  [1m[34mSELECT "shipments".* FROM "shipments" WHERE "shipments"."status" IN (0, 1) ORDER BY "shipments"."created_at" DESC /*action='index',application='PharmaTransport',controller='shipments'*/[0m
+  ↳ app/views/shipments/index.html.erb:5
+  Rendered shipments/index.html.erb within layouts/application (Duration: 1.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 22.0ms | GC: 0.0ms)
+Completed 200 OK in 25ms (Views: 22.7ms | ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Started GET "/shipments" for ::1 at 2025-12-06 23:13:28 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Processing by ShipmentsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering shipments/index.html.erb within layouts/application
+  [1m[36mShipment Load (0.4ms)[0m  [1m[34mSELECT "shipments".* FROM "shipments" WHERE "shipments"."status" IN (0, 1) ORDER BY "shipments"."created_at" DESC /*action='index',application='PharmaTransport',controller='shipments'*/[0m
+  ↳ app/views/shipments/index.html.erb:5
+  Rendered shipments/index.html.erb within layouts/application (Duration: 12.7ms | GC: 0.7ms)
+  Rendered layout layouts/application.html.erb (Duration: 47.1ms | GC: 2.4ms)
+Completed 200 OK in 159ms (Views: 68.4ms | ActiveRecord: 2.1ms (1 query, 0 cached) | GC: 14.3ms)
+
+
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Started GET "/drivers" for ::1 at 2025-12-06 23:16:02 -0700
+Processing by DriversController#index as HTML
+Redirected to http://localhost:3000/login
+↳ app/controllers/application_controller.rb:22:in `require_login'
+Filter chain halted as :require_login rendered or redirected
+Completed 302 Found in 3ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/login" for ::1 at 2025-12-06 23:16:02 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 42.5ms | GC: 25.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 49.7ms | GC: 30.3ms)
+Completed 200 OK in 56ms (Views: 54.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 30.3ms)
+
+
+Started POST "/login" for ::1 at 2025-12-06 23:16:08 -0700
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "email"=>"[FILTERED]", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='PharmaTransport',controller='sessions'*/[0m
+  ↳ app/controllers/sessions_controller.rb:6:in `create'
+Redirected to http://localhost:3000/
+↳ app/controllers/sessions_controller.rb:10:in `create'
+Completed 302 Found in 435ms (ActiveRecord: 1.7ms (1 query, 0 cached) | GC: 1.6ms)
+
+
+Started GET "/" for ::1 at 2025-12-06 23:16:08 -0700
+Processing by PagesController#home as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/home.html.erb within layouts/application
+  Rendered pages/home.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='home',application='PharmaTransport',controller='pages'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in `current_user'
+  Rendered layout layouts/application.html.erb (Duration: 3.2ms | GC: 0.1ms)
+Completed 200 OK in 5ms (Views: 3.9ms | ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.1ms)
+
+
+Started GET "/shipments" for ::1 at 2025-12-06 23:16:18 -0700
+Processing by ShipmentsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering shipments/index.html.erb within layouts/application
+  [1m[36mShipment Load (0.2ms)[0m  [1m[34mSELECT "shipments".* FROM "shipments" WHERE "shipments"."status" IN (0, 1) ORDER BY "shipments"."created_at" DESC /*action='index',application='PharmaTransport',controller='shipments'*/[0m
+  ↳ app/views/shipments/index.html.erb:5
+  Rendered shipments/index.html.erb within layouts/application (Duration: 3.0ms | GC: 0.0ms)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='index',application='PharmaTransport',controller='shipments'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in `current_user'
+  Rendered layout layouts/application.html.erb (Duration: 7.0ms | GC: 0.3ms)
+Completed 200 OK in 18ms (Views: 9.6ms | ActiveRecord: 0.8ms (2 queries, 0 cached) | GC: 0.4ms)
+
+
+  [1m[36mDriver Count (1.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "drivers" /*application='PharmaTransport'*/[0m
+  [1m[36mShipment Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "shipments" /*application='PharmaTransport'*/[0m
+Started GET "/shipments" for ::1 at 2025-12-06 23:20:20 -0700
+Processing by ShipmentsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering shipments/index.html.erb within layouts/application
+  [1m[36mShipment Load (0.2ms)[0m  [1m[34mSELECT "shipments".* FROM "shipments" WHERE "shipments"."status" IN (0, 1) ORDER BY "shipments"."created_at" DESC /*action='index',application='PharmaTransport',controller='shipments'*/[0m
+  ↳ app/views/shipments/index.html.erb:5
+  Rendered shipments/index.html.erb within layouts/application (Duration: 1.4ms | GC: 0.0ms)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='index',application='PharmaTransport',controller='shipments'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in `current_user'
+  Rendered layout layouts/application.html.erb (Duration: 7.7ms | GC: 0.0ms)
+Completed 200 OK in 9ms (Views: 8.0ms | ActiveRecord: 0.4ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/shipments" for ::1 at 2025-12-06 23:20:23 -0700
+Processing by ShipmentsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering shipments/index.html.erb within layouts/application
+  [1m[36mShipment Load (0.3ms)[0m  [1m[34mSELECT "shipments".* FROM "shipments" WHERE "shipments"."status" IN (0, 1) ORDER BY "shipments"."created_at" DESC /*action='index',application='PharmaTransport',controller='shipments'*/[0m
+  ↳ app/views/shipments/index.html.erb:5
+  Rendered shipments/index.html.erb within layouts/application (Duration: 2.4ms | GC: 0.0ms)
+  [1m[36mUser Load (3.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 LIMIT 1 /*action='index',application='PharmaTransport',controller='shipments'*/[0m
+  ↳ app/controllers/application_controller.rb:13:in `current_user'
+  Rendered layout layouts/application.html.erb (Duration: 10.3ms | GC: 0.0ms)
+Completed 200 OK in 12ms (Views: 6.8ms | ActiveRecord: 4.2ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Migrating to CreateUsers (20251207062133)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email_address" varchar NOT NULL, "password_digest" varchar NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='PharmaTransport'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Migrating to CreateUsers (20251207062133)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[35m (3.7ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email_address" varchar NOT NULL, "password_digest" varchar NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='PharmaTransport'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='PharmaTransport'*/[0m
+Started GET "/shipments" for ::1 at 2025-12-06 23:29:55 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+  
+ActiveRecord::PendingMigrationError (
+
+Migrations are pending. To resolve this issue, run:
+
+        bin/rails db:migrate
+
+You have 2 pending migrations:
+
+db/migrate/20251207062133_create_users.rb
+db/migrate/20251207062134_create_sessions.rb
+
+
+):
+  
+activerecord (8.1.1) lib/active_record/migration.rb:743:in `check_pending_migrations'
+activerecord (8.1.1) lib/active_record/migration.rb:660:in `block (2 levels) in call'
+activesupport (8.1.1) lib/active_support/file_update_checker.rb:88:in `execute'
+activesupport (8.1.1) lib/active_support/file_update_checker.rb:98:in `execute_if_updated'
+activerecord (8.1.1) lib/active_record/migration.rb:667:in `block in call'
+activerecord (8.1.1) lib/active_record/migration.rb:657:in `synchronize'
+activerecord (8.1.1) lib/active_record/migration.rb:657:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (8.1.1) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (8.1.1) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.1) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.1) lib/rails/rack/logger.rb:29:in `call'
+propshaft (1.3.1) lib/propshaft/quiet_assets.rb:11:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.4) lib/rack/method_override.rb:28:in `call'
+rack (3.2.4) lib/rack/runtime.rb:24:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:20:in `call'
+propshaft (1.3.1) lib/propshaft/server.rb:37:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.4) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.1) lib/rails/engine.rb:534:in `call'
+puma (7.1.0) lib/puma/configuration.rb:300:in `call'
+puma (7.1.0) lib/puma/request.rb:101:in `block in handle_request'
+puma (7.1.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.1.0) lib/puma/request.rb:100:in `handle_request'
+puma (7.1.0) lib/puma/server.rb:503:in `process_client'
+puma (7.1.0) lib/puma/server.rb:262:in `block in run'
+puma (7.1.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+Started GET "/favicon.ico" for ::1 at 2025-12-06 23:29:57 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+  
+ActiveRecord::PendingMigrationError (
+
+Migrations are pending. To resolve this issue, run:
+
+        bin/rails db:migrate
+
+You have 2 pending migrations:
+
+db/migrate/20251207062133_create_users.rb
+db/migrate/20251207062134_create_sessions.rb
+
+
+):
+  
+activerecord (8.1.1) lib/active_record/migration.rb:743:in `check_pending_migrations'
+activerecord (8.1.1) lib/active_record/migration.rb:660:in `block (2 levels) in call'
+activesupport (8.1.1) lib/active_support/file_update_checker.rb:88:in `execute'
+activerecord (8.1.1) lib/active_record/migration.rb:665:in `block in call'
+activerecord (8.1.1) lib/active_record/migration.rb:657:in `synchronize'
+activerecord (8.1.1) lib/active_record/migration.rb:657:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (8.1.1) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (8.1.1) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.1) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.1) lib/rails/rack/logger.rb:29:in `call'
+propshaft (1.3.1) lib/propshaft/quiet_assets.rb:11:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.4) lib/rack/method_override.rb:28:in `call'
+rack (3.2.4) lib/rack/runtime.rb:24:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:20:in `call'
+propshaft (1.3.1) lib/propshaft/server.rb:37:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.4) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.1) lib/rails/engine.rb:534:in `call'
+puma (7.1.0) lib/puma/configuration.rb:300:in `call'
+puma (7.1.0) lib/puma/request.rb:101:in `block in handle_request'
+puma (7.1.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.1.0) lib/puma/request.rb:100:in `handle_request'
+puma (7.1.0) lib/puma/server.rb:503:in `process_client'
+puma (7.1.0) lib/puma/server.rb:262:in `block in run'
+puma (7.1.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Migrating to CreateUsers (20251207062133)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[35m (3.3ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email_address" varchar NOT NULL, "password_digest" varchar NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='PharmaTransport'*/[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Migrating to CreateUsers (20251207062133)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email_address" varchar NOT NULL, "password_digest" varchar NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='PharmaTransport'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Migrating to CreateUsers (20251207062133)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[35m (3.3ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email_address" varchar NOT NULL, "password_digest" varchar NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='PharmaTransport'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Migrating to CreateUsers (20251207062133)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email_address" varchar NOT NULL, "password_digest" varchar NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='PharmaTransport'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Migrating to CreateUsers (20251207062133)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[35m (2.8ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email_address" varchar NOT NULL, "password_digest" varchar NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='PharmaTransport'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "drivers" /*application='PharmaTransport'*/[0m
+  [1m[35m (392.3ms)[0m  [1m[35mCREATE TABLE "drivers" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "latitude" decimal(10,6), "longitude" decimal(10,6), "name" varchar, "status" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL) /*application='PharmaTransport'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_drivers_on_user_id" ON "drivers" ("user_id") /*application='PharmaTransport'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "shipments" /*application='PharmaTransport'*/[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "shipments" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "delivery_location" varchar, "driver_id" integer, "pickup_location" varchar, "status" integer, "temperature_logs" text, "tracking_number" varchar, "updated_at" datetime(6) NOT NULL) /*application='PharmaTransport'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" /*application='PharmaTransport'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "email" varchar, "password_digest" varchar, "updated_at" datetime(6) NOT NULL) /*application='PharmaTransport'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email") /*application='PharmaTransport'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys /*application='PharmaTransport'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys /*application='PharmaTransport'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON /*application='PharmaTransport'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF /*application='PharmaTransport'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "adrivers" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "latitude" decimal(10,6), "longitude" decimal(10,6), "name" varchar, "status" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL) /*application='PharmaTransport'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_adrivers_on_user_id" ON "adrivers" ("user_id") /*application='PharmaTransport'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "adrivers" ("id","created_at","latitude","longitude","name","status","updated_at","user_id")
+                     SELECT "id","created_at","latitude","longitude","name","status","updated_at","user_id" FROM "drivers" /*application='PharmaTransport'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "drivers" /*application='PharmaTransport'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "drivers" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime(6) NOT NULL, "latitude" decimal(10,6), "longitude" decimal(10,6), "name" varchar, "status" varchar, "updated_at" datetime(6) NOT NULL, "user_id" integer NOT NULL, CONSTRAINT "fk_rails_2492e1bc43"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+) /*application='PharmaTransport'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_drivers_on_user_id" ON "drivers" ("user_id") /*application='PharmaTransport'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "drivers" ("id","created_at","latitude","longitude","name","status","updated_at","user_id")
+                     SELECT "id","created_at","latitude","longitude","name","status","updated_at","user_id" FROM "adrivers" /*application='PharmaTransport'*/[0m
+  [1m[35m (1.7ms)[0m  [1m[35mDROP TABLE "adrivers" /*application='PharmaTransport'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0 /*application='PharmaTransport'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1 /*application='PharmaTransport'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY) /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20251207053719) /*application='PharmaTransport'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20251205003323); /*application='PharmaTransport'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2025-12-08 01:34:16.926705', '2025-12-08 01:34:16.926710') RETURNING "key" /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', '17622e90974605b17c9981bbed909bbc358bde0d', '2025-12-08 01:34:16.930068', '2025-12-08 01:34:16.930072') RETURNING "key" /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Migrating to CreateUsers (20251207062133)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[35m (3.4ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email_address" varchar NOT NULL, "password_digest" varchar NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='PharmaTransport'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+Migrating to CreateUsers (20251207062133)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[35m (2.7ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email_address" varchar NOT NULL, "password_digest" varchar NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='PharmaTransport'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+  [1m[35m (1.9ms)[0m  [1m[32mINSERT IGNORE INTO schema_migrations (version) VALUES('20251207062133') /*application='PharmaTransport'*/[0m
+Started GET "/users/sign_up" for ::1 at 2025-12-18 23:21:21 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+  
+ActiveRecord::PendingMigrationError (
+
+Migrations are pending. To resolve this issue, run:
+
+        bin/rails db:migrate
+
+You have 3 pending migrations:
+
+db/migrate/20251207062133_create_users.rb
+db/migrate/20251207062134_create_sessions.rb
+db/migrate/20251219061920_add_devise_to_users.rb
+
+
+):
+  
+activerecord (8.1.1) lib/active_record/migration.rb:743:in `check_pending_migrations'
+activerecord (8.1.1) lib/active_record/migration.rb:660:in `block (2 levels) in call'
+activesupport (8.1.1) lib/active_support/file_update_checker.rb:88:in `execute'
+activerecord (8.1.1) lib/active_record/migration.rb:665:in `block in call'
+activerecord (8.1.1) lib/active_record/migration.rb:657:in `synchronize'
+activerecord (8.1.1) lib/active_record/migration.rb:657:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (8.1.1) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (8.1.1) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.1) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.1) lib/rails/rack/logger.rb:29:in `call'
+propshaft (1.3.1) lib/propshaft/quiet_assets.rb:11:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.4) lib/rack/method_override.rb:28:in `call'
+rack (3.2.4) lib/rack/runtime.rb:24:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:20:in `call'
+propshaft (1.3.1) lib/propshaft/server.rb:37:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.4) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.1) lib/rails/engine.rb:534:in `call'
+puma (7.1.0) lib/puma/configuration.rb:300:in `call'
+puma (7.1.0) lib/puma/request.rb:101:in `block in handle_request'
+puma (7.1.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.1.0) lib/puma/request.rb:100:in `handle_request'
+puma (7.1.0) lib/puma/server.rb:503:in `process_client'
+puma (7.1.0) lib/puma/server.rb:262:in `block in run'
+puma (7.1.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+Started GET "/users/sign_up" for ::1 at 2025-12-18 23:21:22 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+  
+ActiveRecord::PendingMigrationError (
+
+Migrations are pending. To resolve this issue, run:
+
+        bin/rails db:migrate
+
+You have 3 pending migrations:
+
+db/migrate/20251207062133_create_users.rb
+db/migrate/20251207062134_create_sessions.rb
+db/migrate/20251219061920_add_devise_to_users.rb
+
+
+):
+  
+activerecord (8.1.1) lib/active_record/migration.rb:743:in `check_pending_migrations'
+activerecord (8.1.1) lib/active_record/migration.rb:660:in `block (2 levels) in call'
+activesupport (8.1.1) lib/active_support/file_update_checker.rb:88:in `execute'
+activerecord (8.1.1) lib/active_record/migration.rb:665:in `block in call'
+activerecord (8.1.1) lib/active_record/migration.rb:657:in `synchronize'
+activerecord (8.1.1) lib/active_record/migration.rb:657:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (8.1.1) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (8.1.1) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.1) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.1) lib/rails/rack/logger.rb:29:in `call'
+propshaft (1.3.1) lib/propshaft/quiet_assets.rb:11:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.4) lib/rack/method_override.rb:28:in `call'
+rack (3.2.4) lib/rack/runtime.rb:24:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:20:in `call'
+propshaft (1.3.1) lib/propshaft/server.rb:37:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.4) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.1) lib/rails/engine.rb:534:in `call'
+puma (7.1.0) lib/puma/configuration.rb:300:in `call'
+puma (7.1.0) lib/puma/request.rb:101:in `block in handle_request'
+puma (7.1.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.1.0) lib/puma/request.rb:100:in `handle_request'
+puma (7.1.0) lib/puma/server.rb:503:in `process_client'
+puma (7.1.0) lib/puma/server.rb:262:in `block in run'
+puma (7.1.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+Started GET "/users/sign_in" for ::1 at 2025-12-18 23:21:41 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+  
+ActiveRecord::PendingMigrationError (
+
+Migrations are pending. To resolve this issue, run:
+
+        bin/rails db:migrate
+
+You have 3 pending migrations:
+
+db/migrate/20251207062133_create_users.rb
+db/migrate/20251207062134_create_sessions.rb
+db/migrate/20251219061920_add_devise_to_users.rb
+
+
+):
+  
+activerecord (8.1.1) lib/active_record/migration.rb:743:in `check_pending_migrations'
+activerecord (8.1.1) lib/active_record/migration.rb:660:in `block (2 levels) in call'
+activesupport (8.1.1) lib/active_support/file_update_checker.rb:88:in `execute'
+activerecord (8.1.1) lib/active_record/migration.rb:665:in `block in call'
+activerecord (8.1.1) lib/active_record/migration.rb:657:in `synchronize'
+activerecord (8.1.1) lib/active_record/migration.rb:657:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (8.1.1) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (8.1.1) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.1) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.1) lib/rails/rack/logger.rb:29:in `call'
+propshaft (1.3.1) lib/propshaft/quiet_assets.rb:11:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.4) lib/rack/method_override.rb:28:in `call'
+rack (3.2.4) lib/rack/runtime.rb:24:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:20:in `call'
+propshaft (1.3.1) lib/propshaft/server.rb:37:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.4) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.1) lib/rails/engine.rb:534:in `call'
+puma (7.1.0) lib/puma/configuration.rb:300:in `call'
+puma (7.1.0) lib/puma/request.rb:101:in `block in handle_request'
+puma (7.1.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.1.0) lib/puma/request.rb:100:in `handle_request'
+puma (7.1.0) lib/puma/server.rb:503:in `process_client'
+puma (7.1.0) lib/puma/server.rb:262:in `block in run'
+puma (7.1.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+Started GET "/" for ::1 at 2025-12-18 23:22:02 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+  
+ActiveRecord::PendingMigrationError (
+
+Migrations are pending. To resolve this issue, run:
+
+        bin/rails db:migrate
+
+You have 3 pending migrations:
+
+db/migrate/20251207062133_create_users.rb
+db/migrate/20251207062134_create_sessions.rb
+db/migrate/20251219061920_add_devise_to_users.rb
+
+
+):
+  
+activerecord (8.1.1) lib/active_record/migration.rb:743:in `check_pending_migrations'
+activerecord (8.1.1) lib/active_record/migration.rb:660:in `block (2 levels) in call'
+activesupport (8.1.1) lib/active_support/file_update_checker.rb:88:in `execute'
+activerecord (8.1.1) lib/active_record/migration.rb:665:in `block in call'
+activerecord (8.1.1) lib/active_record/migration.rb:657:in `synchronize'
+activerecord (8.1.1) lib/active_record/migration.rb:657:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (8.1.1) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (8.1.1) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.1) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.1) lib/rails/rack/logger.rb:29:in `call'
+propshaft (1.3.1) lib/propshaft/quiet_assets.rb:11:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.4) lib/rack/method_override.rb:28:in `call'
+rack (3.2.4) lib/rack/runtime.rb:24:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:20:in `call'
+propshaft (1.3.1) lib/propshaft/server.rb:37:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.4) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.1) lib/rails/engine.rb:534:in `call'
+puma (7.1.0) lib/puma/configuration.rb:300:in `call'
+puma (7.1.0) lib/puma/request.rb:101:in `block in handle_request'
+puma (7.1.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.1.0) lib/puma/request.rb:100:in `handle_request'
+puma (7.1.0) lib/puma/server.rb:503:in `process_client'
+puma (7.1.0) lib/puma/server.rb:262:in `block in run'
+puma (7.1.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+Started GET "/" for ::1 at 2025-12-18 23:22:02 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+  
+ActiveRecord::PendingMigrationError (
+
+Migrations are pending. To resolve this issue, run:
+
+        bin/rails db:migrate
+
+You have 3 pending migrations:
+
+db/migrate/20251207062133_create_users.rb
+db/migrate/20251207062134_create_sessions.rb
+db/migrate/20251219061920_add_devise_to_users.rb
+
+
+):
+  
+activerecord (8.1.1) lib/active_record/migration.rb:743:in `check_pending_migrations'
+activerecord (8.1.1) lib/active_record/migration.rb:660:in `block (2 levels) in call'
+activesupport (8.1.1) lib/active_support/file_update_checker.rb:88:in `execute'
+activerecord (8.1.1) lib/active_record/migration.rb:665:in `block in call'
+activerecord (8.1.1) lib/active_record/migration.rb:657:in `synchronize'
+activerecord (8.1.1) lib/active_record/migration.rb:657:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (8.1.1) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (8.1.1) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.1) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.1) lib/rails/rack/logger.rb:29:in `call'
+propshaft (1.3.1) lib/propshaft/quiet_assets.rb:11:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.4) lib/rack/method_override.rb:28:in `call'
+rack (3.2.4) lib/rack/runtime.rb:24:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:20:in `call'
+propshaft (1.3.1) lib/propshaft/server.rb:37:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.4) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.1) lib/rails/engine.rb:534:in `call'
+puma (7.1.0) lib/puma/configuration.rb:300:in `call'
+puma (7.1.0) lib/puma/request.rb:101:in `block in handle_request'
+puma (7.1.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.1.0) lib/puma/request.rb:100:in `handle_request'
+puma (7.1.0) lib/puma/server.rb:503:in `process_client'
+puma (7.1.0) lib/puma/server.rb:262:in `block in run'
+puma (7.1.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+  [1m[35m (201.2ms)[0m  [1m[32mINSERT OR IGNORE INTO schema_migrations (version) VALUES('20251207062133') /*application='PharmaTransport'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT OR IGNORE INTO schema_migrations (version) VALUES('20251207062134') /*application='PharmaTransport'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT OR IGNORE INTO schema_migrations (version) VALUES('20251219061920') /*application='PharmaTransport'*/[0m
+Started GET "/users/sign_up" for ::1 at 2025-12-18 23:24:32 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaTransport'*/[0m
+DEPRECATION WARNING: resource received a hash argument only. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+DEPRECATION WARNING: resource received a hash argument path. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+DEPRECATION WARNING: resource received a hash argument path_names. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+DEPRECATION WARNING: resource received a hash argument controller. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+Processing by Devise::RegistrationsController#new as HTML
+Redirected to http://localhost:3000/session/new
+↳ app/controllers/concerns/authentication.rb:34:in `request_authentication'
+Filter chain halted as :require_authentication rendered or redirected
+Completed 302 Found in 28ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/session/new" for ::1 at 2025-12-18 23:24:32 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 56.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 123.3ms | GC: 23.9ms)
+Completed 200 OK in 195ms (Views: 127.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 23.9ms)
+
+
+Started GET "/users/sign_in" for ::1 at 2025-12-18 23:24:38 -0700
+Processing by Devise::SessionsController#new as HTML
+Redirected to http://localhost:3000/session/new
+↳ app/controllers/concerns/authentication.rb:34:in `request_authentication'
+Filter chain halted as :require_authentication rendered or redirected
+Completed 302 Found in 2ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/session/new" for ::1 at 2025-12-18 23:24:38 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 2.8ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.7ms | GC: 0.4ms)
+Completed 200 OK in 6ms (Views: 4.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/" for ::1 at 2025-12-18 23:24:42 -0700
+Processing by PagesController#home as HTML
+Redirected to http://localhost:3000/session/new
+↳ app/controllers/concerns/authentication.rb:34:in `request_authentication'
+Filter chain halted as :require_authentication rendered or redirected
+Completed 302 Found in 2ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/session/new" for ::1 at 2025-12-18 23:24:42 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 10.3ms | GC: 1.9ms)
+  Rendered layout layouts/application.html.erb (Duration: 12.3ms | GC: 1.9ms)
+Completed 200 OK in 17ms (Views: 14.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.9ms)
+
+
+Started POST "/session" for ::1 at 2025-12-18 23:24:48 -0700
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "email_address"=>"[FILTERED]", "password"=>"[FILTERED]", "commit"=>"Sign in"}
+[31mUnpermitted parameters: :authenticity_token, :commit. Context: { controller: SessionsController, action: create, request: #<ActionDispatch::Request:0x00007986a487b730>, params: {"authenticity_token"=>"[FILTERED]", "email_address"=>"[FILTERED]", "password"=>"[FILTERED]", "commit"=>"Sign in", "controller"=>"sessions", "action"=>"create"} }[0m
+  [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email_address" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='PharmaTransport',controller='sessions'*/[0m
+  ↳ app/controllers/sessions_controller.rb:9:in `create'
+Completed 500 Internal Server Error in 358ms (ActiveRecord: 3.9ms (1 query, 0 cached) | GC: 1.7ms)
+
+
+  
+ActiveRecord::StatementInvalid (SQLite3::SQLException: no such column: users.email_address:
+SELECT "users".* FROM "users" WHERE "users"."email_address" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='PharmaTransport',controller='sessions'*/
+                                    ^)
+Caused by: SQLite3::SQLException (no such column: users.email_address:
+SELECT "users".* FROM "users" WHERE "users"."email_address" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='PharmaTransport',controller='sessions'*/
+                                    ^)
+
+Information for: ActiveRecord::StatementInvalid (SQLite3::SQLException: no such column: users.email_address:
+SELECT "users".* FROM "users" WHERE "users"."email_address" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='PharmaTransport',controller='sessions'*/
+                                    ^):
+  
+
+Information for cause: SQLite3::SQLException (no such column: users.email_address:
+SELECT "users".* FROM "users" WHERE "users"."email_address" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='PharmaTransport',controller='sessions'*/
+                                    ^):
+  
+app/controllers/sessions_controller.rb:9:in `create'
+Started GET "/" for ::1 at 2025-12-18 23:28:28 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+DEPRECATION WARNING: resource received a hash argument only. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+DEPRECATION WARNING: resource received a hash argument path. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+DEPRECATION WARNING: resource received a hash argument path_names. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+DEPRECATION WARNING: resource received a hash argument controller. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+Processing by PagesController#home as HTML
+Redirected to http://localhost:3000/session/new
+↳ app/controllers/concerns/authentication.rb:34:in `request_authentication'
+Filter chain halted as :require_authentication rendered or redirected
+Completed 302 Found in 20ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/session/new" for ::1 at 2025-12-18 23:28:28 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 14.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 23.6ms | GC: 0.0ms)
+Completed 200 OK in 56ms (Views: 32.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/session" for ::1 at 2025-12-18 23:28:30 -0700
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "email_address"=>"[FILTERED]", "password"=>"[FILTERED]", "commit"=>"Sign in"}
+[31mUnpermitted parameters: :authenticity_token, :commit. Context: { controller: SessionsController, action: create, request: #<ActionDispatch::Request:0x00007277994d52a0>, params: {"authenticity_token"=>"[FILTERED]", "email_address"=>"[FILTERED]", "password"=>"[FILTERED]", "commit"=>"Sign in", "controller"=>"sessions", "action"=>"create"} }[0m
+  [1m[36mUser Load (3.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email_address" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='ThomasITHelpdesk',controller='sessions'*/[0m
+  ↳ app/controllers/sessions_controller.rb:9:in `create'
+Completed 500 Internal Server Error in 27ms (ActiveRecord: 7.7ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+  
+ActiveRecord::StatementInvalid (SQLite3::SQLException: no such column: users.email_address:
+SELECT "users".* FROM "users" WHERE "users"."email_address" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='ThomasITHelpdesk',controller='sessions'*/
+                                    ^)
+Caused by: SQLite3::SQLException (no such column: users.email_address:
+SELECT "users".* FROM "users" WHERE "users"."email_address" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='ThomasITHelpdesk',controller='sessions'*/
+                                    ^)
+
+Information for: ActiveRecord::StatementInvalid (SQLite3::SQLException: no such column: users.email_address:
+SELECT "users".* FROM "users" WHERE "users"."email_address" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='ThomasITHelpdesk',controller='sessions'*/
+                                    ^):
+  
+
+Information for cause: SQLite3::SQLException (no such column: users.email_address:
+SELECT "users".* FROM "users" WHERE "users"."email_address" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='ThomasITHelpdesk',controller='sessions'*/
+                                    ^):
+  
+app/controllers/sessions_controller.rb:9:in `create'
+Started POST "/session" for ::1 at 2025-12-18 23:29:01 -0700
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "email_address"=>"[FILTERED]", "password"=>"[FILTERED]", "commit"=>"Sign in"}
+[31mUnpermitted parameters: :authenticity_token, :commit. Context: { controller: SessionsController, action: create, request: #<ActionDispatch::Request:0x00007277994da980>, params: {"authenticity_token"=>"[FILTERED]", "email_address"=>"[FILTERED]", "password"=>"[FILTERED]", "commit"=>"Sign in", "controller"=>"sessions", "action"=>"create"} }[0m
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email_address" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='ThomasITHelpdesk',controller='sessions'*/[0m
+  ↳ app/controllers/sessions_controller.rb:9:in `create'
+Completed 500 Internal Server Error in 10ms (ActiveRecord: 0.7ms (1 query, 0 cached) | GC: 1.0ms)
+
+
+  
+ActiveRecord::StatementInvalid (SQLite3::SQLException: no such column: users.email_address:
+SELECT "users".* FROM "users" WHERE "users"."email_address" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='ThomasITHelpdesk',controller='sessions'*/
+                                    ^)
+Caused by: SQLite3::SQLException (no such column: users.email_address:
+SELECT "users".* FROM "users" WHERE "users"."email_address" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='ThomasITHelpdesk',controller='sessions'*/
+                                    ^)
+
+Information for: ActiveRecord::StatementInvalid (SQLite3::SQLException: no such column: users.email_address:
+SELECT "users".* FROM "users" WHERE "users"."email_address" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='ThomasITHelpdesk',controller='sessions'*/
+                                    ^):
+  
+
+Information for cause: SQLite3::SQLException (no such column: users.email_address:
+SELECT "users".* FROM "users" WHERE "users"."email_address" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='ThomasITHelpdesk',controller='sessions'*/
+                                    ^):
+  
+app/controllers/sessions_controller.rb:9:in `create'
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+Migrating to RenameEmailAddressToEmailInUsers (20251219062932)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+Migrating to RenameEmailAddressToEmailInUsers (20251219062932)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+Started GET "/login" for ::1 at 2025-12-18 23:31:52 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+  
+ActiveRecord::PendingMigrationError (
+
+Migrations are pending. To resolve this issue, run:
+
+        bin/rails db:migrate
+
+You have 1 pending migration:
+
+db/migrate/20251219062932_rename_email_address_to_email_in_users.rb
+
+
+):
+  
+activerecord (8.1.1) lib/active_record/migration.rb:743:in `check_pending_migrations'
+activerecord (8.1.1) lib/active_record/migration.rb:660:in `block (2 levels) in call'
+activesupport (8.1.1) lib/active_support/file_update_checker.rb:88:in `execute'
+activerecord (8.1.1) lib/active_record/migration.rb:665:in `block in call'
+activerecord (8.1.1) lib/active_record/migration.rb:657:in `synchronize'
+activerecord (8.1.1) lib/active_record/migration.rb:657:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (8.1.1) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (8.1.1) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.1) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.1) lib/rails/rack/logger.rb:29:in `call'
+propshaft (1.3.1) lib/propshaft/quiet_assets.rb:11:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.4) lib/rack/method_override.rb:28:in `call'
+rack (3.2.4) lib/rack/runtime.rb:24:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:20:in `call'
+propshaft (1.3.1) lib/propshaft/server.rb:37:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.4) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.1) lib/rails/engine.rb:534:in `call'
+puma (7.1.0) lib/puma/configuration.rb:300:in `call'
+puma (7.1.0) lib/puma/request.rb:101:in `block in handle_request'
+puma (7.1.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.1.0) lib/puma/request.rb:100:in `handle_request'
+puma (7.1.0) lib/puma/server.rb:503:in `process_client'
+puma (7.1.0) lib/puma/server.rb:262:in `block in run'
+puma (7.1.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+Started GET "/" for ::1 at 2025-12-18 23:32:27 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+  
+ActiveRecord::PendingMigrationError (
+
+Migrations are pending. To resolve this issue, run:
+
+        bin/rails db:migrate
+
+You have 1 pending migration:
+
+db/migrate/20251219062932_rename_email_address_to_email_in_users.rb
+
+
+):
+  
+activerecord (8.1.1) lib/active_record/migration.rb:743:in `check_pending_migrations'
+activerecord (8.1.1) lib/active_record/migration.rb:660:in `block (2 levels) in call'
+activesupport (8.1.1) lib/active_support/file_update_checker.rb:88:in `execute'
+activerecord (8.1.1) lib/active_record/migration.rb:665:in `block in call'
+activerecord (8.1.1) lib/active_record/migration.rb:657:in `synchronize'
+activerecord (8.1.1) lib/active_record/migration.rb:657:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (8.1.1) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (8.1.1) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.1) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.1) lib/rails/rack/logger.rb:29:in `call'
+propshaft (1.3.1) lib/propshaft/quiet_assets.rb:11:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.4) lib/rack/method_override.rb:28:in `call'
+rack (3.2.4) lib/rack/runtime.rb:24:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:20:in `call'
+propshaft (1.3.1) lib/propshaft/server.rb:37:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.4) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.1) lib/rails/engine.rb:534:in `call'
+puma (7.1.0) lib/puma/configuration.rb:300:in `call'
+puma (7.1.0) lib/puma/request.rb:101:in `block in handle_request'
+puma (7.1.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.1.0) lib/puma/request.rb:100:in `handle_request'
+puma (7.1.0) lib/puma/server.rb:503:in `process_client'
+puma (7.1.0) lib/puma/server.rb:262:in `block in run'
+puma (7.1.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+Started GET "/" for ::1 at 2025-12-18 23:32:27 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+  
+ActiveRecord::PendingMigrationError (
+
+Migrations are pending. To resolve this issue, run:
+
+        bin/rails db:migrate
+
+You have 1 pending migration:
+
+db/migrate/20251219062932_rename_email_address_to_email_in_users.rb
+
+
+):
+  
+activerecord (8.1.1) lib/active_record/migration.rb:743:in `check_pending_migrations'
+activerecord (8.1.1) lib/active_record/migration.rb:660:in `block (2 levels) in call'
+activesupport (8.1.1) lib/active_support/file_update_checker.rb:88:in `execute'
+activerecord (8.1.1) lib/active_record/migration.rb:665:in `block in call'
+activerecord (8.1.1) lib/active_record/migration.rb:657:in `synchronize'
+activerecord (8.1.1) lib/active_record/migration.rb:657:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (8.1.1) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (8.1.1) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.1) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.1) lib/rails/rack/logger.rb:29:in `call'
+propshaft (1.3.1) lib/propshaft/quiet_assets.rb:11:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.4) lib/rack/method_override.rb:28:in `call'
+rack (3.2.4) lib/rack/runtime.rb:24:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.1) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/executor.rb:20:in `call'
+propshaft (1.3.1) lib/propshaft/server.rb:37:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.4) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.1) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.1) lib/rails/engine.rb:534:in `call'
+puma (7.1.0) lib/puma/configuration.rb:300:in `call'
+puma (7.1.0) lib/puma/request.rb:101:in `block in handle_request'
+puma (7.1.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.1.0) lib/puma/request.rb:100:in `handle_request'
+puma (7.1.0) lib/puma/server.rb:503:in `process_client'
+puma (7.1.0) lib/puma/server.rb:262:in `block in run'
+puma (7.1.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+  [1m[35m (438.3ms)[0m  [1m[32mINSERT OR IGNORE INTO schema_migrations (version) VALUES('20251219062932') /*application='ThomasITHelpdesk'*/[0m
+  [1m[35m (1.5ms)[0m  [1m[32mINSERT OR IGNORE INTO schema_migrations (version) VALUES('20251219062932') /*application='ThomasITHelpdesk'*/[0m
+Started GET "/" for ::1 at 2025-12-18 23:33:31 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+DEPRECATION WARNING: resource received a hash argument only. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+DEPRECATION WARNING: resource received a hash argument path. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+DEPRECATION WARNING: resource received a hash argument path_names. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+DEPRECATION WARNING: resource received a hash argument controller. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+Processing by PagesController#home as HTML
+Redirected to http://localhost:3000/session/new
+↳ app/controllers/concerns/authentication.rb:34:in `request_authentication'
+Filter chain halted as :require_authentication rendered or redirected
+Completed 302 Found in 19ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/session/new" for ::1 at 2025-12-18 23:33:31 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 4.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 11.7ms | GC: 0.0ms)
+Completed 200 OK in 47ms (Views: 25.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/signup" for ::1 at 2025-12-18 23:34:39 -0700
+Processing by UsersController#new as HTML
+Redirected to http://localhost:3000/session/new
+↳ app/controllers/concerns/authentication.rb:34:in `request_authentication'
+Filter chain halted as :require_authentication rendered or redirected
+Completed 302 Found in 3ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/session/new" for ::1 at 2025-12-18 23:34:39 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 5.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.4ms | GC: 0.0ms)
+Completed 200 OK in 14ms (Views: 10.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/passwords/new" for ::1 at 2025-12-18 23:34:45 -0700
+Processing by PasswordsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering passwords/new.html.erb within layouts/application
+  Rendered passwords/new.html.erb within layouts/application (Duration: 41.7ms | GC: 37.7ms)
+  Rendered layout layouts/application.html.erb (Duration: 42.6ms | GC: 37.7ms)
+Completed 200 OK in 69ms (Views: 44.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 37.7ms)
+
+
+Started POST "/session" for ::1 at 2025-12-18 23:34:50 -0700
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "email_address"=>"[FILTERED]", "password"=>"[FILTERED]", "commit"=>"Sign in"}
+[31mUnpermitted parameters: :authenticity_token, :commit. Context: { controller: SessionsController, action: create, request: #<ActionDispatch::Request:0x00007f94c2b4c090>, params: {"authenticity_token"=>"[FILTERED]", "email_address"=>"[FILTERED]", "password"=>"[FILTERED]", "commit"=>"Sign in", "controller"=>"sessions", "action"=>"create"} }[0m
+  [1m[36mUser Load (2.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email_address" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='ThomasITHelpdesk',controller='sessions'*/[0m
+  ↳ app/controllers/sessions_controller.rb:9:in `create'
+Completed 500 Internal Server Error in 31ms (ActiveRecord: 5.2ms (1 query, 0 cached) | GC: 3.5ms)
+
+
+  
+ActiveRecord::StatementInvalid (SQLite3::SQLException: no such column: users.email_address:
+SELECT "users".* FROM "users" WHERE "users"."email_address" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='ThomasITHelpdesk',controller='sessions'*/
+                                    ^)
+Caused by: SQLite3::SQLException (no such column: users.email_address:
+SELECT "users".* FROM "users" WHERE "users"."email_address" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='ThomasITHelpdesk',controller='sessions'*/
+                                    ^)
+
+Information for: ActiveRecord::StatementInvalid (SQLite3::SQLException: no such column: users.email_address:
+SELECT "users".* FROM "users" WHERE "users"."email_address" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='ThomasITHelpdesk',controller='sessions'*/
+                                    ^):
+  
+
+Information for cause: SQLite3::SQLException (no such column: users.email_address:
+SELECT "users".* FROM "users" WHERE "users"."email_address" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='ThomasITHelpdesk',controller='sessions'*/
+                                    ^):
+  
+app/controllers/sessions_controller.rb:9:in `create'
+Started GET "/login" for ::1 at 2025-12-18 23:38:26 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+DEPRECATION WARNING: resource received a hash argument only. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+DEPRECATION WARNING: resource received a hash argument path. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+DEPRECATION WARNING: resource received a hash argument path_names. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+DEPRECATION WARNING: resource received a hash argument controller. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 8.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 15.4ms | GC: 0.0ms)
+Completed 200 OK in 37ms (Views: 21.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/session" for ::1 at 2025-12-18 23:38:29 -0700
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "email_address"=>"[FILTERED]", "password"=>"[FILTERED]", "commit"=>"Sign in"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='ThomasITHelpdesk',controller='sessions'*/[0m
+  ↳ app/controllers/sessions_controller.rb:10:in `create'
+Redirected to http://localhost:3000/session/new
+↳ app/controllers/sessions_controller.rb:14:in `create'
+Completed 302 Found in 310ms (ActiveRecord: 4.7ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/session/new" for ::1 at 2025-12-18 23:38:30 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 6.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.4ms | GC: 0.0ms)
+Completed 200 OK in 12ms (Views: 10.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/session" for ::1 at 2025-12-18 23:38:32 -0700
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "email_address"=>"[FILTERED]", "password"=>"[FILTERED]", "commit"=>"Sign in"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='ThomasITHelpdesk',controller='sessions'*/[0m
+  ↳ app/controllers/sessions_controller.rb:10:in `create'
+Redirected to http://localhost:3000/session/new
+↳ app/controllers/sessions_controller.rb:14:in `create'
+Completed 302 Found in 287ms (ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/session/new" for ::1 at 2025-12-18 23:38:32 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 1.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.5ms | GC: 0.6ms)
+Completed 200 OK in 3ms (Views: 2.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.6ms)
+
+
+Started POST "/session" for ::1 at 2025-12-18 23:39:15 -0700
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "email_address"=>"[FILTERED]", "password"=>"[FILTERED]", "commit"=>"Sign in"}
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'tech@thomasit.com' LIMIT 1 /*action='create',application='ThomasITHelpdesk',controller='sessions'*/[0m
+  ↳ app/controllers/sessions_controller.rb:10:in `create'
+Redirected to http://localhost:3000/session/new
+↳ app/controllers/sessions_controller.rb:14:in `create'
+Completed 302 Found in 286ms (ActiveRecord: 1.4ms (1 query, 0 cached) | GC: 0.8ms)
+
+
+Started GET "/session/new" for ::1 at 2025-12-18 23:39:16 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 1.6ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.2ms | GC: 0.4ms)
+Completed 200 OK in 3ms (Views: 2.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.4ms)
+
+
+Started POST "/session" for ::1 at 2025-12-18 23:39:17 -0700
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "email_address"=>"[FILTERED]", "password"=>"[FILTERED]", "commit"=>"Sign in"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='ThomasITHelpdesk',controller='sessions'*/[0m
+  ↳ app/controllers/sessions_controller.rb:10:in `create'
+Redirected to http://localhost:3000/session/new
+↳ app/controllers/sessions_controller.rb:14:in `create'
+Completed 302 Found in 291ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/session/new" for ::1 at 2025-12-18 23:39:17 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 1.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.0ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 2.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.4ms)
+
+
+Started POST "/session" for ::1 at 2025-12-18 23:39:18 -0700
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "email_address"=>"[FILTERED]", "password"=>"[FILTERED]", "commit"=>"Sign in"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'brett.thomas29.97@gmail.com' LIMIT 1 /*action='create',application='ThomasITHelpdesk',controller='sessions'*/[0m
+  ↳ app/controllers/sessions_controller.rb:10:in `create'
+Redirected to http://localhost:3000/session/new
+↳ app/controllers/sessions_controller.rb:14:in `create'
+Completed 302 Found in 291ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/session/new" for ::1 at 2025-12-18 23:39:18 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 1.7ms | GC: 0.4ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.3ms | GC: 0.4ms)
+Completed 200 OK in 3ms (Views: 2.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/login" for ::1 at 2025-12-18 23:39:21 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 1.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.3ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 2.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/signup" for ::1 at 2025-12-18 23:39:22 -0700
+Processing by UsersController#new as HTML
+Redirected to http://localhost:3000/session/new
+↳ app/controllers/concerns/authentication.rb:34:in `request_authentication'
+Filter chain halted as :require_authentication rendered or redirected
+Completed 302 Found in 4ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/session/new" for ::1 at 2025-12-18 23:39:22 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 2.6ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.3ms | GC: 0.2ms)
+Completed 200 OK in 4ms (Views: 3.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.2ms)
+
+
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'tech@thomasit.com' LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'tech@thomasit.com' LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'tech@thomasit.com' LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at") VALUES ('2025-12-19 06:44:01.842264', 'tech@thomasit.com', '$2a$12$ahfCGT86TPM7fLPXQE0y.eeKe74nFyQtEFVFPa.p4cVkV/Jk7WZGS', '2025-12-19 06:44:01.842264') RETURNING "id" /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (168.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'tech@thomasit.com' LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+Started GET "/login" for ::1 at 2025-12-18 23:44:30 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 8.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 13.7ms | GC: 0.0ms)
+Completed 200 OK in 26ms (Views: 16.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/session" for ::1 at 2025-12-18 23:45:07 -0700
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "email_address"=>"[FILTERED]", "password"=>"[FILTERED]", "commit"=>"Sign in"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'tech@thomasit.com' LIMIT 1 /*action='create',application='ThomasITHelpdesk',controller='sessions'*/[0m
+  ↳ app/controllers/sessions_controller.rb:10:in `create'
+Completed 500 Internal Server Error in 301ms (ActiveRecord: 3.6ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+  
+NoMethodError (undefined method `sessions' for #<User id: 1, created_at: "2025-12-19 06:44:01.842264000 +0000", email: [FILTERED], password_digest: [FILTERED], updated_at: "2025-12-19 06:44:01.842264000 +0000">):
+  
+app/controllers/concerns/authentication.rb:42:in `start_new_session_for'
+app/controllers/sessions_controller.rb:11:in `create'
+Started GET "/login" for ::1 at 2025-12-18 23:48:12 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+  
+Zeitwerk::NameError (expected file /home/zero/ThomasInformationTechnology_proper/app/models/user.rb to define constant User, but didn't):
+  
+config/routes.rb:2:in `block in <main>'
+config/routes.rb:1:in `<main>'
+Started GET "/login" for ::1 at 2025-12-18 23:48:13 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/login"):
+  
+Started GET "/" for ::1 at 2025-12-18 23:49:28 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+  
+ArgumentError (:to must respond to `action` or `call`, or it must be a String that includes '#', or the controller should be implicit):
+  
+config/routes.rb:8:in `block (3 levels) in <main>'
+config/routes.rb:7:in `block (2 levels) in <main>'
+config/routes.rb:6:in `block in <main>'
+config/routes.rb:1:in `<main>'
+Started GET "/" for ::1 at 2025-12-18 23:49:28 -0700
+Processing by HomeController#index as HTML
+Completed 500 Internal Server Error in 11ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ArgumentError (wrong number of arguments (given 0, expected 1+)):
+  
+app/controllers/concerns/authentication.rb:34:in `request_authentication'
+app/controllers/concerns/authentication.rb:21:in `require_authentication'
+Started GET "/" for ::1 at 2025-12-18 23:50:53 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+  
+ArgumentError (:to must respond to `action` or `call`, or it must be a String that includes '#', or the controller should be implicit):
+  
+config/routes.rb:8:in `block (3 levels) in <main>'
+config/routes.rb:7:in `block (2 levels) in <main>'
+config/routes.rb:6:in `block in <main>'
+config/routes.rb:1:in `<main>'
+Started GET "/" for ::1 at 2025-12-18 23:50:54 -0700
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 0.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.1ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 20ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `login_path' for #<ActionView::Base:0x0000000000c7b0>)
+Caused by: NameError (undefined local variable or method `login_path' for #<ActionView::Base:0x0000000000c7b0>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `login_path' for #<ActionView::Base:0x0000000000c7b0>):
+    3: 
+    4: <div class="grid grid-cols-2 gap-4">
+    5:   <%= link_to "Login", login_path, class: "bg-blue-500 text-white px-4 py-2 rounded" %>
+    6:   <%= link_to "Tickets", tickets_path, class: "bg-green-500 text-white px-4 py-2 rounded" %>
+    7: </div>
+    8: 
+    9: <p><strong>Tech Agent:</strong> tech@thomasit.com / Th0masIT2025!SecurePass</p>
+  
+app/views/home/index.html.erb:6
+
+Information for cause: NameError (undefined local variable or method `login_path' for #<ActionView::Base:0x0000000000c7b0>):
+  
+app/views/home/index.html.erb:6
+Started GET "/login" for ::1 at 2025-12-18 23:51:24 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/login"):
+  
+Started GET "/login" for ::1 at 2025-12-18 23:51:26 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/login"):
+  
+Started GET "/" for ::1 at 2025-12-18 23:52:28 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 1.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 14.1ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 32ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `signup_path' for #<ActionView::Base:0x0000000000ed80>)
+Caused by: NameError (undefined local variable or method `signup_path' for #<ActionView::Base:0x0000000000ed80>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `signup_path' for #<ActionView::Base:0x0000000000ed80>):
+    33:           <% else %>
+    34:             <%= link_to "Log In", login_path, class: "btn btn-outline" %>
+    35:             <%= link_to "Sign Up", signup_path, class: "btn btn-primary" %>
+    36:           <% end %>
+    37:         </div>
+    38:       </div>
+    39:     </nav>
+  
+app/views/layouts/application.html.erb:36
+
+Information for cause: NameError (undefined local variable or method `signup_path' for #<ActionView::Base:0x0000000000ed80>):
+  
+app/views/layouts/application.html.erb:36
+Started GET "/" for ::1 at 2025-12-18 23:52:28 -0700
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.8ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 7ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `signup_path' for #<ActionView::Base:0x0000000000f140>)
+Caused by: NameError (undefined local variable or method `signup_path' for #<ActionView::Base:0x0000000000f140>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `signup_path' for #<ActionView::Base:0x0000000000f140>):
+    33:           <% else %>
+    34:             <%= link_to "Log In", login_path, class: "btn btn-outline" %>
+    35:             <%= link_to "Sign Up", signup_path, class: "btn btn-primary" %>
+    36:           <% end %>
+    37:         </div>
+    38:       </div>
+    39:     </nav>
+  
+app/views/layouts/application.html.erb:36
+
+Information for cause: NameError (undefined local variable or method `signup_path' for #<ActionView::Base:0x0000000000f140>):
+  
+app/views/layouts/application.html.erb:36
+Started GET "/login" for ::1 at 2025-12-18 23:52:53 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 9.4ms | GC: 0.7ms)
+  Rendered layout layouts/application.html.erb (Duration: 10.6ms | GC: 0.7ms)
+Completed 500 Internal Server Error in 13ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.8ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `new_password_path' for #<ActionView::Base:0x0000000000f488>)
+Caused by: NameError (undefined local variable or method `new_password_path' for #<ActionView::Base:0x0000000000f488>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `new_password_path' for #<ActionView::Base:0x0000000000f488>):
+     9: <br>
+    10: 
+    11: <%= link_to "Forgot password?", new_password_path %>
+  
+app/views/sessions/new.html.erb:12
+
+Information for cause: NameError (undefined local variable or method `new_password_path' for #<ActionView::Base:0x0000000000f488>):
+  
+app/views/sessions/new.html.erb:12
+Started GET "/login" for ::1 at 2025-12-18 23:52:54 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 13.1ms | GC: 1.1ms)
+  Rendered layout layouts/application.html.erb (Duration: 15.1ms | GC: 1.1ms)
+Completed 500 Internal Server Error in 18ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.1ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `new_password_path' for #<ActionView::Base:0x0000000000f7a8>)
+Caused by: NameError (undefined local variable or method `new_password_path' for #<ActionView::Base:0x0000000000f7a8>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `new_password_path' for #<ActionView::Base:0x0000000000f7a8>):
+     9: <br>
+    10: 
+    11: <%= link_to "Forgot password?", new_password_path %>
+  
+app/views/sessions/new.html.erb:12
+
+Information for cause: NameError (undefined local variable or method `new_password_path' for #<ActionView::Base:0x0000000000f7a8>):
+  
+app/views/sessions/new.html.erb:12
+Started GET "/" for ::1 at 2025-12-18 23:54:18 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 0.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 33.4ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 52ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `signup_path' for #<ActionView::Base:0x0000000000ed80>)
+Caused by: NameError (undefined local variable or method `signup_path' for #<ActionView::Base:0x0000000000ed80>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `signup_path' for #<ActionView::Base:0x0000000000ed80>):
+    24:           <% else %>
+    25:             <%= link_to "Log In", "/login", class: "btn btn-outline" %>
+    26:             <!-- <%= link_to "Sign Up", signup_path, class: "btn btn-primary" %> -->
+    27:           <% end %>
+    28:         </div>
+    29:       </div>
+    30:     </nav>
+  
+app/views/layouts/application.html.erb:27
+
+Information for cause: NameError (undefined local variable or method `signup_path' for #<ActionView::Base:0x0000000000ed80>):
+  
+app/views/layouts/application.html.erb:27
+Started GET "/" for ::1 at 2025-12-18 23:54:18 -0700
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.9ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 6ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `signup_path' for #<ActionView::Base:0x0000000000f140>)
+Caused by: NameError (undefined local variable or method `signup_path' for #<ActionView::Base:0x0000000000f140>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `signup_path' for #<ActionView::Base:0x0000000000f140>):
+    24:           <% else %>
+    25:             <%= link_to "Log In", "/login", class: "btn btn-outline" %>
+    26:             <!-- <%= link_to "Sign Up", signup_path, class: "btn btn-primary" %> -->
+    27:           <% end %>
+    28:         </div>
+    29:       </div>
+    30:     </nav>
+  
+app/views/layouts/application.html.erb:27
+
+Information for cause: NameError (undefined local variable or method `signup_path' for #<ActionView::Base:0x0000000000f140>):
+  
+app/views/layouts/application.html.erb:27
+Started GET "/login" for ::1 at 2025-12-18 23:54:40 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 4.0ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.3ms | GC: 0.2ms)
+Completed 500 Internal Server Error in 8ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.2ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `new_password_path' for #<ActionView::Base:0x0000000000f488>)
+Caused by: NameError (undefined local variable or method `new_password_path' for #<ActionView::Base:0x0000000000f488>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `new_password_path' for #<ActionView::Base:0x0000000000f488>):
+     9: <br>
+    10: 
+    11: <%= link_to "Forgot password?", new_password_path %>
+  
+app/views/sessions/new.html.erb:12
+
+Information for cause: NameError (undefined local variable or method `new_password_path' for #<ActionView::Base:0x0000000000f488>):
+  
+app/views/sessions/new.html.erb:12
+Started GET "/login" for ::1 at 2025-12-18 23:54:41 -0700
+Processing by SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 3.6ms | GC: 0.6ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.0ms | GC: 0.6ms)
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.6ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `new_password_path' for #<ActionView::Base:0x0000000000f7a8>)
+Caused by: NameError (undefined local variable or method `new_password_path' for #<ActionView::Base:0x0000000000f7a8>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `new_password_path' for #<ActionView::Base:0x0000000000f7a8>):
+     9: <br>
+    10: 
+    11: <%= link_to "Forgot password?", new_password_path %>
+  
+app/views/sessions/new.html.erb:12
+
+Information for cause: NameError (undefined local variable or method `new_password_path' for #<ActionView::Base:0x0000000000f7a8>):
+  
+app/views/sessions/new.html.erb:12
+Started GET "/" for ::1 at 2025-12-18 23:55:55 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+Processing by HomeController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (Duration: 1.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 14.6ms | GC: 0.0ms)
+Completed 200 OK in 33ms (Views: 19.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m

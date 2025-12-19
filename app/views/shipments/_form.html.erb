@@ -1,0 +1,47 @@
+<%= form_with(model: shipment) do |form| %>
+  <% if shipment.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(shipment.errors.count, "error") %> prohibited this shipment from being saved:</h2>
+
+      <ul>
+        <% shipment.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :tracking_number, style: "display: block" %>
+    <%= form.text_field :tracking_number %>
+  </div>
+
+  <div>
+    <%= form.label :status, style: "display: block" %>
+    <%= form.number_field :status %>
+  </div>
+
+  <div>
+    <%= form.label :temperature_logs, style: "display: block" %>
+    <%= form.textarea :temperature_logs %>
+  </div>
+
+  <div>
+    <%= form.label :pickup_location, style: "display: block" %>
+    <%= form.text_field :pickup_location %>
+  </div>
+
+  <div>
+    <%= form.label :delivery_location, style: "display: block" %>
+    <%= form.text_field :delivery_location %>
+  </div>
+
+  <div>
+    <%= form.label :driver_id, style: "display: block" %>
+    <%= form.number_field :driver_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

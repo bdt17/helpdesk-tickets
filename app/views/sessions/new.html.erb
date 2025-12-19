@@ -1,0 +1,17 @@
+<h1>Thomas IT Helpdesk Login</h1>
+
+<div class="login-form">
+  <%= form_with url: "/session", local: true do |f| %>
+    <div class="form-group">
+      <%= f.label :email %>
+      <%= f.email_field :email, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :password %>
+      <%= f.password_field :password, class: "form-control" %>
+    </div>
+    <%= f.submit "Sign In", class: "btn btn-primary" %>
+  <% end %>
+</div>
+
+<p><strong>Tech Agent:</strong> tech@thomasit.com / Th0masIT2025!SecurePass</p>

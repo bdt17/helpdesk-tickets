@@ -1,0 +1,35 @@
+<%= form_with model: driver, class: "driver-form" do |f| %>
+  <% if driver.errors.any? %>
+    <div class="error-messages">
+      <% driver.errors.full_messages.each do |message| %>
+        <p><%= message %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, required: true, autofocus: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :status %>
+    <%= f.select :status, Driver.statuses.keys.map { |s| [s.titleize, s] }, {}, class: "form-select" %>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <%= f.label :latitude %>
+      <%= f.number_field :latitude, step: "any", placeholder: "e.g. 40.7128" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :longitude %>
+      <%= f.number_field :longitude, step: "any", placeholder: "e.g. -74.0060" %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit class: "btn btn-primary" %>
+  </div>
+<% end %>

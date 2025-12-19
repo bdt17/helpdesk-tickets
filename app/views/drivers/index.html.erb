@@ -1,0 +1,60 @@
+<div class="drivers-page">
+  <div class="page-header">
+    <h1>Manage Drivers</h1>
+    <div class="page-actions">
+      <%= link_to "Back to Map", dashboard_path, class: "btn btn-outline" %>
+      <%= link_to "Add Driver", new_driver_path, class: "btn btn-primary" %>
+    </div>
+  </div>
+
+  <% if @drivers.any? %>
+    <table class="drivers-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Location</th>
+          <th>Last Updated</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @drivers.each do |driver| %>
+          <tr>
+            <td><strong><%= driver.name %></strong></td>
+            <td><span class="driver-status status-<%= driver.status %>"><%= driver.status.titleize %></span></td>
+            <td>
+              <% if driver.latitude && driver.longitude %>
+                <%= driver.latitude.round(4) %>, <%= driver.longitude.round(4) %>
+              <% else %>
+                <span class="text-muted">No data</span>
+              <% end %>
+            </td>
+            <td><%= time_ago_in_words(driver.updated_at) %> ago</td>
+            <td class="actions">
+              <%= link_to "Edit", edit_driver_path(driver), class: "btn btn-sm btn-outline" %>
+              <%= button_to "Delete", driver_path(driver), method: :delete, class: "btn btn-sm btn-danger", data: { turbo_confirm: "Are you sure?" } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="empty-state">
+      <p>No drivers yet.</p>
+      <%= link_to "Add your first driver", new_driver_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+
+  <div class="api-info">
+    <h3>API Endpoint</h3>
+    <p>Send driver location updates to:</p>
+    <code>POST /api/drivers/:id/location</code>
+    <p>Request body:</p>
+    <pre>{
+  "latitude": 40.7128,
+  "longitude": -74.0060,
+  "status": "active"
+}</pre>
+  </div>
+</div>
