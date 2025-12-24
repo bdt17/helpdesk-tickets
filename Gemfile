@@ -72,3 +72,4 @@ gem "langchainrb", "~> 0.16.1"
 gem "langchainrb_rails", "~> 0.1.12"
 gem "ruby-openai", "~> 8.3"
 gem "sidekiq", "~> 8.1"
+gem 'csv', '~> 3.2'
