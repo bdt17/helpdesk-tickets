@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_19_062932) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_24_063919) do
+  create_table "ai_agents", force: :cascade do |t|
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.text "embedding"
+    t.string "role"
+    t.integer "status"
+    t.datetime "updated_at", null: false
+  end
+
   create_table "drivers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.decimal "latitude", precision: 10, scale: 6

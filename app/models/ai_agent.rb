@@ -1,0 +1,2 @@
+class AiAgent < ApplicationRecord
+end
