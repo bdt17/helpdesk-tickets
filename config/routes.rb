@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  root "home#index"
+  namespace :api do
+    get '/ai/status', to: 'ai#status'
+  end
+  # ... your other routes
 end
-get '/api/ai/status', to: 'api/ai#status'
-get '/api/ai/status', to: 'api/ai#status'
