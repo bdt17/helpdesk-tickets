@@ -4,3 +4,8 @@ Rails.application.routes.draw do
   end
   # ... your other routes
 end
+
+namespace :api do
+  get '/health', to: 'health#index'
+  get '/ai/status', to: 'ai#status'
+end

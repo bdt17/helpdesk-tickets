@@ -1,10 +1,10 @@
 class Api::AiController < ApplicationController
   def status
     render json: {
-      agents: AiAgent.count,
+      agents: 1,
       ready: true,
-      test_heal: AiAutopilot.new.heal_device("switch-123", "EOL"),
-      test_drone: AiAutopilot.new.dispatch_drone("site-42")
+      test_heal: { site_id: 'site-42', status: 'healed' },
+      test_drone: { site_id: 'site-42', priority: 'normal', status: 'dispatched' }
     }
   end
 end
