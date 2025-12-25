@@ -1,6 +1,6 @@
 <div class="container">
   <h1><a href="/">Thomas IT Helpdesk</a></h1>
-  <p><a href="/login">Log In</a></p>
+  <p>Demo Mode - Contact sales@thomasit.com</p>
   
   <div class="status">
     ✅ THOMAS HELPDESK LIVE<br>
@@ -42,8 +42,44 @@ button:hover { background: #2980b9; }
 </style>
 
 <script>
-async function loadHealth() { document.getElementById('results').textContent = 'Loading...'; try { const res = await fetch('/api/health'); const data = await res.json(); document.getElementById('results').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`; } catch(e) { document.getElementById('results').textContent = 'Error: ' + e; } }
-async function loadTickets() { document.getElementById('results').textContent = 'Loading...'; try { const res = await fetch('/api/tickets'); const data = await res.json(); document.getElementById('results').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`; } catch(e) { document.getElementById('results').textContent = 'Error: ' + e; } }
-async function loadDrones() { document.getElementById('results').textContent = 'Loading...'; try { const res = await fetch('/api/drones'); const data = await res.json(); document.getElementById('results').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`; } catch(e) { document.getElementById('results').textContent = 'Error: ' + e; } }
-async function loadAI() { document.getElementById('results').textContent = 'Loading...'; try { const res = await fetch('/api/ai_status'); const data = await res.json(); document.getElementById('results').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`; } catch(e) { document.getElementById('results').textContent = 'Error: ' + e; } }
+async function loadHealth() { 
+  document.getElementById('results').textContent = 'Loading...'; 
+  try { 
+    const res = await fetch('/api/health'); 
+    const data = await res.json(); 
+    document.getElementById('results').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`; 
+  } catch(e) { 
+    document.getElementById('results').textContent = 'Error: ' + e; 
+  } 
+}
+async function loadTickets() { 
+  document.getElementById('results').textContent = 'Loading...'; 
+  try { 
+    const res = await fetch('/api/tickets'); 
+    const data = await res.json(); 
+    document.getElementById('results').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`; 
+  } catch(e) { 
+    document.getElementById('results').textContent = 'Error: ' + e; 
+  } 
+}
+async function loadDrones() { 
+  document.getElementById('results').textContent = 'Loading...'; 
+  try { 
+    const res = await fetch('/api/drones'); 
+    const data = await res.json(); 
+    document.getElementById('results').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`; 
+  } catch(e) { 
+    document.getElementById('results').textContent = 'Error: ' + e; 
+  } 
+}
+async function loadAI() { 
+  document.getElementById('results').textContent = 'Loading...'; 
+  try { 
+    const res = await fetch('/api/ai_status'); 
+    const data = await res.json(); 
+    document.getElementById('results').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`; 
+  } catch(e) { 
+    document.getElementById('results').textContent = 'Error: ' + e; 
+  } 
+}
 </script>
