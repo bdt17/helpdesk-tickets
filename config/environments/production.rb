@@ -28,7 +28,6 @@ Rails.application.configure do
   # config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
 
   # Skip http-to-https redirect for the default health check endpoint.
   # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
@@ -87,7 +86,6 @@ Rails.application.configure do
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 end
-config.force_ssl = true
 config.ssl_options = { hsts: { expires: 31536000, subdomains: true } }
 config.action_dispatch.default_headers = {
   'X-Frame-Options' => 'SAMEORIGIN',
@@ -98,4 +96,13 @@ config.action_dispatch.default_headers = {
   'Referrer-Policy' => 'strict-origin-when-cross-origin',
   'Clear-Site-Data' => 'cache, cookies, storage'
 }
-config.force_ssl = true
+
+Rails.application.configure do
+  config.force_ssl = true
+  config.consider_all_requests_local       = false
+  config.action_controller.perform_caching = true
+
+  config.cache_classes                     = true
+  config.eager_load                        = true
+  config.log_level                         = :info
+end
