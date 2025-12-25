@@ -11,4 +11,15 @@ Rails.application.routes.draw do
   get '/api/users', to: 'api/users#index'
   get '/api/shipments', to: 'api/shipments#index'
   get '/api/drones', to: 'api/drones#index'
+
+
+  # PHASE 16 APIs (LIVE)
+  get '/api/health', to: 'api/health#index'
+  get '/api/ai/status', to: 'api/ai#status'
+  get '/api/tickets', to: 'api/tickets#index'
+  get '/api/users', to: 'api/users#index'
+  get '/api/shipments', to: 'api/shipments#index'
+  get '/api/drones', to: 'api/drones#index'
+
+
 end
