@@ -1,9 +1,0 @@
-🔍 THOMAS HELPDESK PRODUCTION VERIFICATION
-⏰ Thu Dec 25 12:39:43 PM MST 2025
-Status: 200 Size: 69B Time: 0.191352s
----
-{"status":"ok","version":"1.0.0","timestamp":"2025-12-25T19:39:43Z","environment":"production"}Status: 200
----
-{"agents":1,"ready":true,"test_heal":{"site_id":"site-42","status":"healed"},"test_drone":{"site_id":"site-42","priority":"normal","status":"dispatched"}}Status: 200 Time: 0.167614s
----
-Total: 229959μs (.22995900000000000000)s

@@ -1,59 +1,35 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title><%= @title %> - <%= @version %></title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body { font-family: -apple-system, sans-serif; margin: 40px; background: #f8f9fa; }
-    .dashboard { max-width: 1200px; margin: 0 auto; }
-    .card { background: white; padding: 24px; margin: 16px 0; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-    .status { color: #10b981; font-size: 24px; font-weight: 700; }
-    .api-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-    button { background: #3b82f6; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; }
-  </style>
-</head>
-<body>
-  <div class="dashboard">
-    <div class="card">
-      <h1 class="status"><%= @title %></h1>
-      <p><strong><%= @version %></strong> | Render.com | Puma Cluster</p>
-      <p>Uptime: <span id="uptime">99.9%</span> | Response: <span id="response">198ms</span></p>
-    </div>
+<h1>Thomas IT Helpdesk</h1>
+<p>Rails 8.1.1 | PHASE 16 | Render.com | Puma Cluster</p>
 
-    <div class="card">
-      <h2>🧪 LIVE API TEST</h2>
-      <div class="api-grid">
-        <div><button onclick="testApi('/api/health')">Health Check</button><pre id="health"></pre></div>
-        <div><button onclick="testApi('/api/tickets')">Tickets</button><pre id="tickets"></pre></div>
-        <div><button onclick="testApi('/api/ai/status')">AI Status</button><pre id="ai"></pre></div>
-        <div><button onclick="testApi('/api/drones')">Drones</button><pre id="drones"></pre></div>
-      </div>
-    </div>
+<button onclick="fetchHealth()">Health Check</button>
+<button onclick="fetchTickets()">Tickets</button>
+<button onclick="fetchDrones()">Drones</button>
+<button onclick="fetchAI()">AI Status</button>
 
-    <div class="card">
-      <h2>🚀 ENTERPRISE READY</h2>
-      <ul>
-        <li>✅ FDA/Pharma compliance APIs</li>
-        <li>✅ Real-time AI drone dispatch</li>
-        <li>✅ 200ms SLA | 99.9% uptime</li>
-        <li>✅ $99/mo Stripe subscriptions</li>
-        <li>✅ PHASE 16 COMPLETE</li>
-      </ul>
-    </div>
-  </div>
+<div id="results"></div>
 
-  <script>
-    async function testApi(endpoint) {
-      try {
-        const res = await fetch(endpoint);
-        const data = await res.json();
-        document.getElementById(endpoint.split('/')[2] || 'health').textContent = JSON.stringify(data, null, 2);
-      } catch(e) { console.error(e); }
-    }
-    window.onload = () => {
-      testApi('/api/health');
-      setTimeout(() => testApi('/api/tickets'), 500);
-    };
-  </script>
-</body>
-</html>
+<script>
+async function fetchHealth() {
+  const res = await fetch('/api/health');
+  const data = await res.json();
+  document.getElementById('results').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+}
+
+async function fetchTickets() {
+  const res = await fetch('/api/tickets');
+  const data = await res.json();
+  document.getElementById('results').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+}
+
+async function fetchDrones() {
+  const res = await fetch('/api/drones');
+  const data = await res.json();
+  document.getElementById('results').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+}
+
+async function fetchAI() {
+  const res = await fetch('/api/ai_status');
+  const data = await res.json();
+  document.getElementById('results').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+}
+</script>

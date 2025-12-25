@@ -1,25 +1,10 @@
 Rails.application.routes.draw do
-  # ROOT (fix 404)
-  root "home#index"
+  root to: "home#index"
   
-  # PHASE 16 WORKING APIs
-  get '/api/health', to: 'api/health#index'
-  get '/api/ai/status', to: 'api/ai#status'
-  
-  # SIMPLE JSON APIs (no resources syntax)
-  get '/api/tickets', to: 'api/tickets#index'
-  get '/api/users', to: 'api/users#index'
-  get '/api/shipments', to: 'api/shipments#index'
-  get '/api/drones', to: 'api/drones#index'
-
-
-  # PHASE 16 APIs (LIVE)
-  get '/api/health', to: 'api/health#index'
-  get '/api/ai/status', to: 'api/ai#status'
-  get '/api/tickets', to: 'api/tickets#index'
-  get '/api/users', to: 'api/users#index'
-  get '/api/shipments', to: 'api/shipments#index'
-  get '/api/drones', to: 'api/drones#index'
-
-
+  namespace :api do
+    get :health, controller: 'health'
+    resources :tickets, only: :index
+    resources :drones, only: :index
+    get :ai_status, to: 'ai#status'
+  end
 end
