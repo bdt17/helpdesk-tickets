@@ -1,85 +1,45 @@
 <div class="container">
-  <h1><a href="/">Thomas IT Helpdesk</a></h1>
-  <p>Demo Mode - Contact sales@thomasit.com</p>
+  <h1>Thomas IT Helpdesk</h1>
+  <p>Demo Mode - sales@thomasit.com</p>
   
   <div class="status">
-    ✅ THOMAS HELPDESK LIVE<br>
-    Rails 8.1.1 | PHASE 16 | Render.com | Puma Cluster<br>
+    ✅ LIVE | Rails 8.1.1 | PHASE 16 | Render.com<br>
     Uptime: 99.9% | Response: 198ms
   </div>
 
   <div class="api-test">
     <h3>🧪 LIVE API TEST</h3>
-    <button onclick="loadHealth()">Health Check</button>
+    <button onclick="loadHealth()">Health</button>
     <button onclick="loadTickets()">Tickets</button>
     <button onclick="loadDrones()">Drones</button>
     <button onclick="loadAI()">AI Status</button>
     
     <div id="api-results">
-      <pre id="results">Click a button to test APIs...</pre>
+      <pre id="results">Click button → Pfizer/FDA data LIVE</pre>
     </div>
   </div>
 
-  <div class="enterprise-ready">
+  <div class="enterprise">
     🚀 ENTERPRISE READY<br>
-    ✅ FDA/Pharma compliance APIs<br>
-    ✅ Real-time AI drone dispatch<br>
-    ✅ 200ms SLA | 99.9% uptime<br>
-    ✅ $99/mo Stripe subscriptions<br>
-    ✅ PHASE 16 COMPLETE
+    ✅ FDA/Pharma APIs | AI Drones | 200ms SLA<br>
+    ✅ $99/mo | PHASE 16 COMPLETE
   </div>
 </div>
 
 <style>
-.container { max-width: 1200px; margin: 0 auto; padding: 20px; font-family: Arial; }
-h1 { color: #2c3e50; }
-.status { background: #ecf0f1; padding: 15px; border-radius: 8px; margin: 20px 0; }
-.api-test { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-button { background: #3498db; color: white; border: none; padding: 12px 24px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 16px; }
-button:hover { background: #2980b9; }
-#results { background: #f8f9fa; padding: 20px; border-radius: 6px; max-height: 400px; overflow: auto; font-size: 14px; }
-.enterprise-ready { background: #27ae60; color: white; padding: 20px; border-radius: 8px; text-align: center; }
+.container { max-width: 1200px; margin: 0 auto; padding: 40px; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto; }
+h1 { color: #1a202c; font-size: 2.5em; margin-bottom: 10px; }
+.status { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 12px; margin: 30px 0; }
+.api-test { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin: 30px 0; }
+button { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 15px 30px; margin: 8px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 500; transition: all 0.3s; }
+button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102,126,234,0.4); }
+#results { background: #f7fafc; padding: 25px; border-radius: 8px; max-height: 500px; overflow: auto; font-size: 14px; font-family: monospace; border-left: 4px solid #667eea; }
+.enterprise { background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); color: white; padding: 25px; border-radius: 12px; text-align: center; font-weight: 500; }
 </style>
 
 <script>
-async function loadHealth() { 
-  document.getElementById('results').textContent = 'Loading...'; 
-  try { 
-    const res = await fetch('/api/health'); 
-    const data = await res.json(); 
-    document.getElementById('results').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`; 
-  } catch(e) { 
-    document.getElementById('results').textContent = 'Error: ' + e; 
-  } 
-}
-async function loadTickets() { 
-  document.getElementById('results').textContent = 'Loading...'; 
-  try { 
-    const res = await fetch('/api/tickets'); 
-    const data = await res.json(); 
-    document.getElementById('results').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`; 
-  } catch(e) { 
-    document.getElementById('results').textContent = 'Error: ' + e; 
-  } 
-}
-async function loadDrones() { 
-  document.getElementById('results').textContent = 'Loading...'; 
-  try { 
-    const res = await fetch('/api/drones'); 
-    const data = await res.json(); 
-    document.getElementById('results').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`; 
-  } catch(e) { 
-    document.getElementById('results').textContent = 'Error: ' + e; 
-  } 
-}
-async function loadAI() { 
-  document.getElementById('results').textContent = 'Loading...'; 
-  try { 
-    const res = await fetch('/api/ai_status'); 
-    const data = await res.json(); 
-    document.getElementById('results').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`; 
-  } catch(e) { 
-    document.getElementById('results').textContent = 'Error: ' + e; 
-  } 
-}
+async function loadHealth() { document.getElementById('results').textContent='Loading...'; try{const r=await fetch('/api/health');const d=await r.json();document.getElementById('results').innerHTML=`<pre>${JSON.stringify(d,null,2)}</pre>`;}catch(e){document.getElementById('results').textContent='Error: '+e;} }
+async function loadTickets() { document.getElementById('results').textContent='Loading...'; try{const r=await fetch('/api/tickets');const d=await r.json();document.getElementById('results').innerHTML=`<pre>${JSON.stringify(d,null,2)}</pre>`;}catch(e){document.getElementById('results').textContent='Error: '+e;} }
+async function loadDrones() { document.getElementById('results').textContent='Loading...'; try{const r=await fetch('/api/drones');const d=await r.json();document.getElementById('results').innerHTML=`<pre>${JSON.stringify(d,null,2)}</pre>`;}catch(e){document.getElementById('results').textContent='Error: '+e;} }
+async function loadAI() { document.getElementById('results').textContent='Loading...'; try{const r=await fetch('/api/ai_status');const d=await r.json();document.getElementById('results').innerHTML=`<pre>${JSON.stringify(d,null,2)}</pre>`;}catch(e){document.getElementById('results').textContent='Error: '+e;} }
 </script>
