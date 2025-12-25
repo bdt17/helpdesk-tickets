@@ -23,22 +23,10 @@
     <div class="card">
       <h2>🧪 LIVE API TEST</h2>
       <div class="api-grid">
-        <div>
-          <button onclick="testApi('/api/health')">Health Check</button>
-          <pre id="health"></pre>
-        </div>
-        <div>
-          <button onclick="testApi('/api/tickets')">Tickets</button>
-          <pre id="tickets"></pre>
-        </div>
-        <div>
-          <button onclick="testApi('/api/ai/status')">AI Status</button>
-          <pre id="ai"></pre>
-        </div>
-        <div>
-          <button onclick="testApi('/api/drones')">Drones</button>
-          <pre id="drones"></pre>
-        </div>
+        <div><button onclick="testApi('/api/health')">Health Check</button><pre id="health"></pre></div>
+        <div><button onclick="testApi('/api/tickets')">Tickets</button><pre id="tickets"></pre></div>
+        <div><button onclick="testApi('/api/ai/status')">AI Status</button><pre id="ai"></pre></div>
+        <div><button onclick="testApi('/api/drones')">Drones</button><pre id="drones"></pre></div>
       </div>
     </div>
 
@@ -60,12 +48,8 @@
         const res = await fetch(endpoint);
         const data = await res.json();
         document.getElementById(endpoint.split('/')[2] || 'health').textContent = JSON.stringify(data, null, 2);
-      } catch(e) {
-        console.error(e);
-      }
+      } catch(e) { console.error(e); }
     }
-    
-    // Auto-test on load
     window.onload = () => {
       testApi('/api/health');
       setTimeout(() => testApi('/api/tickets'), 500);
