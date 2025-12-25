@@ -1,20 +1,14 @@
 Rails.application.routes.draw do
+  # ROOT (fix 404)
   root "home#index"
   
-  # PHASE 16 - Working APIs
-  namespace :api do
-    get '/health', to: 'health#index'
-    get '/ai/status', to: 'ai#status'
-  end
+  # PHASE 16 WORKING APIs
+  get '/api/health', to: 'api/health#index'
+  get '/api/ai/status', to: 'api/ai#status'
   
-  # FULL API SUITE - CORRECT SYNTAX
-  namespace :api, path: '', defaults: {format: :json} do
-    resources :tickets, only: [:index, :create]
-    resources :users, only: [:index]
-    resources :shipments, only: [:index, :create]
-    get '/drones', to: 'drones#index'
-    get '/drones/status', to: 'drones#status'
-  end
-  
-  get '/status', to: 'status#index'
+  # SIMPLE JSON APIs (no resources syntax)
+  get '/api/tickets', to: 'api/tickets#index'
+  get '/api/users', to: 'api/users#index'
+  get '/api/shipments', to: 'api/shipments#index'
+  get '/api/drones', to: 'api/drones#index'
 end
