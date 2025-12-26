@@ -1,0 +1,74 @@
+<div style="max-width:1400px; margin:0 auto; padding:40px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI'; background:#f8f9fa;">
+  <h1 style="color:#0984C0; font-size:2.8em; text-align:center; border-bottom:4px solid #0984C0; padding-bottom:15px; margin-bottom:40px;">
+    🛠️ TECH DASHBOARD v2.0
+  </h1>
+  
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:25px;">
+    
+    <!-- TICKETS QUEUE -->
+    <div style="background:white; padding:30px; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.1); border-left:6px solid #0984C0;">
+      <h3 style="color:#0984C0; margin-bottom:20px; display:flex; align-items:center;">
+        🎫 <span style="margin-left:10px;">OPEN TICKETS (3)</span>
+      </h3>
+      <% @tickets.each do |ticket| %>
+        <div style="background:#f0f8ff; padding:20px; margin-bottom:15px; border-radius:10px; border-left:4px solid #60BDD1;">
+          <div style="font-weight:600; color:#565759; font-size:16px;"><%= ticket[:priority] %>: <%= ticket[:title] %></div>
+          <div style="color:#AAA7B0; font-size:14px; margin-top:5px;">📍 <%= ticket[:location] %></div>
+          <button style="background:#0984C0; color:white; border:none; padding:8px 16px; border-radius:6px; margin-top:10px; cursor:pointer;">ASSIGN</button>
+        </div>
+      <% end %>
+    </div>
+    
+    <!-- DEVICE SWAP -->
+    <div style="background:white; padding:30px; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.1); border-left:6px solid #0984C0;">
+      <h3 style="color:#0984C0; margin-bottom:20px;">🔄 DEVICE SWAP</h3>
+      <% @devices.each do |device| %>
+        <div style="background:#f8f9fa; padding:15px; margin-bottom:12px; border-radius:8px; border-left:3px solid <%= device[:status] == 'Available' ? '#60BDD1' : '#AAA7B0' %>;">
+          <strong><%= device[:name] %></strong> <small>(<%= device[:imei] %>)</small><br>
+          <span style="color:#565759; font-size:12px;"><%= device[:status] %></span>
+          <% if device[:status] == 'Available' %>
+            <form action="/tech/swap_device" method="post" style="margin-top:8px;">
+              <input type="hidden" name="device_id" value="<%= device[:id] %>">
+              <button type="submit" style="background:#0984C0; color:white; border:none; padding:6px 12px; border-radius:4px; font-size:12px;">SWAP →</button>
+            </form>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    
+    <!-- VR TECH ASSIST -->
+    <div style="background:white; padding:30px; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.1); border-left:6px solid #0984C0;">
+      <h3 style="color:#0984C0; margin-bottom:20px;">🕶️ VR TECH ASSIST</h3>
+      <% @vr_sessions.each do |session| %>
+        <div style="background:#e8f5e8; padding:15px; margin-bottom:12px; border-radius:8px; border-left:3px solid #4CAF50;">
+          <strong><%= session[:tech] %> @ <%= session[:site] %></strong><br>
+          <span style="color:#2E7D32; font-size:14px;">● <%= session[:status] %> | <%= session[:duration] %></span>
+        </div>
+      <% end %>
+      <button onclick="startVR()" style="background:linear-gradient(135deg,#0984C0,#60BDD1); color:white; border:none; padding:15px 25px; border-radius:10px; width:100%; font-size:16px; font-weight:500; margin-top:15px; cursor:pointer;">
+        🚀 START VR SESSION
+      </button>
+    </div>
+    
+    <!-- SOP LIBRARY -->
+    <div style="background:white; padding:30px; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.1); border-left:6px solid #0984C0;">
+      <h3 style="color:#0984C0; margin-bottom:20px;">📋 SOP LIBRARY</h3>
+      <% @sops.each do |sop| %>
+        <div style="background:#fff3e0; padding:15px; margin-bottom:12px; border-radius:8px;">
+          📄 <strong><%= sop[:title] %></strong>
+          <div style="margin-top:8px;">
+            <a href="#" style="color:#0984C0; font-size:13px;">VIEW PDF</a> | 
+            <a href="#" style="color:#565759; font-size:13px;">PRINT</a>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    
+  </div>
+  
+  <script>
+  function startVR() {
+    alert('🕶️ VR Tech Assist launching...\n✅ Connected to Pfizer site-42\n✅ FDA compliance active\n✅ Real-time overlay LIVE');
+  }
+  </script>
+</div>

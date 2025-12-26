@@ -10,3 +10,8 @@ Rails.application.routes.draw do
     get 'ai_status', to: 'ai#status'
   end
 end
+
+namespace :tech do
+  get 'dashboard', to: 'dashboard#index'
+  post 'swap_device', to: 'dashboard#swap_device'
+end
