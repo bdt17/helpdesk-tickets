@@ -1,4 +1,4 @@
 class Ticket < ApplicationRecord
   scope :open, -> { where(status: 'open') }
-  scope :for_tech, ->(user) { all }
+  scope :for_tech, ->(_user) { all }
 end

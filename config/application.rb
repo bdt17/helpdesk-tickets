@@ -1,13 +1,13 @@
-require_relative "boot"
+require_relative 'boot'
 
-require "rails/all"
+require 'rails/all'
 
 Bundler.require(*Rails.groups)
 
 module ThomasITHelpdesk
   class Application < Rails::Application
     config.load_defaults 8.1
-    
+
     config.active_record.migration_error = false
     config.autoload_lib(ignore: %w[assets tasks])
 
