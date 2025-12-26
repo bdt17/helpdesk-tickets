@@ -8,3 +8,6 @@ Rails.application.routes.draw do
     get :ai_status, to: 'ai#status'
   end
 end
+
+get 'login', to: 'sessions#new'
+post 'login', to: 'sessions#create'
