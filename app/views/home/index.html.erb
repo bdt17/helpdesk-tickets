@@ -1,64 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-/* THOMAS IT COLORS - NO PURPLE! */
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#FFFFFF; color:#565759; }
+  <title>Thomas IT Helpdesk</title>
+  <style>
+  h1 { color: #0984C0 !important; font-size: 2.5em !important; }
 
-.container { max-width:1200px; margin:0 auto; padding:40px; }
-
-h1 { color:#0984C0; font-size:2.5em; margin-bottom:10px; border-bottom:3px solid #0984C0; padding-bottom:10px; }
-
-.status { 
-  background: linear-gradient(135deg, #0984C0, #60BDD1); 
-  color:white; padding:20px; border-radius:12px; margin:30px 0; 
-  border-left:5px solid #AAA7B0;
-}
-
-.api-test { 
-  background:#FFFFFF; padding:30px; border-radius:12px; margin:30px 0; 
-  border:1px solid #C0BEC6; box-shadow:0 10px 30px rgba(9,132,192,0.1);
-}
-
-button { 
-  background:#0984C0 !important; 
-  color:white !important; 
-  border:2px solid #AAA7B0 !important; 
-  padding:15px 30px !important; 
-  margin:8px !important; 
-  border-radius:8px !important; 
-  cursor:pointer !important; 
-  font-size:16px !important; 
-  font-weight:500 !important; 
-  transition:all 0.3s !important;
-  text-decoration:none !important;
-}
-
-button:hover { 
-  background:#60BDD1 !important; 
-  transform:translateY(-2px) !important; 
-  box-shadow:0 8px 25px rgba(9,132,192,0.3) !important;
-}
-
-#results { 
-  background:#f8f9fa; padding:25px; border-radius:8px; max-height:500px; 
-  overflow:auto; font-family:monospace; font-size:14px; 
-  border-left:4px solid #0984C0; margin-top:20px;
-}
-
-.enterprise { 
-  background:#565759; color:white; padding:25px; border-radius:12px; 
-  text-align:center; font-weight:500; border:2px solid #AAA7B0;
-}
-
-.login-link { display:none !important; } /* HIDE LOGIN 404 */
-</style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#FFFFFF; color:#565759; line-height:1.6; }
+    .container { max-width:1200px; margin:0 auto; padding:40px; }
+    h1 { color:#0984C0 !important;  color:#0984C0; font-size:2.5em; margin-bottom:10px; border-bottom:3px solid #0984C0; padding-bottom:10px; }
+    .status { background: linear-gradient(135deg, #0984C0, #60BDD1); color:white; padding:20px; border-radius:12px; margin:30px 0; border-left:5px solid #AAA7B0; }
+    .api-test { background:#FFFFFF; padding:30px; border-radius:12px; margin:30px 0; border:1px solid #C0BEC6; box-shadow:0 10px 30px rgba(9,132,192,0.1); }
+    button { background:#0984C0 !important; color:white !important; border:2px solid #AAA7B0 !important; padding:15px 30px !important; margin:8px !important; border-radius:8px !important; cursor:pointer !important; font-size:16px !important; font-weight:500 !important; transition:all 0.3s !important; }
+    button:hover { background:#60BDD1 !important; transform:translateY(-2px) !important; box-shadow:0 8px 25px rgba(9,132,192,0.3) !important; }
+    #results { background:#f8f9fa; padding:25px; border-radius:8px; max-height:500px; overflow:auto; font-family:monospace; font-size:14px; border-left:4px solid #0984C0; margin-top:20px; white-space:pre-wrap; }
+    .enterprise { background:#565759; color:white; padding:25px; border-radius:12px; text-align:center; font-weight:500; border:2px solid #AAA7B0; margin-top:30px; }
+    .demo-notice { background:#60BDD1; color:white; padding:15px; border-radius:8px; text-align:center; margin:20px 0; }
+  </style>
 </head>
 <body>
 <div class="container">
   <h1>Thomas IT Helpdesk</h1>
-  <p>Demo Mode - <a href="mailto:sales@thomasit.com">sales@thomasit.com</a></p>
+  <p>Demo Mode - <a href="mailto:sales@thomasit.com" style="color:#0984C0;">sales@thomasit.com</a></p>
   
   <div class="status">
     ✅ LIVE | Rails 8.1.1 | PHASE 16 | Render.com<br>
@@ -66,15 +29,19 @@ button:hover {
   </div>
 
   <div class="api-test">
-    <h3>🧪 LIVE API TEST</h3>
-    <button onclick="loadHealth()">Health</button>
+    <h3 style="color:#0984C0; margin-bottom:20px;">🧪 LIVE API TEST</h3>
+    <button onclick="loadHealth()">Health Check</button>
     <button onclick="loadTickets()">Tickets</button>
     <button onclick="loadDrones()">Drones</button>
     <button onclick="loadAI()">AI Status</button>
     
     <div id="api-results">
-      <pre id="results">Click button → Pfizer/FDA data LIVE</pre>
+      <div id="results">Click any button for LIVE Pfizer/FDA data →</div>
     </div>
+  </div>
+
+  <div class="demo-notice">
+    🔐 Demo Mode Active - <a href="mailto:sales@thomasit.com" style="color:white; font-weight:bold;">Contact sales@thomasit.com</a> for Enterprise Access
   </div>
 
   <div class="enterprise">
@@ -85,45 +52,52 @@ button:hover {
 </div>
 
 <script>
-async function loadHealth() { 
-  document.getElementById('results').textContent='Loading...'; 
-  try{ 
-    const r=await fetch('/api/health'); 
-    const d=await r.json(); 
-    document.getElementById('results').innerHTML=`<pre>${JSON.stringify(d,null,2)}</pre>`; 
-  }catch(e){ 
-    document.getElementById('results').textContent='Error: '+e; 
-  } 
+async function loadHealth() {
+  const results = document.getElementById('results');
+  results.textContent = 'Loading Health API...';
+  try {
+    const response = await fetch('/api/health');
+    const data = await response.json();
+    results.textContent = `✅ Health: ${data.status || 'OK'}\nAgents: ${data.agents || 0}\nProcessing: ${data.processing || 'None'}\nTimestamp: ${new Date().toLocaleString()}`;
+  } catch(e) {
+    results.textContent = `❌ Health API Error: ${e.message}`;
+  }
 }
-async function loadTickets() { 
-  document.getElementById('results').textContent='Loading...'; 
-  try{ 
-    const r=await fetch('/api/tickets'); 
-    const d=await r.json(); 
-    document.getElementById('results').innerHTML=`<pre>${JSON.stringify(d,null,2)}</pre>`; 
-  }catch(e){ 
-    document.getElementById('results').textContent='Error: '+e; 
-  } 
+
+async function loadTickets() {
+  const results = document.getElementById('results');
+  results.textContent = 'Loading Tickets API...';
+  try {
+    const response = await fetch('/api/tickets');
+    const data = await response.json();
+    results.textContent = `✅ Tickets API OK\nTotal: ${data.length || 0} tickets\nPriority: ${data[0]?.priority || 'N/A'}\nStatus: LIVE`;
+  } catch(e) {
+    results.textContent = `❌ Tickets API Error: ${e.message}`;
+  }
 }
-async function loadDrones() { 
-  document.getElementById('results').textContent='Loading...'; 
-  try{ 
-    const r=await fetch('/api/drones'); 
-    const d=await r.json(); 
-    document.getElementById('results').innerHTML=`<pre>${JSON.stringify(d,null,2)}</pre>`; 
-  }catch(e){ 
-    document.getElementById('results').textContent='Error: '+e; 
-  } 
+
+async function loadDrones() {
+  const results = document.getElementById('results');
+  results.textContent = 'Loading Drones API...';
+  try {
+    const response = await fetch('/api/drones');
+    const data = await response.json();
+    results.textContent = `✅ Drones API OK\nActive: ${data.active || 0}\nStatus: LIVE`;
+  } catch(e) {
+    results.textContent = `❌ Drones API Error: ${e.message}`;
+  }
 }
-async function loadAI() { 
-  document.getElementById('results').textContent='Loading...'; 
-  try{ 
-    const r=await fetch('/api/ai_status'); 
-    const d=await r.json(); 
-    document.getElementById('results').innerHTML=`<pre>${JSON.stringify(d,null,2)}</pre>`; 
-  }catch(e){ 
-    document.getElementById('results').textContent='Error: '+e; 
-  } 
+
+async function loadAI() {
+  const results = document.getElementById('results');
+  results.textContent = 'Loading AI Status...';
+  try {
+    const response = await fetch('/api/ai_status');
+    const data = await response.json();
+    results.textContent = `✅ AI Status: ${data.status || 'Active'}\nProcessing: ${data.processing || 'Idle'}\nStatus: LIVE`;
+  } catch(e) {
+    results.textContent = `❌ AI API Error: ${e.message}`;
+  }
 }
 </script>
 </body>
