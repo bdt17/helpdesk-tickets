@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Thomas IT Helpdesk" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Thomas IT Helpdesk">
-    <%= csrf_meta_tags %>
+
+
     <%= csp_meta_tag %>
     <%= yield :head %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
@@ -13,8 +13,8 @@
   <body>
     <nav class="navbar">
       <div class="nav-container">
-        <%= link_to "Thomas IT Helpdesk", root_path, class: "nav-brand" %>
-        <div class="nav-links">
+
+
           <% if cookies.signed[:user_id].present? %>
             <span class="nav-user">Welcome, <%= User.find(cookies.signed[:user_id]).email rescue 'Agent' %></span>
             <%= button_to "Log Out", "/logout", method: :delete, class: "btn btn-outline" %>
