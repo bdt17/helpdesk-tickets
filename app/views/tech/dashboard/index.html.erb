@@ -1,74 +1,112 @@
-<div style="max-width:1400px; margin:0 auto; padding:40px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI'; background:#f8f9fa;">
-  <h1 style="color:#0984C0; font-size:2.8em; text-align:center; border-bottom:4px solid #0984C0; padding-bottom:15px; margin-bottom:40px;">
-    🛠️ TECH DASHBOARD v2.0
+<div style="max-width:1400px;margin:0 auto;padding:40px;background:#f8f9fa;">
+  <h1 style="color:#0984C0;font-size:2.8em;text-align:center;border-bottom:4px solid #0984C0;padding-bottom:20px;margin-bottom:40px;">
+    🛠️ TECH DASHBOARD v2.0 - DRONE OPS
   </h1>
   
-  <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:25px;">
+  <% if flash[:notice] %>
+    <div style="background:#d4edda;color:#155724;padding:20px;margin:20px 0;border-radius:12px;border-left:6px solid #28a745;box-shadow:0 4px 12px rgba(40,167,69,0.2);">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+  
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:25px;">
     
-    <!-- TICKETS QUEUE -->
-    <div style="background:white; padding:30px; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.1); border-left:6px solid #0984C0;">
-      <h3 style="color:#0984C0; margin-bottom:20px; display:flex; align-items:center;">
-        🎫 <span style="margin-left:10px;">OPEN TICKETS (3)</span>
-      </h3>
-      <% @tickets.each do |ticket| %>
-        <div style="background:#f0f8ff; padding:20px; margin-bottom:15px; border-radius:10px; border-left:4px solid #60BDD1;">
-          <div style="font-weight:600; color:#565759; font-size:16px;"><%= ticket[:priority] %>: <%= ticket[:title] %></div>
-          <div style="color:#AAA7B0; font-size:14px; margin-top:5px;">📍 <%= ticket[:location] %></div>
-          <button style="background:#0984C0; color:white; border:none; padding:8px 16px; border-radius:6px; margin-top:10px; cursor:pointer;">ASSIGN</button>
-        </div>
-      <% end %>
+    <!-- DRONE ASSIGNMENTS -->
+    <div style="background:white;padding:30px;border-radius:15px;border-left:6px solid #0984C0;box-shadow:0 10px 30px rgba(9,132,192,0.15);">
+      <h3 style="color:#0984C0;font-size:1.3em;margin-bottom:20px;">🚁 DRONE ASSIGNMENTS</h3>
+      <div style="background:#e3f2fd;padding:20px;border-radius:10px;border-left:4px solid #2196F3;">
+        <strong>HIGH: Pfizer site-42</strong><br>
+        <small style="color:#666;">DJI Matrice 300 - LIVE</small>
+      </div>
+      <div style="background:#e3f2fd;padding:20px;margin-top:15px;border-radius:10px;border-left:4px solid #f44336;">
+        <strong>URGENT: FDA CRITICAL</strong><br>
+        <small style="color:#666;">Autel EVO II - PRIORITY</small>
+      </div>
     </div>
     
-    <!-- DEVICE SWAP -->
-    <div style="background:white; padding:30px; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.1); border-left:6px solid #0984C0;">
-      <h3 style="color:#0984C0; margin-bottom:20px;">🔄 DEVICE SWAP</h3>
-      <% @devices.each do |device| %>
-        <div style="background:#f8f9fa; padding:15px; margin-bottom:12px; border-radius:8px; border-left:3px solid <%= device[:status] == 'Available' ? '#60BDD1' : '#AAA7B0' %>;">
-          <strong><%= device[:name] %></strong> <small>(<%= device[:imei] %>)</small><br>
-          <span style="color:#565759; font-size:12px;"><%= device[:status] %></span>
-          <% if device[:status] == 'Available' %>
-            <form action="/tech/swap_device" method="post" style="margin-top:8px;">
-              <input type="hidden" name="device_id" value="<%= device[:id] %>">
-              <button type="submit" style="background:#0984C0; color:white; border:none; padding:6px 12px; border-radius:4px; font-size:12px;">SWAP →</button>
-            </form>
-          <% end %>
-        </div>
-      <% end %>
+    <!-- DRONE SWAP (NO iPhones!) -->
+    <div style="background:white;padding:30px;border-radius:15px;border-left:6px solid #0984C0;box-shadow:0 10px 30px rgba(9,132,192,0.15);">
+      <h3 style="color:#0984C0;font-size:1.3em;margin-bottom:20px;">🚁 ACTIVE DRONES</h3>
+      <div style="background:#f0f8ff;padding:20px;margin-bottom:15px;border-radius:10px;border-left:4px solid #60BDD1;">
+        <strong>DJI Matrice 300 RTK</strong><br>
+        <small>ID: DJI-001 | Battery: 87%</small><br>
+        <form action="/tech/swap_device" method="post" style="margin-top:10px;">
+          <input type="hidden" name="device_id" value="1">
+          <button type="submit" style="background:#0984C0;color:white;border:none;padding:12px 24px;border-radius:8px;cursor:pointer;font-weight:500;width:100%;margin-top:8px;">DEPLOY →</button>
+        </form>
+      </div>
+      <div style="background:#f0f8ff;padding:20px;border-radius:10px;border-left:4px solid #60BDD1;">
+        <strong>Autel EVO II Pro</strong><br>
+        <small>ID: AUT-002 | Battery: 92%</small><br>
+        <form action="/tech/swap_device" method="post" style="margin-top:10px;">
+          <input type="hidden" name="device_id" value="2">
+          <button type="submit" style="background:#0984C0;color:white;border:none;padding:12px 24px;border-radius:8px;cursor:pointer;font-weight:500;width:100%;margin-top:8px;">DEPLOY →</button>
+        </form>
+      </div>
     </div>
     
-    <!-- VR TECH ASSIST -->
-    <div style="background:white; padding:30px; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.1); border-left:6px solid #0984C0;">
-      <h3 style="color:#0984C0; margin-bottom:20px;">🕶️ VR TECH ASSIST</h3>
-      <% @vr_sessions.each do |session| %>
-        <div style="background:#e8f5e8; padding:15px; margin-bottom:12px; border-radius:8px; border-left:3px solid #4CAF50;">
-          <strong><%= session[:tech] %> @ <%= session[:site] %></strong><br>
-          <span style="color:#2E7D32; font-size:14px;">● <%= session[:status] %> | <%= session[:duration] %></span>
-        </div>
-      <% end %>
-      <button onclick="startVR()" style="background:linear-gradient(135deg,#0984C0,#60BDD1); color:white; border:none; padding:15px 25px; border-radius:10px; width:100%; font-size:16px; font-weight:500; margin-top:15px; cursor:pointer;">
-        🚀 START VR SESSION
-      </button>
+    <!-- AI ASSIST -->
+    <div style="background:white;padding:30px;border-radius:15px;border-left:6px solid #0984C0;box-shadow:0 10px 30px rgba(9,132,192,0.15);">
+      <h3 style="color:#0984C0;font-size:1.3em;margin-bottom:20px;">🤖 AI ASSIST STATUS</h3>
+      <div style="background:#e8f5e8;padding:20px;border-radius:10px;border-left:4px solid #4CAF50;">
+        <strong>Claude 3.5 Agent</strong><br>
+        <small>✅ Pfizer site-42 analysis LIVE</small><br>
+        <span style="color:#2E7D32;font-weight:500;">Processing: 3.2s</span>
+      </div>
     </div>
     
-    <!-- SOP LIBRARY -->
-    <div style="background:white; padding:30px; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.1); border-left:6px solid #0984C0;">
-      <h3 style="color:#0984C0; margin-bottom:20px;">📋 SOP LIBRARY</h3>
-      <% @sops.each do |sop| %>
-        <div style="background:#fff3e0; padding:15px; margin-bottom:12px; border-radius:8px;">
-          📄 <strong><%= sop[:title] %></strong>
-          <div style="margin-top:8px;">
-            <a href="#" style="color:#0984C0; font-size:13px;">VIEW PDF</a> | 
-            <a href="#" style="color:#565759; font-size:13px;">PRINT</a>
-          </div>
-        </div>
-      <% end %>
+    <!-- SOP LIBRARY - FULL DRONE/AI -->
+    <div style="background:white;padding:30px;border-radius:15px;border-left:6px solid #0984C0;box-shadow:0 10px 30px rgba(9,132,192,0.15);">
+      <h3 style="color:#0984C0;font-size:1.3em;margin-bottom:20px;">📋 DRONE SOPs</h3>
+      <div style="background:#fff3e0;padding:18px;margin-bottom:12px;border-radius:10px;border-left:4px solid #ff9800;cursor:pointer;transition:all 0.3s;" onclick="showSOP('DJI Pre-Flight Checklist')">
+        🚁 <strong>DJI Pre-Flight Checklist</strong>
+      </div>
+      <div style="background:#fff3e0;padding:18px;margin-bottom:12px;border-radius:10px;border-left:4px solid #ff9800;cursor:pointer;transition:all 0.3s;" onclick="showSOP('Autel EVO Emergency')">
+        🚁 <strong>Autel EVO Emergency Protocol</strong>
+      </div>
+      <div style="background:#fff3e0;padding:18px;margin-bottom:12px;border-radius:10px;border-left:4px solid #ff9800;cursor:pointer;transition:all 0.3s;" onclick="showSOP('AI Flight Path Analysis')">
+        🤖 <strong>AI Flight Path Analysis</strong>
+      </div>
+      <div style="background:#fff3e0;padding:18px;border-radius:10px;border-left:4px solid #ff9800;cursor:pointer;transition:all 0.3s;" onclick="showSOP('FDA Drone Compliance')">
+        📋 <strong>FDA 21 CFR Part 11</strong>
+      </div>
     </div>
-    
   </div>
   
   <script>
-  function startVR() {
-    alert('🕶️ VR Tech Assist launching...\n✅ Connected to Pfizer site-42\n✅ FDA compliance active\n✅ Real-time overlay LIVE');
+  function showSOP(title) {
+    document.body.style.overflow = 'hidden';
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+      position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);
+      z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;
+    `;
+    modal.innerHTML = `
+      <div style="background:white;max-width:600px;max-height:80vh;overflow:auto;border-radius:15px;padding:30px;box-shadow:0 20px 60px rgba(0,0,0,0.3);border-left:6px solid #0984C0;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;">
+          <h2 style="color:#0984C0;margin:0;font-size:1.8em;">📋 ${title}</h2>
+          <button onclick="this.parentElement.parentElement.parentElement.remove();document.body.style.overflow='auto'" style="background:#ff5722;color:white;border:none;border-radius:50%;width:40px;height:40px;cursor:pointer;font-size:18px;font-weight:bold;">×</button>
+        </div>
+        <div style="line-height:1.6;color:#333;">
+          <p><strong>✅ STATUS:</strong> FDA 21 CFR Part 11 Compliant</p>
+          <p><strong>📅 LAST UPDATED:</strong> Dec 25, 2025</p>
+          <p><strong>⏱️ EST TIME:</strong> 5 minutes</p>
+          <hr style="margin:25px 0;border:none;border-top:2px solid #eee;">
+          <ol style="padding-left:25px;">
+            <li>Complete pre-flight visual inspection</li>
+            <li>Verify GPS lock (8+ satellites)</li>
+            <li>Confirm FDA audit logging active</li>
+            <li>Initiate AI flight path analysis</li>
+            <li>Record takeoff coordinates</li>
+          </ol>
+          <div style="margin-top:25px;padding:15px;background:#e3f2fd;border-radius:8px;border-left:4px solid #2196F3;">
+            <strong>⚠️ EMERGENCY:</strong> RTK signal loss → Auto-RTH active
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    modal.querySelector('button').focus();
   }
   </script>
 </div>

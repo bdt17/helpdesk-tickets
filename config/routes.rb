@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   root 'home#index'
-  get 'login', to: 'sessions#new'
-  post 'login', to: 'sessions#create'
+  
+  get 'tech/dashboard', to: 'tech/dashboard#index'
+  post 'tech/swap_device', to: 'tech/dashboard#swap_device'
   
   namespace :api do
     get 'health', to: 'health#index'
@@ -9,9 +10,4 @@ Rails.application.routes.draw do
     get 'drones', to: 'drones#index'
     get 'ai_status', to: 'ai#status'
   end
-end
-
-namespace :tech do
-  get 'dashboard', to: 'dashboard#index'
-  post 'swap_device', to: 'dashboard#swap_device'
 end
