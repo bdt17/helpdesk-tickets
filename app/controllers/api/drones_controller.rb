@@ -1,8 +1,10 @@
 class Api::DronesController < ApplicationController
+  skip_before_action :verify_authenticity_token
   def index
-    render json: [
-      {id:1,status:"active",site:"site-42",battery:87},
-      {id:2,status:"charging",site:"site-17"}
-    ]
+    render json: {
+      active: 2,
+      models: ["DJI Matrice 300", "Autel EVO II"],
+      status: "LIVE"
+    }
   end
 end
