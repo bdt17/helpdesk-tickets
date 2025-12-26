@@ -1,1 +1,2 @@
-module pages_helperHelper\nend
+module PagesHelper
+end

@@ -1,1 +1,2 @@
-module shipments_helperHelper\nend
+module ShipmentsHelper
+end

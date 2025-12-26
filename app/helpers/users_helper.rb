@@ -1,1 +1,2 @@
-module users_helperHelper\nend
+module UsersHelper
+end
