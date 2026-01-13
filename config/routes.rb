@@ -1,23 +1,17 @@
 Rails.application.routes.draw do
   devise_for :users
-  namespace :api do
-    get "ai/status"
+  
+  namespace :analytics do
+    get '/', to: 'dashboard#index', as: :dashboard
   end
-  get "reports/index"
-  root "home#index"
   
-  get "login", to: "sessions#new"
-  post "session", to: "sessions#create"
-  delete "session", to: "sessions#destroy"
-  get "logout", to: "sessions#destroy"
+  # ALL routes MUST be INSIDE this block:
+  get '/reports', to: 'reports#index'
   
-  get "dashboard", to: "home#dashboard"
+  namespace :api do 
+    get '/ai/status', to: 'api/ai#status'
+    post '/ai/categorize', to: 'api/ai#categorize'
+  end
   
-  # Tickets (uncomment after scaffold)
-  # resources :tickets
+  root to: 'analytics/dashboard#index'
 end
-get '/reports', to: 'reports#index'
-namespace :api do get '/ai/status', to: 'api/ai#status' end
-post '/api/ai/categorize', to: 'api/ai#categorize'
-namespace :api do get '/ai/status', to: 'api/ai#status' end
-namespace :api do get '/ai/status', to: 'api/ai#status' end
