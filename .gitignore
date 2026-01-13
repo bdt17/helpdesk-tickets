@@ -1,0 +1,4 @@
+tmp/cache/*
+tmp/pids/*
+tmp/sessions/*
+log/*.log
