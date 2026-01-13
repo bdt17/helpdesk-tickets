@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  status: MyString
+  priority: MyString
+  account_id: 1
+  resolved_at: 2026-01-12 18:17:38
+
+two:
+  title: MyString
+  status: MyString
+  priority: MyString
+  account_id: 1
+  resolved_at: 2026-01-12 18:17:38

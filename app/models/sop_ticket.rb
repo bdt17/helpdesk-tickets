@@ -1,0 +1,2 @@
+class SopTicket < ApplicationRecord
+end

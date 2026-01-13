@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_19_062932) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_13_011737) do
   create_table "drivers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.decimal "latitude", precision: 10, scale: 6
@@ -30,6 +30,16 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_19_062932) do
     t.integer "status"
     t.text "temperature_logs"
     t.string "tracking_number"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sop_tickets", force: :cascade do |t|
+    t.integer "account_id"
+    t.datetime "created_at", null: false
+    t.string "priority"
+    t.datetime "resolved_at"
+    t.string "status"
+    t.string "title"
     t.datetime "updated_at", null: false
   end
 
