@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_13_033214) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_14_042844) do
   create_table "drivers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.decimal "latitude", precision: 10, scale: 6
@@ -48,6 +48,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_13_033214) do
     t.datetime "created_at", null: false
     t.string "email"
     t.string "password_digest"
+    t.datetime "sent_at"
+    t.string "token"
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
