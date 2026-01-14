@@ -77,3 +77,12 @@ gem "sidekiq", "~> 8.1"
 gem "twilio-ruby", "~> 7.9"
 
 gem "redis", "~> 5.4"
+gem 'pg', '~> 1.5', group: :production
+
+group :production do
+  gem 'pg', '~> 1.5'
+end
+
+group :development, :test do
+  gem 'sqlite3', '~> 1.4'
+end
