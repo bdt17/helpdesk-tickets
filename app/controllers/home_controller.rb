@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  skip_before_action :require_authentication  # BYPASS auth for now
+  # skip_before_action :require_authentication  # Disabled - callback undefined
   
   def index
     @message = "Thomas IT Helpdesk - Phase 4 Complete!"

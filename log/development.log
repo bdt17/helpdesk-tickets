@@ -2864,3 +2864,55 @@ Processing by Analytics::DashboardController#index as HTML
 Completed 200 OK in 94ms (Views: 77.5ms | ActiveRecord: 3.3ms (5 queries, 0 cached) | GC: 23.7ms)
 
 
+Started GET "/" for ::1 at 2026-01-13 21:09:37 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (165.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+DEPRECATION WARNING: resource received a hash argument only. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+DEPRECATION WARNING: resource received a hash argument path. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+DEPRECATION WARNING: resource received a hash argument path_names. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+DEPRECATION WARNING: resource received a hash argument controller. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+Processing by Analytics::DashboardController#index as HTML
+  [1m[36mSopTicket Count (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "sop_tickets" WHERE "sop_tickets"."status" = 'open' /*action='index',application='ThomasITHelpdesk',controller='dashboard'*/[0m
+  ↳ app/controllers/analytics/dashboard_controller.rb:7:in `index'
+  [1m[36mSopTicket Count (0.4ms)[0m  [1m[34mSELECT COUNT(*) AS "count_all", "sop_tickets"."status" AS "sop_tickets_status" FROM "sop_tickets" GROUP BY "sop_tickets"."status" /*action='index',application='ThomasITHelpdesk',controller='dashboard'*/[0m
+  ↳ app/controllers/analytics/dashboard_controller.rb:8:in `index'
+  [1m[36mSopTicket Pluck (0.2ms)[0m  [1m[34mSELECT "sop_tickets"."title", "sop_tickets"."description" FROM "sop_tickets" /*action='index',application='ThomasITHelpdesk',controller='dashboard'*/[0m
+  ↳ app/controllers/analytics/dashboard_controller.rb:12:in `index'
+  Rendering layout layouts/application.html.erb
+  Rendering analytics/dashboard/index.html.erb within layouts/application
+  [1m[36mSopTicket Count (0.5ms)[0m  [1m[34mSELECT COUNT(count_column) FROM (SELECT "sop_tickets"."id", "sop_tickets"."title", "sop_tickets"."status", "sop_tickets"."created_at" AS count_column FROM "sop_tickets" LIMIT 10) AS subquery_for_count /*action='index',application='ThomasITHelpdesk',controller='dashboard'*/[0m
+  ↳ app/views/analytics/dashboard/index.html.erb:37
+  [1m[36mSopTicket Load (0.4ms)[0m  [1m[34mSELECT "sop_tickets"."id", "sop_tickets"."title", "sop_tickets"."status", "sop_tickets"."created_at" FROM "sop_tickets" LIMIT 10 /*action='index',application='ThomasITHelpdesk',controller='dashboard'*/[0m
+  ↳ app/views/analytics/dashboard/index.html.erb:60
+  Rendered analytics/dashboard/index.html.erb within layouts/application (Duration: 35.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 139.6ms | GC: 21.3ms)
+Completed 200 OK in 355ms (Views: 172.1ms | ActiveRecord: 4.3ms (5 queries, 0 cached) | GC: 21.5ms)
+
+
+Started GET "/favicon.ico" for ::1 at 2026-01-13 21:09:40 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/" for ::1 at 2026-01-13 21:14:25 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+DEPRECATION WARNING: resource received a hash argument only. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+DEPRECATION WARNING: resource received a hash argument path. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+DEPRECATION WARNING: resource received a hash argument path_names. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+DEPRECATION WARNING: resource received a hash argument controller. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero/ThomasInformationTechnology_proper/config/routes.rb:2)
+Processing by Analytics::DashboardController#index as HTML
+  [1m[36mSopTicket Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "sop_tickets" WHERE "sop_tickets"."status" = 'open' /*action='index',application='ThomasITHelpdesk',controller='dashboard'*/[0m
+  ↳ app/controllers/analytics/dashboard_controller.rb:7:in `index'
+  [1m[36mSopTicket Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) AS "count_all", "sop_tickets"."status" AS "sop_tickets_status" FROM "sop_tickets" GROUP BY "sop_tickets"."status" /*action='index',application='ThomasITHelpdesk',controller='dashboard'*/[0m
+  ↳ app/controllers/analytics/dashboard_controller.rb:8:in `index'
+  [1m[36mSopTicket Pluck (0.3ms)[0m  [1m[34mSELECT "sop_tickets"."title", "sop_tickets"."description" FROM "sop_tickets" /*action='index',application='ThomasITHelpdesk',controller='dashboard'*/[0m
+  ↳ app/controllers/analytics/dashboard_controller.rb:12:in `index'
+  Rendering layout layouts/application.html.erb
+  Rendering analytics/dashboard/index.html.erb within layouts/application
+  [1m[36mSopTicket Count (0.5ms)[0m  [1m[34mSELECT COUNT(count_column) FROM (SELECT "sop_tickets"."id", "sop_tickets"."title", "sop_tickets"."status", "sop_tickets"."created_at" AS count_column FROM "sop_tickets" LIMIT 10) AS subquery_for_count /*action='index',application='ThomasITHelpdesk',controller='dashboard'*/[0m
+  ↳ app/views/analytics/dashboard/index.html.erb:37
+  [1m[36mSopTicket Load (1.2ms)[0m  [1m[34mSELECT "sop_tickets"."id", "sop_tickets"."title", "sop_tickets"."status", "sop_tickets"."created_at" FROM "sop_tickets" LIMIT 10 /*action='index',application='ThomasITHelpdesk',controller='dashboard'*/[0m
+  ↳ app/views/analytics/dashboard/index.html.erb:60
+  Rendered analytics/dashboard/index.html.erb within layouts/application (Duration: 25.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 81.0ms | GC: 25.4ms)
+Completed 200 OK in 116ms (Views: 80.8ms | ActiveRecord: 7.7ms (5 queries, 0 cached) | GC: 26.1ms)
+
+
