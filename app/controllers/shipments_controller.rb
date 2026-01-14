@@ -3,13 +3,8 @@ class ShipmentsController < ApplicationController
 
   # GET /shipments or /shipments.json
   def index
-  @shipments = Shipment.where(status: [0,1]).order(created_at: :desc) # Active shipments
-end
-
-def temperature_alerts
-  @alerts = Shipment.where("temperature_logs LIKE ?", "%CRITICAL%")
-end
-
+    @shipments = Shipment.all
+  end
 
   # GET /shipments/1 or /shipments/1.json
   def show
@@ -30,7 +25,7 @@ end
 
     respond_to do |format|
       if @shipment.save
-        format.html { redirect_to @shipment, notice: "Shipment was successfully created." }
+        format.html { redirect_to shipment_url(@shipment), notice: "Shipment was successfully created." }
         format.json { render :show, status: :created, location: @shipment }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,13 +34,37 @@ end
     end
   end
 
- class ShipmentsController < ApplicationController
-  def index
-    @shipments = Shipment.all
+  # PATCH/PUT /shipments/1 or /shipments/1.json
+  def update
+    respond_to do |format|
+      if @shipment.update(shipment_params)
+        format.html { redirect_to shipment_url(@shipment), notice: "Shipment was successfully updated." }
+        format.json { render :show, status: :ok, location: @shipment }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @shipment.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
-  def show
-    @shipment = Shipment.find(params[:id])
+  # DELETE /shipments/1 or /shipments/1.json
+  def destroy
+    @shipment.destroy
+
+    respond_to do |format|
+      format.html { redirect_to shipments_url, notice: "Shipment was successfully destroyed." }
+      format.json { head :no_content }
+    end
   end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_shipment
+      @shipment = Shipment.find(params[:id])
+    end
+
+    # Only allow a list of trusted parameters through.
+    def shipment_params
+      params.require(:shipment).permit(:tracking_number, :status, :carrier)
+    end
 end
-
