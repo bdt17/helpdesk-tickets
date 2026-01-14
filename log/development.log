@@ -2925,3 +2925,10 @@ Migrating to AddPasswordResetToUsers (20260114042844)
   [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260114042844') RETURNING "version" /*application='ThomasITHelpdesk'*/[0m
   [1m[36mTRANSACTION (148.9ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='ThomasITHelpdesk'*/[0m
   [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mSopTicket Create (1.5ms)[0m  [1m[32mINSERT INTO "sop_tickets" ("title", "status", "priority", "account_id", "resolved_at", "created_at", "updated_at", "description") VALUES ('Pharma Transport Build Sprint 1', 'open', 'high', NULL, NULL, '2026-01-14 22:07:13.565108', '2026-01-14 22:07:13.565108', 'Complete Kubernetes deployment pipeline. FDA compliance validation required.') RETURNING "id" /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (258.7ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mSopTicket Create (1.0ms)[0m  [1m[32mINSERT INTO "sop_tickets" ("title", "status", "priority", "account_id", "resolved_at", "created_at", "updated_at", "description") VALUES ('Thomas IT Helpdesk Rails 8.1 Optimization', 'open', 'medium', NULL, NULL, '2026-01-14 22:07:25.868924', '2026-01-14 22:07:25.868924', 'Performance tuning + seed data for production deployment. Add analytics dashboard.') RETURNING "id" /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mSopTicket Load (0.3ms)[0m  [1m[34mSELECT "sop_tickets".* FROM "sop_tickets" WHERE "sop_tickets"."status" = 'open' /* loading for pp */ LIMIT 11 /*application='ThomasITHelpdesk'*/[0m
