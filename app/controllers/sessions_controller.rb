@@ -1,27 +1,26 @@
 class SessionsController < ApplicationController
-  # Devise-compatible - NO Rails 8 Authentication needed
-  skip_before_action :authenticate_user!, only: [:new, :create]
-  
-  rate_limit to: 10, within: 3.minutes, only: :create, 
-    with: -> { redirect_to new_session_path, alert: "Too many login attempts" }
-
   def new
+    # GET /login - Show login form
   end
 
   def create
-    email = params[:email] || params[:email_address]
-    if user = User.find_by(email: email)&.authenticate(params[:password])
-      # Your PERFECT cookie auth - production ready
-      cookies.signed.permanent[:user_id] = { value: user.id, httponly: true }
-      redirect_to root_path, notice: "Welcome to Thomas IT Helpdesk, #{user.email}!"
+    # POST /login - Process login
+    email = params[:email]
+    password = params[:password]
+    user = User.find_by(email: email)
+    
+    if user && user.authenticate(password)
+      session[:user_id] = user.id
+      redirect_to root_path, notice: "Logged in successfully"
     else
-      redirect_to new_session_path, alert: "Invalid email or password"
+      flash.now[:alert] = "Invalid email/password"
+      render :new
     end
   end
 
   def destroy
-    # Simple cookie delete - NO terminate_session needed
-    cookies.delete(:user_id)
-    redirect_to new_session_path, status: :see_other
+    # DELETE /logout - Logout
+    session[:user_id] = nil
+    redirect_to root_path, notice: "Logged out"
   end
 end
