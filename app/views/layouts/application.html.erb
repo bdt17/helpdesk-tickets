@@ -20,46 +20,46 @@
     <style>
       /* Hide navbar on analytics dashboard */
       body.analytics-page .navbar { display: none !important; }
-      
+
       /* CENTER LOGIN FORM INPUTS */
       .login-form { max-width: 400px; margin: 0 auto; text-align: center; }
-      .form-control { 
-        text-align: center !important; 
-        margin-bottom: 1rem; 
+      .form-control {
+        text-align: center !important;
+        margin-bottom: 1rem;
       }
       .form-group { margin-bottom: 1.5rem; }
-      .login-container { 
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        min-height: 50vh; 
-        padding: 2rem; 
+      .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 50vh;
+        padding: 2rem;
       }
-      
+
       /* Navbar + Cards + Buttons */
       .navbar { background: #212529 !important; color: white; }
-      .btn-primary, .btn-success, .btn-outline-light { 
-        background: #0d6efd; 
-        color: white; 
-        border: none; 
-        padding: 10px 20px; 
-        border-radius: 5px; 
+      .btn-primary, .btn-success, .btn-outline-light {
+        background: #0d6efd;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
       }
       .btn-outline-light:hover { background: #0d6efd !important; }
-      .card { 
-        border: 1px solid #dee2e6; 
-        border-radius: 10px; 
-        padding: 20px; 
-        margin: 10px 0; 
+      .card {
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 10px 0;
       }
       .badge-high { background: #dc3545; color: white; }
       .badge-medium { background: #ffc107; color: black; }
-      
+
       /* Responsive */
-      @media (max-width: 768px) { 
+      @media (max-width: 768px) {
         .form-control { text-align: left !important; }
       }
-      
+
       .main-content { min-height: 70vh; padding: 2rem; }
     </style>
   </head>
@@ -68,11 +68,11 @@
       <div class="container">
         <%= link_to "Thomas IT Helpdesk", root_path, class: "navbar-brand fw-bold" %>
         <div class="navbar-nav ms-auto">
-          <% if cookies.signed[:user_id].present? %>
-            <span class="navbar-text me-3">Welcome, <%= User.find(cookies.signed[:user_id]).email rescue 'Agent' %></span>
-            <%= button_to "Log Out", "/logout", method: :delete, class: "btn btn-outline-light btn-sm" %>
+          <% if session[:user_id].present? %>
+            <span class="navbar-text me-3">Welcome, <%= User.find(session[:user_id]).email rescue 'Agent' %>!</span>
+            <%= button_to "Log Out", logout_path, method: :delete, class: "btn btn-outline-light btn-sm" %>
           <% else %>
-            <%= link_to "Log In", new_user_session_path, class: "btn btn-outline-light btn-sm" %>
+            <%= link_to "Log In", login_path, class: "btn btn-outline-light btn-sm" %>
           <% end %>
         </div>
       </div>
