@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_14_042844) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_15_001537) do
   create_table "drivers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.decimal "latitude", precision: 10, scale: 6
@@ -47,11 +47,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_14_042844) do
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email"
+    t.string "encrypted_password"
     t.string "password_digest"
+    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at"
+    t.string "reset_password_token"
     t.datetime "sent_at"
     t.string "token"
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["encrypted_password"], name: "index_users_on_encrypted_password"
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token"
   end
 
   add_foreign_key "drivers", "users"
