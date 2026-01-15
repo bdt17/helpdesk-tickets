@@ -1,23 +1,25 @@
 <div class="login-container">
-  <div class="login-form card p-4">
-    <h2 class="text-center pharma-blue mb-4">Thomas IT Helpdesk Login</h2>
+  <div class="login-form card p-4 shadow-lg">
+    <div class="text-center mb-4">
+      <i class="fas fa-headset fa-3x pharma-blue mb-3"></i>
+      <h2 class="pharma-blue mb-1">Thomas IT Helpdesk</h2>
+      <p class="text-muted mb-0">Agent Login</p>
+    </div>
     
-    <%= form_with model: @user, url: login_path, local: true do |f| %>
-      <div class="form-group">
-        <%= f.label :email, "Email", class: "form-label" %>
-        <%= f.email_field :email, class: "form-control", placeholder: "Enter your email", required: true %>
+    <%= form_with model: @user || User.new, url: login_path, local: true, class: "text-center" do |f| %>
+      <div class="form-group mb-4">
+        <%= f.label :email, "Email", class: "form-label fw-bold text-center d-block" %>
+        <%= f.email_field :email, class: "form-control form-control-lg text-center mt-2", 
+                          placeholder: "agent@thomasit.com", required: true, autocomplete: "email" %>
       </div>
       
-      <div class="form-group">
-        <%= f.label :password, "Password", class: "form-label" %>
-        <%= f.password_field :password, class: "form-control", placeholder: "Enter your password", required: true, autocomplete: "current-password" %>
+      <div class="form-group mb-4">
+        <%= f.label :password, "Password", class: "form-label fw-bold text-center d-block" %>
+        <%= f.password_field :password, class: "form-control form-control-lg text-center mt-2", 
+                             placeholder: "••••••••", required: true, autocomplete: "current-password" %>
       </div>
       
-      <%= f.submit "Log In", class: "btn btn-primary w-100 mt-3" %>
-    <% end %>
-    
-    <% if @error %>
-      <div class="alert alert-danger mt-3"><%= @error %></div>
+      <%= f.submit "Log In", class: "btn btn-primary btn-lg w-100 py-3 fw-bold" %>
     <% end %>
   </div>
 </div>
