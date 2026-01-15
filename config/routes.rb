@@ -15,3 +15,8 @@ Rails.application.routes.draw do
   
   root to: 'analytics/dashboard#index'
 end
+# devise_for :users  # DISABLED
+get 'login', to: 'sessions#new', as: 'login'
+post 'login', to: 'sessions#create'
+delete 'logout', to: 'sessions#destroy', as: 'logout'
+root 'analytics/dashboard#index'

@@ -1,26 +1,19 @@
 class SessionsController < ApplicationController
-  def new
-    # GET /login - Show login form
-  end
+  def new; end
 
   def create
-    # POST /login - Process login
-    email = params[:email]
-    password = params[:password]
-    user = User.find_by(email: email)
-    
-    if user && user.authenticate(password)
+    user = User.find_by(email: params[:email]&.downcase)
+    if user && BCrypt::Password.new(user.password_digest) == params[:password]
       session[:user_id] = user.id
-      redirect_to root_path, notice: "Logged in successfully"
+      redirect_to root_path, notice: "Welcome to Thomas IT Helpdesk!"
     else
-      flash.now[:alert] = "Invalid email/password"
+      flash.now[:alert] = "Invalid email or password"
       render :new
     end
   end
 
   def destroy
-    # DELETE /logout - Logout
     session[:user_id] = nil
-    redirect_to root_path, notice: "Logged out"
+    redirect_to login_path, notice: "Logged out!"
   end
 end
