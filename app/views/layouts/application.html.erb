@@ -78,6 +78,8 @@
   }
   .badge-high { background: var(--pharma-blue); }
   .badge-medium { background: var(--pharma-silver); color: #000; }
+.navbar-brand { color: var(--pharma-blue) !important; font-weight: 800 !important; }
+.navbar-dark .navbar-text { color: rgba(255,255,255,.75) !important; }
 
 .stats-card {
   background: linear-gradient(135deg, var(--pharma-blue), var(--pharma-hover)) !important;
@@ -133,25 +135,19 @@
       .badge-high { background: #dc3545; color: white; }
       .badge-medium { background: #ffc107; color: black; }
 
-      /* Responsive */
-      @media (max-width: 768px) {
-        .form-control { text-align: left !important; }
-      }
-
-      .main-content { min-height: 70vh; padding: 2rem; }
-    </style>
-  </head>
-  <body class="<%= controller_name %>-page">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-2">
   <div class="container-fluid">
-    <%= link_to "Thomas IT Helpdesk", root_path, class: "navbar-brand fw-bold" %>
+    <a class="navbar-brand fw-bold fs-3 me-auto" href="<%= root_path %>">
+      Thomas IT Helpdesk
+    </a>
     <div class="navbar-nav ms-auto">
       <% if session[:user_id].present? %>
-        <span class="navbar-text me-3 text-light">Welcome, <%= User.find(session[:user_id]).email rescue 'Agent' %>!</span>
-        <%= button_to "Log Out", logout_path, method: :delete, class: "btn btn-primary btn-sm" %>
+        <span class="navbar-text me-3 text-light small">
+          Welcome, <%= User.find(session[:user_id]).email rescue 'Agent' %>!
+        </span>
+        <%= button_to "Log Out", logout_path, method: :delete, class: "btn btn-primary btn-sm px-4" %>
       <% else %>
-        <%= link_to "Log In", login_path, class: "btn btn-primary" %>
+        <%= link_to "Log In", login_path, class: "btn btn-primary px-4 py-2" %>
       <% end %>
     </div>
   </div>
