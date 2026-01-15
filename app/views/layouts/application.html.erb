@@ -17,6 +17,74 @@
     <%= javascript_importmap_tags %>
 
     <!-- PRODUCTION CSS - ALL STYLES HERE -->
+
+<style>
+  /* Hide navbar on analytics dashboard */
+  body.analytics-page .navbar { display: none !important; }
+
+  /* PHARMA TRANSPORT COLORS */
+  :root {
+    --pharma-blue: #0984C0;
+    --pharma-silver: #AAA7B0;
+    --pharma-grey: #565759;
+    --pharma-white: #FFFFFF;
+    --pharma-light: #C0BEC6;
+    --pharma-hover: #60BDD1;
+  }
+
+  /* BLACK DASHBOARD BG */
+  body.analytics-page { 
+    background: #000 !important; 
+    color: white; 
+  }
+
+  /* CENTER LOGIN FORM */
+  .login-form { max-width: 400px; margin: 0 auto; text-align: center; }
+  .form-control { text-align: center !important; margin-bottom: 1rem; }
+  .login-container { display: flex; justify-content: center; align-items: center; min-height: 50vh; padding: 2rem; }
+
+  /* PHARMA NAVBAR */
+  .navbar { 
+    background: #000 !important; 
+    border-bottom: 3px solid var(--pharma-blue) !important; 
+  }
+  .navbar-brand { 
+    color: var(--pharma-blue) !important; 
+    font-weight: 700 !important;
+    font-size: 1.5rem !important;
+  }
+
+  /* PHARMA BUTTONS - SINGLE LOGIN */
+  .btn-primary, .btn-success, .btn-outline-light {
+    background: var(--pharma-blue) !important;
+    color: white !important;
+    border: 2px solid var(--pharma-blue) !important;
+    padding: 12px 24px !important;
+    border-radius: 8px !important;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  .btn-outline-light:hover, .btn-primary:hover {
+    background: var(--pharma-hover) !important;
+    border-color: var(--pharma-hover) !important;
+    transform: translateY(-2px);
+  }
+
+  /* CARDS + STATS */
+  .card { 
+    background: rgba(255,255,255,0.95); 
+    border: 1px solid var(--pharma-silver); 
+    border-radius: 12px; 
+  }
+  .badge-high { background: var(--pharma-blue); }
+  .badge-medium { background: var(--pharma-silver); color: #000; }
+
+  /* Responsive */
+  @media (max-width: 768px) { .form-control { text-align: left !important; } }
+  .main-content { min-height: 70vh; padding: 2rem; }
+</style>
+
+
     <style>
       /* Hide navbar on analytics dashboard */
       body.analytics-page .navbar { display: none !important; }
