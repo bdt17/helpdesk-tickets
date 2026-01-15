@@ -1,30 +1,29 @@
 Rails.application.routes.draw do
-#  devise_for :users
-
+  # Thomas IT Custom Authentication (DISABLE DEVISE)
   get 'login', to: 'sessions#new', as: 'login'
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy', as: 'logout'
-  
+
+  # Dashboard (root)
   root 'analytics/dashboard#index'
-  # All other routes...
-end 
- 
+
+  # Analytics namespace
   namespace :analytics do
     get '/', to: 'dashboard#index', as: :dashboard
   end
-  
-  # ALL routes MUST be INSIDE this block:
+
+  # Reports
   get '/reports', to: 'reports#index'
-  
-  namespace :api do 
+
+  # API namespace
+  namespace :api do
     get '/ai/status', to: 'api/ai#status'
     post '/ai/categorize', to: 'api/ai#categorize'
   end
-  
-  root to: 'analytics/dashboard#index'
+
+  # Tickets (assuming you have tickets)
+  resources :tickets
+
+  # DISABLE DEVISE - NO LONGER NEEDED
+  # devise_for :users
 end
-# devise_for :users  # DISABLED
-get 'login', to: 'sessions#new', as: 'login'
-post 'login', to: 'sessions#create'
-delete 'logout', to: 'sessions#destroy', as: 'logout'
-root 'analytics/dashboard#index'
