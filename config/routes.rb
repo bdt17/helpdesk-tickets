@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
-  devise_for :users
+#  devise_for :users
+
+  get 'login', to: 'sessions#new', as: 'login'
+  post 'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy', as: 'logout'
   
+  root 'analytics/dashboard#index'
+  # All other routes...
+end 
+ 
   namespace :analytics do
     get '/', to: 'dashboard#index', as: :dashboard
   end
