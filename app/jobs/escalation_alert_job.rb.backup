@@ -1,0 +1,95 @@
+class EscalationAlertJob < ApplicationJob
+  queue_as :critical_alerts
+
+  def perform(*ticket_ids)
+    # Batch mode OR single ticket
+    tickets = ticket_ids.any? ? 
+      Ticket.where(id: ticket_ids) : 
+      Ticket.where("created_at < ?", 24.hours.ago)
+            .where("priority >= ?", 1)  # medium+ tickets
+
+    tickets.find_each do |ticket|
+      next unless needs_escalation?(ticket)
+      
+      escalate_ticket(ticket)
+      notify_admins(ticket)
+      log_escalation(ticket)
+    end
+  end
+
+  private
+
+  def needs_escalation?(ticket)
+    ticket.status == 0 && # new/open
+    (Time.current - ticket.created_at) > 24.hours &&
+    ticket.priority.to_i >= 1 # medium or higher
+  end
+
+  def escalate_ticket(ticket)
+    ticket.update!(
+      status: 1, # in_progress
+      escalated_at: Time.current
+    )
+  end
+
+  def notify_admins(ticket)
+    # 1. ActionCable (real-time dashboard)
+    ActionCable.server.broadcast("ticket_updates", {
+      action: "escalate",
+      ticket: ticket.as_json(only: [:id, :subject, :status, :priority]),
+      message: "⚠️ ##{ticket.id} escalated after 24h"
+    })
+
+    # 2. Twilio SMS (if configured)
+    if ENV['TWILIO_SID']
+      require 'twilio-ruby'
+      client = Twilio::REST::Client.new(
+        ENV['TWILIO_SID'], 
+        ENV['TWILIO_AUTH_TOKEN']
+      )
+      client.messages.create(
+        from: ENV['TWILIO_PHONE'],
+        to: ENV['ADMIN_PHONE'] || '+15551234567',
+        body: "🚨 TICKET ##{ticket.id}: #{ticket.subject[0..100]}\n#{ticket.id}"
+      )
+    end
+
+    # 3. Slack webhook (if configured)
+    if ENV['SLACK_WEBHOOK']
+      require 'slack-notifier'
+      slack = Slack::Notifier.new(ENV['SLACK_WEBHOOK'])
+      slack.ping(
+        text: "🚨 *TICKET ESCALATED* ##{ticket.id}",
+        attachments: [{
+          color: 'danger',
+          title: ticket.subject,
+          fields: [{
+            title: 'Status', 
+            value: ticket.status, 
+            short: true
+          }, {
+            title: 'Priority', 
+            value: ticket.priority, 
+            short: true
+          }, {
+            title: 'Age', 
+            value: "#{((Time.current - ticket.created_at)/3600).round}h", 
+            short: true
+          }],
+          actions: [{
+            type: 'button',
+            text: 'View Ticket',
+            url: "#{ENV['APP_URL'] || 'http://localhost:3000'}#/tickets/#{ticket.id}"
+          }]
+        }]
+      )
+    end
+  end
+
+  def log_escalation(ticket)
+    Rails.logger.warn(
+      "ESCALATION ##{ticket.id}: #{ticket.subject} " +
+      "(priority=#{ticket.priority}, age=#{((Time.current - ticket.created_at)/3600).round}h)"
+    )
+  end
+end

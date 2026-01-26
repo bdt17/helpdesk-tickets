@@ -2951,3 +2951,91 @@ Migrating to CreateTickets (20260115071610)
   [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
   [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
   [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+[ActiveJob] [EscalationAlertJob] [982d7176-4504-409d-81ac-33c69c7ddd90] Performing EscalationAlertJob (Job ID: 982d7176-4504-409d-81ac-33c69c7ddd90) from Async(critical_alerts)
+[ActiveJob] [EscalationAlertJob] [982d7176-4504-409d-81ac-33c69c7ddd90] ↳ (thomas-it-helpdesk):1:in `<main>'
+[ActiveJob] [EscalationAlertJob] [982d7176-4504-409d-81ac-33c69c7ddd90] Error performing EscalationAlertJob (Job ID: 982d7176-4504-409d-81ac-33c69c7ddd90) from Async(critical_alerts) in 22.96ms: ActiveRecord::StatementInvalid (Could not find table 'tickets'):
+app/jobs/escalation_alert_job.rb:11:in `perform'
+(thomas-it-helpdesk):1:in `<main>'
+[ActiveJob] [EscalationAlertJob] [982d7176-4504-409d-81ac-33c69c7ddd90] ↳ (thomas-it-helpdesk):1:in `<main>'
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mSopTicket Count (6.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "sop_tickets" /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mSopTicket Load (0.6ms)[0m  [1m[34mSELECT "sop_tickets".* FROM "sop_tickets" ORDER BY "sop_tickets"."id" ASC LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+[ActiveJob] [EscalationAlertJob] [892a0c8f-0306-4831-b43a-709a04e4206c] Performing EscalationAlertJob (Job ID: 892a0c8f-0306-4831-b43a-709a04e4206c) from Async(critical_alerts) with arguments: 1
+[ActiveJob] [EscalationAlertJob] [892a0c8f-0306-4831-b43a-709a04e4206c] ↳ (thomas-it-helpdesk):3:in `<main>'
+[ActiveJob] [EscalationAlertJob] [892a0c8f-0306-4831-b43a-709a04e4206c] Error performing EscalationAlertJob (Job ID: 892a0c8f-0306-4831-b43a-709a04e4206c) from Async(critical_alerts) in 3.25ms: ActiveRecord::StatementInvalid (Could not find table 'tickets'):
+app/jobs/escalation_alert_job.rb:7:in `perform'
+(thomas-it-helpdesk):3:in `<main>'
+[ActiveJob] [EscalationAlertJob] [892a0c8f-0306-4831-b43a-709a04e4206c] ↳ (thomas-it-helpdesk):3:in `<main>'
+[ActiveJob] [EscalationAlertJob] [93aa4204-840c-4cfe-bbf6-1ea029a66f1f] Performing EscalationAlertJob (Job ID: 93aa4204-840c-4cfe-bbf6-1ea029a66f1f) from Async(critical_alerts) with arguments: 1
+[ActiveJob] [EscalationAlertJob] [93aa4204-840c-4cfe-bbf6-1ea029a66f1f] ↳ (thomas-it-helpdesk):1:in `<main>'
+[ActiveJob] [EscalationAlertJob] [93aa4204-840c-4cfe-bbf6-1ea029a66f1f]   [1m[36mSopTicket Load (0.3ms)[0m  [1m[34mSELECT "sop_tickets".* FROM "sop_tickets" WHERE "sop_tickets"."id" = 1 LIMIT 1 /*application='ThomasITHelpdesk',job='EscalationAlertJob'*/[0m
+[ActiveJob] [EscalationAlertJob] [93aa4204-840c-4cfe-bbf6-1ea029a66f1f] 🚨 ESCALATION: SopTicket #1 Pfizer shipment delay - site-42
+[ActiveJob] [EscalationAlertJob] [93aa4204-840c-4cfe-bbf6-1ea029a66f1f]   [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='ThomasITHelpdesk',job='EscalationAlertJob'*/[0m
+[ActiveJob] [EscalationAlertJob] [93aa4204-840c-4cfe-bbf6-1ea029a66f1f]   [1m[36mSopTicket Update (1.3ms)[0m  [1m[33mUPDATE "sop_tickets" SET "status" = 'in_progress', "updated_at" = '2026-01-26 00:23:54.629637' WHERE "sop_tickets"."id" = 1 /*application='ThomasITHelpdesk',job='EscalationAlertJob'*/[0m
+[ActiveJob] [EscalationAlertJob] [93aa4204-840c-4cfe-bbf6-1ea029a66f1f]   [1m[36mTRANSACTION (1.9ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='ThomasITHelpdesk',job='EscalationAlertJob'*/[0m
+[ActiveJob] [EscalationAlertJob] [93aa4204-840c-4cfe-bbf6-1ea029a66f1f] [ActionCable] Broadcasting to ticket_updates: {:action=>"escalated", :ticket_id=>1, :message=>"⚠️ #1 escalated"}
+[ActiveJob] [EscalationAlertJob] [93aa4204-840c-4cfe-bbf6-1ea029a66f1f] Performed EscalationAlertJob (Job ID: 93aa4204-840c-4cfe-bbf6-1ea029a66f1f) from Async(critical_alerts) in 56.22ms
+[ActiveJob] [EscalationAlertJob] [93aa4204-840c-4cfe-bbf6-1ea029a66f1f] ↳ (thomas-it-helpdesk):1:in `<main>'
+Started GET "/" for ::1 at 2026-01-25 17:24:48 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+DEPRECATION WARNING: resource received a hash argument only. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero-hd/helpdesk-tickets/config/routes.rb:2)
+DEPRECATION WARNING: resource received a hash argument path. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero-hd/helpdesk-tickets/config/routes.rb:2)
+DEPRECATION WARNING: resource received a hash argument path_names. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero-hd/helpdesk-tickets/config/routes.rb:2)
+DEPRECATION WARNING: resource received a hash argument controller. Please use a keyword instead. Support to hash argument will be removed in Rails 8.2. (called from block in <main> at /home/zero-hd/helpdesk-tickets/config/routes.rb:2)
+Processing by Analytics::DashboardController#index as HTML
+  [1m[36mSopTicket Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "sop_tickets" WHERE "sop_tickets"."status" = 'open' /*action='index',application='ThomasITHelpdesk',controller='dashboard'*/[0m
+  ↳ app/controllers/analytics/dashboard_controller.rb:7:in `index'
+  [1m[36mSopTicket Count (0.5ms)[0m  [1m[34mSELECT COUNT(*) AS "count_all", "sop_tickets"."status" AS "sop_tickets_status" FROM "sop_tickets" GROUP BY "sop_tickets"."status" /*action='index',application='ThomasITHelpdesk',controller='dashboard'*/[0m
+  ↳ app/controllers/analytics/dashboard_controller.rb:8:in `index'
+  [1m[36mSopTicket Pluck (0.4ms)[0m  [1m[34mSELECT "sop_tickets"."title", "sop_tickets"."description" FROM "sop_tickets" /*action='index',application='ThomasITHelpdesk',controller='dashboard'*/[0m
+  ↳ app/controllers/analytics/dashboard_controller.rb:12:in `index'
+  Rendering layout layouts/application.html.erb
+  Rendering analytics/dashboard/index.html.erb within layouts/application
+  [1m[36mSopTicket Count (0.7ms)[0m  [1m[34mSELECT COUNT(count_column) FROM (SELECT "sop_tickets"."id", "sop_tickets"."title", "sop_tickets"."status", "sop_tickets"."created_at" AS count_column FROM "sop_tickets" LIMIT 10) AS subquery_for_count /*action='index',application='ThomasITHelpdesk',controller='dashboard'*/[0m
+  ↳ app/views/analytics/dashboard/index.html.erb:41
+  [1m[36mSopTicket Load (0.7ms)[0m  [1m[34mSELECT "sop_tickets"."id", "sop_tickets"."title", "sop_tickets"."status", "sop_tickets"."created_at" FROM "sop_tickets" LIMIT 10 /*action='index',application='ThomasITHelpdesk',controller='dashboard'*/[0m
+  ↳ app/views/analytics/dashboard/index.html.erb:64
+  Rendered analytics/dashboard/index.html.erb within layouts/application (Duration: 25.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 33.3ms | GC: 0.0ms)
+Completed 200 OK in 61ms (Views: 34.5ms | ActiveRecord: 5.3ms (5 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-01-25 17:24:52 -0700
+Processing by Analytics::DashboardController#index as HTML
+  [1m[36mSopTicket Count (1.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "sop_tickets" WHERE "sop_tickets"."status" = 'open' /*action='index',application='ThomasITHelpdesk',controller='dashboard'*/[0m
+  ↳ app/controllers/analytics/dashboard_controller.rb:7:in `index'
+  [1m[36mSopTicket Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) AS "count_all", "sop_tickets"."status" AS "sop_tickets_status" FROM "sop_tickets" GROUP BY "sop_tickets"."status" /*action='index',application='ThomasITHelpdesk',controller='dashboard'*/[0m
+  ↳ app/controllers/analytics/dashboard_controller.rb:8:in `index'
+  [1m[36mSopTicket Pluck (0.2ms)[0m  [1m[34mSELECT "sop_tickets"."title", "sop_tickets"."description" FROM "sop_tickets" /*action='index',application='ThomasITHelpdesk',controller='dashboard'*/[0m
+  ↳ app/controllers/analytics/dashboard_controller.rb:12:in `index'
+  Rendering layout layouts/application.html.erb
+  Rendering analytics/dashboard/index.html.erb within layouts/application
+  [1m[36mSopTicket Count (0.7ms)[0m  [1m[34mSELECT COUNT(count_column) FROM (SELECT "sop_tickets"."id", "sop_tickets"."title", "sop_tickets"."status", "sop_tickets"."created_at" AS count_column FROM "sop_tickets" LIMIT 10) AS subquery_for_count /*action='index',application='ThomasITHelpdesk',controller='dashboard'*/[0m
+  ↳ app/views/analytics/dashboard/index.html.erb:41
+  [1m[36mSopTicket Load (0.5ms)[0m  [1m[34mSELECT "sop_tickets"."id", "sop_tickets"."title", "sop_tickets"."status", "sop_tickets"."created_at" FROM "sop_tickets" LIMIT 10 /*action='index',application='ThomasITHelpdesk',controller='dashboard'*/[0m
+  ↳ app/views/analytics/dashboard/index.html.erb:64
+  Rendered analytics/dashboard/index.html.erb within layouts/application (Duration: 9.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 12.0ms | GC: 0.0ms)
+Completed 200 OK in 27ms (Views: 12.7ms | ActiveRecord: 2.8ms (5 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/favicon.ico" for 127.0.0.1 at 2026-01-25 17:24:52 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+  [1m[36mSopTicket Count (1.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "sop_tickets" /*application='ThomasITHelpdesk'*/[0m
+  ↳ test_escalation.rb:5:in `<main>'
+  [1m[36mSopTicket Load (0.1ms)[0m  [1m[34mSELECT "sop_tickets".* FROM "sop_tickets" WHERE "sop_tickets"."id" = 1 LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  ↳ app/jobs/escalation_alert_job.rb:5:in `perform'
+🚨 ESCALATION: SopTicket #1 Pfizer shipment delay - site-42
+[ActionCable] Broadcasting to ticket_updates: {:action=>"escalated", :ticket_id=>1, :message=>"⚠️ #1 escalated"}
+  [1m[36mSopTicket Load (0.2ms)[0m  [1m[34mSELECT "sop_tickets".* FROM "sop_tickets" WHERE "sop_tickets"."id" = 1 LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  ↳ test_escalation.rb:11:in `<main>'

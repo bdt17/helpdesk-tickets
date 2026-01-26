@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   # Thomas IT Custom Authentication (DISABLE DEVISE)
   get 'login', to: 'sessions#new', as: 'login'
   post 'login', to: 'sessions#create'

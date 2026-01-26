@@ -86,3 +86,6 @@ group :development, :test do
   gem 'sqlite3'
 end
 
+
+gem "rspec", "~> 3.13", group: :test
+  gem "rspec-rails", "~> 6.1.0"
