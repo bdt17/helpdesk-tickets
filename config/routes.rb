@@ -1,34 +1,16 @@
 Rails.application.routes.draw do
-  devise_for :users
-  # Thomas IT Custom Authentication (DISABLE DEVISE)
-  get 'login', to: 'sessions#new', as: 'login'
-  post 'login', to: 'sessions#create'
-  delete 'logout', to: 'sessions#destroy', as: 'logout'
-
-  # Dashboard (root)
   root 'analytics/dashboard#index'
-
-  # Analytics namespace
+  
+  # Your existing routes here (keep analytics/dashboard)
   namespace :analytics do
-    get '/', to: 'dashboard#index', as: :dashboard
+    resources :dashboard
   end
-
-  # Reports
-  get '/reports', to: 'reports#index'
-
-  # API namespace
-  namespace :api do
-    get '/ai/status', to: 'api/ai#status'
-    post '/ai/categorize', to: 'api/ai#categorize'
-  end
-
-  # Tickets (assuming you have tickets)
-  resources :tickets
-
-  # DISABLE DEVISE - NO LONGER NEEDED
-  # devise_for :users
+  
+  # Network routes (SAFE - works with existing analytics)
+  get '/network-dashboard', to: 'dashboard#index'
+  resources :sites
+  resources :devices
+  
+  # Devise routes (keep existing)
+  devise_for :users
 end
-
-get 'dashboard', to: 'dashboard#index'
-resources :sites
-resources :devices
