@@ -87,3 +87,45 @@ Rails.application.configure do
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 end
+# Production seed data for Thomas IT Pharma Helpdesk
+if ENV['SEED_DATA'] == 'true'
+  Rails.application.config.to_prepare do
+    # Create pharma transport priority tickets
+    SopTicket.transaction do
+      SopTicket.create!([
+        {
+          title: "Pharma Transport - missing implementations", 
+          status: "Open", 
+          priority: "High",
+          created_at: 13.days.ago
+        },
+        {
+          title: "Thomas IT drones IT functions", 
+          status: "Open", 
+          priority: "High",
+          created_at: 11.days.ago
+        }, 
+        {
+          title: "3-D printing optimization", 
+          status: "In Progress",
+          created_at: 13.days.ago
+        },
+        {
+          title: "Pfizer shipment delay - site-42", 
+          status: "Open",
+          created_at: 13.days.ago
+        },
+        {
+          title: "FDA compliance alert", 
+          status: "In Progress",
+          created_at: 13.days.ago
+        },
+        {
+          title: "Multi-region K8s deployment", 
+          status: "Open",
+          created_at: 11.days.ago
+        }
+      ])
+    end
+  end
+end
