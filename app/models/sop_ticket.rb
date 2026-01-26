@@ -1,4 +1,3 @@
 class SopTicket < ApplicationRecord
-  enum status: { "0" => 0, "1" => 1, "2" => 2 }  # Match your DB exactly
-  enum priority: { "0" => 0, "1" => 1, "2" => 2, "3" => 3 }
+  # Rails 8.1.2 LIVE - enums added LATER
 end
