@@ -10,7 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_15_001537) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_26_223505) do
+  create_table "devices", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.date "eol_date"
+    t.string "ip_address"
+    t.string "mac_address"
+    t.string "model"
+    t.string "name"
+    t.string "serial"
+    t.integer "site_id", null: false
+    t.string "snmp_community"
+    t.integer "status"
+    t.datetime "updated_at", null: false
+    t.string "vendor"
+    t.index ["site_id"], name: "index_devices_on_site_id"
+  end
+
   create_table "drivers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.decimal "latitude", precision: 10, scale: 6
@@ -33,6 +49,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_15_001537) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "sites", force: :cascade do |t|
+    t.string "address"
+    t.datetime "created_at", null: false
+    t.float "latitude"
+    t.float "longitude"
+    t.string "manager"
+    t.string "name"
+    t.datetime "updated_at", null: false
+  end
+
   create_table "sop_tickets", force: :cascade do |t|
     t.integer "account_id"
     t.datetime "created_at", null: false
@@ -42,6 +68,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_15_001537) do
     t.string "status"
     t.string "title"
     t.datetime "updated_at", null: false
+  end
+
+  create_table "swap_tickets", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "device_id", null: false
+    t.text "notes"
+    t.string "priority"
+    t.date "scheduled_date"
+    t.integer "site_id", null: false
+    t.string "status"
+    t.datetime "updated_at", null: false
+    t.string "vendor_po"
+    t.index ["device_id"], name: "index_swap_tickets_on_device_id"
+    t.index ["site_id"], name: "index_swap_tickets_on_site_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -60,5 +100,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_15_001537) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token"
   end
 
+  add_foreign_key "devices", "sites"
   add_foreign_key "drivers", "users"
+  add_foreign_key "swap_tickets", "devices"
+  add_foreign_key "swap_tickets", "sites"
 end

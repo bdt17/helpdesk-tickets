@@ -28,3 +28,7 @@ Rails.application.routes.draw do
   # DISABLE DEVISE - NO LONGER NEEDED
   # devise_for :users
 end
+
+get 'dashboard', to: 'dashboard#index'
+resources :sites
+resources :devices

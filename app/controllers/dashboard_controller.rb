@@ -1,22 +1,11 @@
 class DashboardController < ApplicationController
-  before_action :require_login
-
   def index
-    @drivers = current_user.drivers
-  end
-
-  # JSON endpoint for fetching driver locations (for map refresh)
-  def drivers_json
-    drivers = current_user.drivers.map do |driver|
-      {
-        id: driver.id,
-        name: driver.name,
-        latitude: driver.latitude,
-        longitude: driver.longitude,
-        status: driver.status,
-        updated_at: driver.updated_at
-      }
-    end
-    render json: drivers
+    @total_tickets = SopTicket.count
+    @network_tickets = SopTicket.where("title LIKE ? OR description LIKE ?", '%Cisco%', '%HP%').count
+    @open_tickets = SopTicket.open.count
+    @critical_tickets = SopTicket.critical.count
+    @recent_network = SopTicket.where("title LIKE ?", '%Cisco% OR title LIKE ?', '%HP%').order(created_at: :desc).limit(5)
+    @devices = Device.count
+    @sites = Site.count
   end
 end
