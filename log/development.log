@@ -3109,3 +3109,7 @@ FOREIGN KEY ("site_id")
   [1m[36mDevice Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "devices" /*application='ThomasITHelpdesk'*/[0m
   [1m[36mSite Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "sites" /*application='ThomasITHelpdesk'*/[0m
   [1m[36mSopTicket Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "sop_tickets" /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mSopTicket Create (0.4ms)[0m  [1m[32mINSERT INTO "sop_tickets" ("title", "status", "priority", "account_id", "resolved_at", "created_at", "updated_at", "description") VALUES ('Test Open', '0', '2', NULL, NULL, '2026-01-26 22:50:45.190290', '2026-01-26 22:50:45.190290', NULL) RETURNING "id" /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mSopTicket Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "sop_tickets" /*application='ThomasITHelpdesk'*/[0m
