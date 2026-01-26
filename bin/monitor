@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "$(date): Thomas IT Production Check"
+curl -s -o /dev/null -w "Pharma: %{http_code} | Network: %{http_code}\n" \
+  https://thomasinformationtechnology.com/ \
+  https://thomasinformationtechnology.com/network-dashboard
