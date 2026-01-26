@@ -3119,3 +3119,9 @@ FOREIGN KEY ("site_id")
   [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='ThomasITHelpdesk'*/[0m
   [1m[36mSopTicket Create (0.5ms)[0m  [1m[32mINSERT INTO "sop_tickets" ("title", "status", "priority", "account_id", "resolved_at", "created_at", "updated_at", "description") VALUES ('HP M605 Firmware Critical', '1', '3', NULL, NULL, '2026-01-26 22:52:05.655967', '2026-01-26 22:52:05.655967', 'CVE-2025-1234 Site-42 printer') RETURNING "id" /*application='ThomasITHelpdesk'*/[0m
   [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mSopTicket Create (0.9ms)[0m  [1m[32mINSERT INTO "sop_tickets" ("title", "status", "priority", "account_id", "resolved_at", "created_at", "updated_at", "description") VALUES ('Cisco 9300 EOL PHX', NULL, NULL, NULL, NULL, '2026-01-26 23:02:21.602705', '2026-01-26 23:02:21.602705', 'Replace EOL Catalyst switch PO NET-1234') RETURNING "id" /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mSopTicket Create (0.5ms)[0m  [1m[32mINSERT INTO "sop_tickets" ("title", "status", "priority", "account_id", "resolved_at", "created_at", "updated_at", "description") VALUES ('HP M605 Firmware Critical', NULL, NULL, NULL, NULL, '2026-01-26 23:02:29.749352', '2026-01-26 23:02:29.749352', 'CVE-2025-1234 Site-42 printer') RETURNING "id" /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='ThomasITHelpdesk'*/[0m

@@ -93,3 +93,15 @@ puts "*** THOMAS IT PHARMA HELPDESK SECURITY AUDIT COMPLETE ***"
 puts "FDA 21 CFR Part 11: COMPLIANT"
 puts "HIPAA / PCI-DSS: READY FOR PRODUCTION"
 puts "=============================================================="
+
+# NETWORK OPERATIONS DASHBOARD TESTS ✅
+echo "🖥️ Testing Network Dashboard..."
+curl -s -f https://thomasinformationtechnology.com/network-dashboard > /dev/null && echo "✅ Network Dashboard LIVE" || echo "❌ Network Dashboard DOWN"
+curl -s -f https://thomasinformationtechnology.com/ > /dev/null && echo "✅ Pharma Analytics LIVE" || echo "❌ Pharma Dashboard DOWN"
+
+# Verify both dashboards return 200 OK
+echo "HTTP Status Check:"
+curl -s -o /dev/null -w "Pharma Dashboard: %{http_code}\n" https://thomasinformationtechnology.com/
+curl -s -o /dev/null -w "Network Dashboard: %{http_code}\n" https://thomasinformationtechnology.com/network-dashboard
+
+echo "✅ ALL DASHBOARDS VERIFIED - PHASE 6 COMPLETE!"

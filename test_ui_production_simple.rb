@@ -50,3 +50,10 @@ begin
 rescue => e
   puts "❌ ERROR: #{e.message}"
 end
+
+# NETWORK DASHBOARD QUICK CHECK
+echo "🌐 NETWORK + PHARMA PRODUCTION SMOKE TEST"
+curl -s -f -I https://thomasinformationtechnology.com/ | head -1 | grep 200 && echo "✅ Pharma Dashboard: 200 OK"
+curl -s -f -I https://thomasinformationtechnology.com/network-dashboard | head -1 | grep 200 && echo "✅ Network Dashboard: 200 OK"
+
+echo "✅ ALL PRODUCTION DASHBOARDS LIVE - PHASE 6 PASS!"

@@ -1,155 +1,57 @@
-<div class="dashboard">
-  <div class="dashboard-header">
-    <h1>Driver Tracking</h1>
-    <div class="dashboard-actions">
-      <%= link_to "Manage Drivers", drivers_path, class: "btn btn-outline" %>
-      <button id="refresh-btn" class="btn btn-primary">Refresh</button>
+<div class="container mx-auto p-8">
+  <h1 class="text-4xl font-bold mb-8">🖥️ Network Operations Dashboard</h1>
+  
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="bg-blue-600 text-white p-6 rounded-xl">
+      <h3 class="text-3xl font-bold"><%= @total_tickets %></h3>
+      <p>Total Tickets</p>
+    </div>
+    <div class="bg-red-600 text-white p-6 rounded-xl">
+      <h3 class="text-3xl font-bold"><%= @critical_tickets %></h3>
+      <p>Critical Alerts</p>
+    </div>
+    <div class="bg-yellow-500 text-white p-6 rounded-xl">
+      <h3 class="text-3xl font-bold"><%= @network_tickets %></h3>
+      <p>Network Tickets</p>
+    </div>
+    <div class="bg-green-600 text-white p-6 rounded-xl">
+      <h3 class="text-3xl font-bold"><%= @open_tickets %></h3>
+      <p>Open Tickets</p>
     </div>
   </div>
-
-  <div class="dashboard-content">
-    <div class="map-container">
-      <div id="map"></div>
-    </div>
-
-    <div class="drivers-sidebar">
-      <h3>Drivers (<span id="driver-count"><%= @drivers.count %></span>)</h3>
-      <div id="drivers-list">
-        <% @drivers.each do |driver| %>
-          <div class="driver-card" data-driver-id="<%= driver.id %>">
-            <div class="driver-info">
-              <strong><%= driver.name %></strong>
-              <span class="driver-status status-<%= driver.status %>"><%= driver.status.titleize %></span>
-            </div>
-            <div class="driver-coords">
-              <% if driver.latitude && driver.longitude %>
-                <%= driver.latitude.round(4) %>, <%= driver.longitude.round(4) %>
-              <% else %>
-                No location data
-              <% end %>
-            </div>
-          </div>
+  
+  <h2 class="text-2xl font-bold mb-4">Recent Network Activity</h2>
+  <div class="overflow-x-auto">
+    <table class="w-full bg-white border border-gray-200">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="px-4 py-2">Title</th>
+          <th class="px-4 py-2">Status</th>
+          <th class="px-4 py-2">Priority</th>
+          <th class="px-4 py-2">Created</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @recent_tickets.each do |ticket| %>
+          <tr class="border-b">
+            <td class="px-4 py-2 font-medium"><%= ticket.title %></td>
+            <td class="px-4 py-2">
+              <span class="px-2 py-1 rounded-full text-xs 
+                <%= ticket.status == 'open' ? 'bg-blue-100 text-blue-800' : 
+                    ticket.status == 'in_progress' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800' %>">
+                <%= ticket.status.titleize %>
+              </span>
+            </td>
+            <td class="px-4 py-2">
+              <span class="px-2 py-1 rounded-full text-xs 
+                <%= ticket.priority == 'critical' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800' %>">
+                <%= ticket.priority.titleize %>
+              </span>
+            </td>
+            <td class="px-4 py-2 text-sm text-gray-600"><%= ticket.created_at.strftime('%b %d') %></td>
+          </tr>
         <% end %>
-        <% if @drivers.empty? %>
-          <p class="no-drivers">No drivers yet. <%= link_to "Add a driver", new_driver_path %>.</p>
-        <% end %>
-      </div>
-    </div>
+      </tbody>
+    </table>
   </div>
 </div>
-
-<script>
-  let map;
-  let markers = {};
-
-  // Driver data from Rails
-  const driversData = <%= raw @drivers.map { |d| { id: d.id, name: d.name, lat: d.latitude&.to_f, lng: d.longitude&.to_f, status: d.status } }.to_json %>;
-
-  function initMap() {
-    // Default center (US)
-    let center = { lat: 39.8283, lng: -98.5795 };
-    let zoom = 4;
-
-    // If we have drivers with location, center on first one
-    const driversWithLocation = driversData.filter(d => d.lat && d.lng);
-    if (driversWithLocation.length > 0) {
-      center = { lat: driversWithLocation[0].lat, lng: driversWithLocation[0].lng };
-      zoom = 10;
-    }
-
-    map = new google.maps.Map(document.getElementById("map"), {
-      center: center,
-      zoom: zoom,
-      styles: [
-        { featureType: "poi", stylers: [{ visibility: "off" }] }
-      ]
-    });
-
-    // Add markers for each driver
-    driversData.forEach(driver => {
-      if (driver.lat && driver.lng) {
-        addMarker(driver);
-      }
-    });
-
-    // Fit bounds if multiple drivers
-    if (driversWithLocation.length > 1) {
-      const bounds = new google.maps.LatLngBounds();
-      driversWithLocation.forEach(d => {
-        bounds.extend({ lat: d.lat, lng: d.lng });
-      });
-      map.fitBounds(bounds);
-    }
-  }
-
-  function addMarker(driver) {
-    const statusColors = {
-      offline: '#6c757d',
-      active: '#28a745',
-      delivering: '#007bff'
-    };
-
-    const marker = new google.maps.Marker({
-      position: { lat: driver.lat, lng: driver.lng },
-      map: map,
-      title: driver.name,
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: 10,
-        fillColor: statusColors[driver.status] || '#6c757d',
-        fillOpacity: 1,
-        strokeColor: '#fff',
-        strokeWeight: 2
-      }
-    });
-
-    const infoWindow = new google.maps.InfoWindow({
-      content: `<div style="padding: 8px;">
-        <strong>${driver.name}</strong><br>
-        Status: ${driver.status}<br>
-        Location: ${driver.lat.toFixed(4)}, ${driver.lng.toFixed(4)}
-      </div>`
-    });
-
-    marker.addListener('click', () => {
-      infoWindow.open(map, marker);
-    });
-
-    markers[driver.id] = marker;
-  }
-
-  // Refresh driver locations
-  document.getElementById('refresh-btn').addEventListener('click', async () => {
-    try {
-      const response = await fetch('/dashboard/drivers.json');
-      const drivers = await response.json();
-
-      drivers.forEach(driver => {
-        if (driver.latitude && driver.longitude) {
-          const position = { lat: parseFloat(driver.latitude), lng: parseFloat(driver.longitude) };
-
-          if (markers[driver.id]) {
-            markers[driver.id].setPosition(position);
-          } else {
-            addMarker({
-              id: driver.id,
-              name: driver.name,
-              lat: parseFloat(driver.latitude),
-              lng: parseFloat(driver.longitude),
-              status: driver.status
-            });
-          }
-        }
-      });
-    } catch (error) {
-      console.error('Error refreshing drivers:', error);
-    }
-  });
-
-  // Initialize map when Google Maps API loads
-  window.initMap = initMap;
-</script>
-
-<script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC9Ql9f3f6UMtBnbeN0tKqZ71NusuajL0&callback=initMap">
-</script>
