@@ -3125,3 +3125,9 @@ FOREIGN KEY ("site_id")
   [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='ThomasITHelpdesk'*/[0m
   [1m[36mSopTicket Create (0.5ms)[0m  [1m[32mINSERT INTO "sop_tickets" ("title", "status", "priority", "account_id", "resolved_at", "created_at", "updated_at", "description") VALUES ('HP M605 Firmware Critical', NULL, NULL, NULL, NULL, '2026-01-26 23:02:29.749352', '2026-01-26 23:02:29.749352', 'CVE-2025-1234 Site-42 printer') RETURNING "id" /*application='ThomasITHelpdesk'*/[0m
   [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at", "token", "sent_at", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at") VALUES ('2026-01-27 03:56:19.829531', 'test@example.com', NULL, '2026-01-27 03:56:19.829531', NULL, NULL, '$2a$12$tTzgw2ZhqoZQWBHO8ibNTe6Ioum5JfluCLi6J8GbkxAyaGX5X7X7m', NULL, NULL, NULL) RETURNING "id" /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (2.4ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'test@example.com' LIMIT 1 /*application='ThomasITHelpdesk'*/[0m

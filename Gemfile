@@ -57,11 +57,6 @@ group :development do
   gem "web-console"
 end
 
-group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara"
-  gem "selenium-webdriver"
-end
 
 gem 'devise'
 gem 'pundit'
@@ -89,3 +84,8 @@ end
 
 gem "rspec", "~> 3.13", group: :test
   gem "rspec-rails", "~> 6.1.0"
+
+group :test do
+  gem 'capybara'
+  gem 'selenium-webdriver'
+end

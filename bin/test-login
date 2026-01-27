@@ -1,0 +1,9 @@
+#!/bin/bash
+echo "🔐 Testing Thomas IT Login..."
+
+# Test login form exists
+curl -s https://thomasinformationtechnology.com/users/sign_in | grep -q "Email" && echo "✅ Login form OK"
+
+# Test dashboard after login (manual browser test recommended)
+echo "📱 Manual test: https://thomasinformationtechnology.com/users/sign_in"
+echo "Email: test@example.com | Password: changeme123"

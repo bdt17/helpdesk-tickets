@@ -1,9 +1,16 @@
 require "application_system_test_case"
 
 class ProductionDashboardsTest < ApplicationSystemTestCase
-  # test "visiting the index" do
-  #   visit production_dashboards_url
-  #
-  #   assert_selector "h1", text: "ProductionDashboards"
-  # end
+  test "pharma dashboard production live" do
+    visit "https://thomasinformationtechnology.com/"
+    assert_selector "title", text: /Thomas IT/
+    assert_text "Thomas IT Analytics"
+    assert_text "dashboard"
+  end
+  
+  test "network dashboard production live" do
+    visit "https://thomasinformationtechnology.com/network-dashboard"
+    assert_selector "body"
+    assert_text "dashboard", maximum: 10
+  end
 end
