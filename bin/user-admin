@@ -1,0 +1,89 @@
+#!/bin/bash
+# Thomas IT User Admin Script
+# Usage: ./bin/user-admin [create|delete|password|list]
+
+set -e
+
+RAILS_ENV=${RAILS_ENV:-development}
+SITE_URL="https://thomasinformationtechnology.com"
+
+echo "👤 Thomas IT User Management"
+echo "============================="
+
+case "$1" in
+  "create")
+    EMAIL=$2
+    PASSWORD=${3:-changeme123}
+    if [ -z "$EMAIL" ]; then
+      echo "Usage: $0 create user@example.com [password]"
+      exit 1
+    fi
+    echo "Creating user: $EMAIL"
+    bundle exec rails runner "
+      user = User.new(email: '$EMAIL', password: '$PASSWORD', password_confirmation: '$PASSWORD')
+      if user.save
+        puts '✅ User created successfully'
+      else
+        puts '❌ Failed: ' + user.errors.full_messages.join(', ')
+      end
+    "
+    ;;
+    
+  "delete") 
+    EMAIL=$2
+    if [ -z "$EMAIL" ]; then
+      echo "Usage: $0 delete user@example.com"
+      exit 1
+    fi
+    echo "Deleting user: $EMAIL"
+    bundle exec rails runner "
+      user = User.find_by(email: '$EMAIL')
+      if user&.destroy
+        puts '✅ User deleted successfully'
+      else
+        puts '❌ User not found'
+      end
+    "
+    ;;
+    
+  "password")
+    EMAIL=$2
+    NEW_PASS=$3
+    if [ -z "$EMAIL" ] || [ -z "$NEW_PASS" ]; then
+      echo "Usage: $0 password user@example.com newpassword123"
+      exit 1
+    fi
+    echo "Changing password for: $EMAIL"
+    bundle exec rails runner "
+      user = User.find_by(email: '$EMAIL')
+      if user
+        if user.update(password: '$NEW_PASS', password_confirmation: '$NEW_PASS')
+          puts '✅ Password updated successfully'
+        else
+          puts '❌ Update failed: ' + user.errors.full_messages.join(', ')
+        end
+      else
+        puts '❌ User not found'
+      end
+    "
+    ;;
+    
+  "list")
+    echo "All users:"
+    bundle exec rails runner "
+      User.find_each do |user|
+        puts \"  #{user.email} (ID: #{user.id})\"
+      end
+    "
+    ;;
+    
+  *)
+    echo "Usage: $0 [create|delete|password|list]"
+    echo "Examples:"
+    echo "  $0 create test@example.com mypass123"
+    echo "  $0 delete test@example.com" 
+    echo "  $0 password test@example.com newpass456"
+    echo "  $0 list"
+    exit 1
+    ;;
+esac
