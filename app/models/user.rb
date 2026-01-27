@@ -23,3 +23,11 @@ end
 def password_reset_expired?
   password_reset_sent_at < 2.hours.ago
 end
+
+  def active_for_authentication?
+    super && active?
+  end
+
+  def inactive_message
+    active? ? super : :account_disabled
+  end
