@@ -1,0 +1,18 @@
+#!/bin/bash
+echo "=== Thomas IT Production Status ($(date)) ==="
+echo "Pharma Dashboard: https://thomasinformationtechnology.com/"
+echo "Network Dashboard: https://thomasinformationtechnology.com/network-dashboard"
+
+# HTTP Status
+PHARMA_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://thomasinformationtechnology.com/)
+NETWORK_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://thomasinformationtechnology.com/network-dashboard)
+
+echo "Pharma: $PHARMA_STATUS | Network: $NETWORK_STATUS"
+
+if [ "$PHARMA_STATUS" = "200" ] && [ "$NETWORK_STATUS" = "200" ]; then
+  echo "✅ BOTH DASHBOARDS PRODUCTION LIVE!"
+  exit 0
+else
+  echo "❌ ALERT: Dashboard(s) DOWN!"
+  exit 1
+fi
