@@ -1,33 +1,40 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  # FIXED ENUM SYNTAX for Rails 8.1
+  enum :role, { customer: 0, agent: 1, admin: 2 }, default: 0
+class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-end
 
-# Add these methods to your User model
-def generate_password_reset_token!
-  self.password_reset_token = SecureRandom.hex(16)
-  self.password_reset_sent_at = Time.current
-  save!
-end
+  enum :role, { customer: 0, agent: 1, admin: 2 }, default: 0
 
-def clear_password_reset_token!
-  self.password_reset_token = nil
-  self.password_reset_sent_at = nil
-  save!
-end
-
-def password_reset_expired?
-  password_reset_sent_at < 2.hours.ago
-end
-
-  def active_for_authentication?
-    super && active?
+  # ADD THESE TWO METHODS - critical!
+  def agent?
+    role == 'agent' || role == 'admin'
   end
 
-  def inactive_message
-    active? ? super : :account_disabled
+  def admin?
+    role == 'admin'
   end
+
+  # ... your existing password methods ...
+end
+
+
+  # Role helpers
+  def agent?
+    role.in?(%w[agent admin])
+  end
+
+  def admin?
+    role == 'admin'
+  end
+
+  # Keep ALL your existing password methods below...
+  def generate_password_reset_token!
+    # ... your existing code
+  end
+  # ... rest unchanged
+end
