@@ -2,10 +2,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  # RAILS 8.1 CORRECT ENUM SYNTAX
+  # CORRECT Rails 8.1 enum syntax
   enum role: { customer: 0, agent: 1, admin: 2 }, _default: :customer
 
-  # Role helper methods
   def agent?
     role.in?(%w[agent admin])
   end
@@ -14,7 +13,6 @@ class User < ApplicationRecord
     role == 'admin'
   end
 
-  # Your existing password reset methods
   def generate_password_reset_token!
     self.password_reset_token = SecureRandom.hex(16)
     self.password_reset_sent_at = Time.current
