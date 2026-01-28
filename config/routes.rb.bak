@@ -2,8 +2,6 @@
 Rails.application.routes.draw do
   # Devise FIRST (convention)
   devise_for :users
-  
-  resources :tickets  # Adds /tickets, /tickets/new, /tickets/:id/edit
 
   # Root
   root 'analytics/dashboard#index'

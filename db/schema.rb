@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_28_013707) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_28_184801) do
   create_table "devices", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.date "eol_date"
@@ -94,6 +94,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_28_013707) do
     t.string "reset_password_token"
     t.string "role"
     t.datetime "sent_at"
+    t.integer "status", default: 1, null: false
     t.string "token"
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true

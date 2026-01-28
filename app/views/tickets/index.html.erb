@@ -1,0 +1,1 @@
+<h1>All Tickets</h1> <%= link_to "New Ticket", new_ticket_path, class: "bg-blue-500 text-white px-4 py-2 rounded" %> <br> <% @tickets.each do |t| %> <div class="p-4 border"> <%= link_to t.title, ticket_path(t) %> - <%= t.status %> </div> <% end %>
