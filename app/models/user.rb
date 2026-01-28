@@ -2,19 +2,20 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  # SAFE role/status checks - no crashes
   def agent?
-    role == 1 || role == '1'
+    role.present? && (role.to_i == 1)
   end
 
   def admin?
-    role == 2 || role == '2'
+    role.present? && (role.to_i == 2)
   end
 
   def active_for_authentication?
-    super && (role.present? && status.present?)
+    super
   end
 
   def inactive_message
-    :account_disabled
+    super
   end
 end
