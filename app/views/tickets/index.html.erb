@@ -1,1 +1,17 @@
-<h1>All Tickets</h1> <%= link_to "New Ticket", new_ticket_path, class: "bg-blue-500 text-white px-4 py-2 rounded" %> <br> <% @tickets.each do |t| %> <div class="p-4 border"> <%= link_to t.title, ticket_path(t) %> - <%= t.status %> </div> <% end %>
+<h1>All Tickets</h1>
+<%= link_to 'New Ticket', new_ticket_path, class: 'bg-blue-500 text-white px-4 py-2 rounded' %>
+<table class="table w-full">
+  <thead><tr><th>ID</th><th>Title</th><th>Status</th><th>Actions</th></tr></thead>
+  <tbody>
+    <% @tickets.each do |ticket| %>
+      <tr>
+        <td><%= ticket.id %></td>
+        <td><%= link_to ticket.title, ticket_path(ticket) %></td>
+        <td><%= ticket.status.humanize %></td>
+        <td>
+          <%= link_to 'Edit', edit_ticket_path(ticket), class: 'bg-yellow-500 text-white px-2 py-1 rounded' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
