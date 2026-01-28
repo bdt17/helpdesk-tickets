@@ -1,18 +1,21 @@
 Rails.application.routes.draw do
   root 'analytics/dashboard#index'
+  devise_for :users
   
-  # Analytics namespace (Pharma dashboard)
+  # ALL ROUTES NEEDED
+  resources :tickets
+  resources :sites  
+  resources :devices
+  get '/reports', to: 'reports#index'
+  
+  # API Phase 5
+  namespace :api do
+    resources :tickets, only: [:index]
+  end
+  
+  # Dashboards
   namespace :analytics do
     resources :dashboard
   end
-  
-  # Network operations dashboard
   get '/network-dashboard', to: 'dashboard#index'
-  
-  # Network resources  
-  resources :sites
-  resources :devices
-  
-  # Devise authentication
-  devise_for :users
 end
