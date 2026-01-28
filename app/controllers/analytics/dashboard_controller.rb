@@ -1,16 +1,21 @@
-module Analytics
-  class DashboardController < ApplicationController
-    layout 'application'
-    
-    def index
-      @recent_tickets = SopTicket.select(:id, :title, :status, :created_at).limit(10)
-      @open_tickets = SopTicket.where(status: 'open').count
-      @ticket_stats = SopTicket.group(:status).count
-      @top_keywords = {}
+class Analytics::DashboardController < ApplicationController
+  before_action :authenticate_user!
 
-      # Extract keywords from titles + descriptions
-      all_text = SopTicket.pluck(:title, :description).flatten.compact.join(' ')
-      @top_keywords = all_text.downcase.scan(/\w{3,}/).tally.sort_by { |_,v| -v }.first(10).to_h
+  def index
+    if current_user.agent? || current_user.admin?
+      # AGENT sees ALL tickets
+      @open_tickets = Ticket.where(status: 'open').count      # 8
+      @total_tickets = Ticket.count                           # 10
+      @recent_tickets = Ticket.order(created_at: :desc).limit(10)
+      @stats = Ticket.group(:status).count                    # Open:8, In Progress:4
+      @keywords = Ticket.pluck(:title).join(' ').downcase.scan(/\w+/).tally.sort_by { |_,v| -v }.first(6)
+    else
+      # CUSTOMER sees only their tickets
+      @open_tickets = current_user.tickets.where(status: 'open').count || 0
+      @total_tickets = current_user.tickets.count || 0
+      @recent_tickets = current_user.tickets.order(created_at: :desc).limit(10)
+      @stats = current_user.tickets.group(:status).count
+      @keywords = []
     end
   end
 end
