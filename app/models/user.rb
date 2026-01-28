@@ -2,14 +2,20 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  enum :status, [:inactive, :active], default: :active
-  enum :role, [:customer, :agent, :admin], default: :customer
+  # NO ENUMS - Use raw integers until DB fixed
+  def agent?
+    role == 1
+  end
+
+  def admin?
+    role == 2
+  end
 
   def active_for_authentication?
-    super && active?
+    super && (status != 0)
   end
 
   def inactive_message
-    active? ? super : :account_disabled
+    (status == 0) ? :account_disabled : super
   end
 end
