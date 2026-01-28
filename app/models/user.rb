@@ -3,18 +3,18 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   def agent?
-    role == 1
+    role == 1 || role == '1'
   end
 
   def admin?
-    role == 2
+    role == 2 || role == '2'
   end
 
   def active_for_authentication?
-    super && (status != 0)
+    super && (role.present? && status.present?)
   end
 
   def inactive_message
-    (status == 0) ? :account_disabled : super
+    :account_disabled
   end
 end
