@@ -3,6 +3,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   # CORRECT Rails 8.1 enum syntax
+  enum status: { inactive: 0, active: 1 }, _default: :active
   enum role: { customer: 0, agent: 1, admin: 2 }, _default: :customer
 
   def agent?
