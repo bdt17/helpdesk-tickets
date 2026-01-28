@@ -3182,3 +3182,24 @@ Migrating to AddRoleStatusToUsers (20260128184801)
   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN deferred TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'agent1@thomasit.com' LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_2 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_3 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'agent1@thomasit.com' LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at", "token", "sent_at", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "role", "status") VALUES ('2026-01-28 21:40:05.223971', 'agent1@thomasit.com', NULL, '2026-01-28 21:40:05.223971', NULL, NULL, '$2a$12$XrhFP.tfJdXu8VuS9F/H8.AGrY7c7fbnwPqDzbwTXmDf4bUT0DZ9K', NULL, NULL, NULL, '1', 1) RETURNING "id" /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_3 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN deferred TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'agent1@thomasit.com' LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_2 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mSAVEPOINT active_record_3 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'agent1@thomasit.com' LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at", "token", "sent_at", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "role", "status") VALUES ('2026-01-28 21:41:03.999720', 'agent1@thomasit.com', NULL, '2026-01-28 21:41:03.999720', NULL, NULL, '$2a$12$whC9YWwhOcMxufCzHsTZ7OoQT87KUCRDUVZqQa.dgXoO0fyTM61cu', NULL, NULL, NULL, '1', 1) RETURNING "id" /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_3 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'agent1@thomasit.com' LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'agent1@thomasit.com' LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at", "token", "sent_at", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "role", "status") VALUES ('2026-01-28 21:41:40.078098', 'agent1@thomasit.com', NULL, '2026-01-28 21:41:40.078098', NULL, NULL, '$2a$12$NnKn.KXCiVPC7Vbewev5tOsyB314EiQyRDIT.9SbO31HfsryUmLCm', NULL, NULL, NULL, '1', 1) RETURNING "id" /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='ThomasITHelpdesk'*/[0m

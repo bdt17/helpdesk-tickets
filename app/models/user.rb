@@ -2,7 +2,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  # NO ENUMS - Use raw integers until DB fixed
   def agent?
     role == 1
   end
