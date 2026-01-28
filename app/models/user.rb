@@ -2,28 +2,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  # FIXED ENUM SYNTAX for Rails 8.1
-  enum :role, { customer: 0, agent: 1, admin: 2 }, default: 0
-class User < ApplicationRecord
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+  # RAILS 8.1 CORRECT ENUM SYNTAX
+  enum role: { customer: 0, agent: 1, admin: 2 }, _default: :customer
 
-  enum :role, { customer: 0, agent: 1, admin: 2 }, default: 0
-
-  # ADD THESE TWO METHODS - critical!
-  def agent?
-    role == 'agent' || role == 'admin'
-  end
-
-  def admin?
-    role == 'admin'
-  end
-
-  # ... your existing password methods ...
-end
-
-
-  # Role helpers
+  # Role helper methods
   def agent?
     role.in?(%w[agent admin])
   end
@@ -32,9 +14,28 @@ end
     role == 'admin'
   end
 
-  # Keep ALL your existing password methods below...
+  # Your existing password reset methods
   def generate_password_reset_token!
-    # ... your existing code
+    self.password_reset_token = SecureRandom.hex(16)
+    self.password_reset_sent_at = Time.current
+    save!
   end
-  # ... rest unchanged
+
+  def clear_password_reset_token!
+    self.password_reset_token = nil
+    self.password_reset_sent_at = nil
+    save!
+  end
+
+  def password_reset_expired?
+    password_reset_sent_at < 2.hours.ago
+  end
+
+  def active_for_authentication?
+    super && active?
+  end
+
+  def inactive_message
+    active? ? super : :account_disabled
+  end
 end
