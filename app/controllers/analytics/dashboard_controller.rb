@@ -2,29 +2,25 @@ class Analytics::DashboardController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    # ALWAYS set ALL instance variables with safe defaults
+    # ALL instance variables - bulletproof defaults
     @open_tickets = 0
     @total_tickets = 0
     @agents = 0
     @recent_tickets = []
-    @ticket_stats = { open: 0, 'in_progress' => 0 }  # ← FIX HERE
+    @ticket_stats = { 'open' => 0, 'in_progress' => 0 }  # STRING keys!
     
-    begin
-      return unless table_exists?
-      
-      @open_tickets = Ticket.where(status: 'open').count
-      @total_tickets = Ticket.count
-      @recent_tickets = Ticket.order(created_at: :desc).limit(10)
-      @ticket_stats = Ticket.group(:status).count  # Hash like { "open" => 5 }
-      
-    rescue 
-      # Keep safe defaults on ANY error
-    end
+    return unless safe_ticket_query?
+    
+    @open_tickets = Ticket.where(status: 'open').count rescue 0
+    @total_tickets = Ticket.count rescue 0
+    @recent_tickets = Ticket.order(created_at: :desc).limit(10) rescue []
+    @ticket_stats = Ticket.group(:status).count.transform_keys(&:to_s) rescue @ticket_stats
   end
 
   private
 
-  def table_exists?
+  def safe_ticket_query?
+    return false unless defined?(Ticket)
     ActiveRecord::Base.connection.table_exists?('tickets') rescue false
   end
 end
