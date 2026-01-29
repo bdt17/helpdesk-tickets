@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_28_184801) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_29_225510) do
   create_table "devices", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.date "eol_date"
@@ -82,6 +82,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_28_184801) do
     t.string "vendor_po"
     t.index ["device_id"], name: "index_swap_tickets_on_device_id"
     t.index ["site_id"], name: "index_swap_tickets_on_site_id"
+  end
+
+  create_table "tickets", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "status"
+    t.string "title"
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
