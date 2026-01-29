@@ -3219,3 +3219,37 @@ Migrating to AddRoleStatusToUsers (20260128184801)
   [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='ThomasITHelpdesk'*/[0m
   [1m[36mUser Update (0.8ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = '2026-01-29 00:28:02.092231', "encrypted_password" = '$2a$12$zBTifPb7sdgZbXN9cwZ9d.q7oglMLI2t0vJ1ugVsxnVzpfb37Jk1S' WHERE "users"."id" = 4 /*application='ThomasITHelpdesk'*/[0m
   [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='ThomasITHelpdesk'*/[0m
+Migrating to CreateTickets (20260129042350)
+  [1m[35m (1.4ms)[0m  [1m[32mINSERT INTO tickets (title, status, created_at) VALUES 
+  ("Pharma Transport - missing implementations", "open", NOW()),
+  ("Thomas IT drones IT functions", "open", NOW()),
+  ("3-D printing optimization", "in_progress", NOW())
+   /*application='ThomasITHelpdesk'*/[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "tickets" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "status" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Exists? (1.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'agent1@thomasit.com' LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'agent1@thomasit.com' LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[35m (1.3ms)[0m  [1m[32m    INSERT INTO tickets (title, status, created_at) VALUES
+    ('Pharma Transport - missing implementations', 'open', datetime('now')),
+    ('Thomas IT drones IT functions', 'open', datetime('now')),
+    ('3-D printing optimization', 'in_progress', datetime('now')),
+    ('Pfizer shipment delay - site-42', 'open', datetime('now')),
+    ('FDA compliance alert', 'in_progress', datetime('now')),
+    ('Multi-region K8s deployment', 'open', datetime('now'));
+ /*application='ThomasITHelpdesk'*/[0m
+  [1m[35m (2.0ms)[0m  [1m[32m    INSERT INTO tickets (title, status, created_at, updated_at) VALUES
+    ('Pharma Transport - missing implementations', 'open', datetime('now'), datetime('now')),
+    ('Thomas IT drones IT functions', 'open', datetime('now'), datetime('now')),
+    ('3-D printing optimization', 'in_progress', datetime('now'), datetime('now')),
+    ('Pfizer shipment delay - site-42', 'open', datetime('now'), datetime('now')),
+    ('FDA compliance alert', 'in_progress', datetime('now'), datetime('now')),
+    ('Multi-region K8s deployment', 'open', datetime('now'), datetime('now'));
+ /*application='ThomasITHelpdesk'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM tickets /*application='ThomasITHelpdesk'*/[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT title FROM tickets LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
