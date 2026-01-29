@@ -2,25 +2,36 @@ class Analytics::DashboardController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    # ALL instance variables - bulletproof defaults
-    @open_tickets = 0
-    @total_tickets = 0
-    @agents = 0
-    @recent_tickets = []
-    @ticket_stats = { 'open' => 0, 'in_progress' => 0 }  # STRING keys!
+    # BULLETPROOF - ALL variables always set
+    @open_tickets    = 0
+    @total_tickets   = 0
+    @agents          = 0
+    @recent_tickets  = []
+    @ticket_stats    = { "Open" => 0, "In Progress" => 0 }
     
-    return unless safe_ticket_query?
-    
-    @open_tickets = Ticket.where(status: 'open').count rescue 0
-    @total_tickets = Ticket.count rescue 0
-    @recent_tickets = Ticket.order(created_at: :desc).limit(10) rescue []
-    @ticket_stats = Ticket.group(:status).count.transform_keys(&:to_s) rescue @ticket_stats
+    # Safe ticket loading ONLY if everything works
+    begin
+      return unless defined?(Ticket) && table_exists?
+      
+      @open_tickets = Ticket.open.count
+      @total_tickets = Ticket.count
+      @recent_tickets = Ticket.last(10)
+      
+      # CRITICAL FIX: String keys + titleize-safe
+      raw_stats = Ticket.group(:status).count
+      @ticket_stats = raw_stats.transform_keys { |k| k.to_s.titleize }
+      
+    rescue => e
+      Rails.logger.error "Dashboard error: #{e.message}"
+      # Keep safe defaults
+    end
   end
 
   private
-
-  def safe_ticket_query?
-    return false unless defined?(Ticket)
-    ActiveRecord::Base.connection.table_exists?('tickets') rescue false
+  
+  def table_exists?
+    ActiveRecord::Base.connection.table_exists?('tickets')
+  rescue
+    false
   end
 end
