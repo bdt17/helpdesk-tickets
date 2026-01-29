@@ -3203,3 +3203,19 @@ Migrating to AddRoleStatusToUsers (20260128184801)
   [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'agent1@thomasit.com' LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
   [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at", "token", "sent_at", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "role", "status") VALUES ('2026-01-28 21:41:40.078098', 'agent1@thomasit.com', NULL, '2026-01-28 21:41:40.078098', NULL, NULL, '$2a$12$NnKn.KXCiVPC7Vbewev5tOsyB314EiQyRDIT.9SbO31HfsryUmLCm', NULL, NULL, NULL, '1', 1) RETURNING "id" /*application='ThomasITHelpdesk'*/[0m
   [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'agent1@thomasit.com' LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Update (0.4ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = '2026-01-29 00:21:53.003424', "encrypted_password" = '$2a$12$EeMLY9zdkb9Ecbc73GbmveJj9Jn9LDWGWVlkMz9VkvjxC1elmXlnW' WHERE "users"."id" = 3 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = 'admin@thomasit.com' LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("created_at", "email", "password_digest", "updated_at", "token", "sent_at", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "role", "status") VALUES ('2026-01-29 00:22:01.685778', 'admin@thomasit.com', NULL, '2026-01-29 00:22:01.685778', NULL, NULL, '$2a$12$jyok1Eid7YGxgpOugOUHfulpSGd/jPkRab3wLEG/TYzgRZKg4Idyi', NULL, NULL, NULL, '2', 1) RETURNING "id" /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'agent1@thomasit.com' LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Update (0.8ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = '2026-01-29 00:28:01.878822', "encrypted_password" = '$2a$12$MZcOm4tEszINEd77iIEkL.TtzqoHZU8mSH97YBCf0pVQQly1qdraq' WHERE "users"."id" = 3 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'admin@thomasit.com' LIMIT 1 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mUser Update (0.8ms)[0m  [1m[33mUPDATE "users" SET "updated_at" = '2026-01-29 00:28:02.092231', "encrypted_password" = '$2a$12$zBTifPb7sdgZbXN9cwZ9d.q7oglMLI2t0vJ1ugVsxnVzpfb37Jk1S' WHERE "users"."id" = 4 /*application='ThomasITHelpdesk'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='ThomasITHelpdesk'*/[0m
