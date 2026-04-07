@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_07_015127) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_29_225510) do
   create_table "devices", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.date "eol_date"
@@ -92,12 +92,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_07_015127) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.integer "consumed_timestep"
     t.datetime "created_at", null: false
     t.string "email"
     t.string "encrypted_password"
-    t.boolean "otp_required_for_login"
-    t.string "otp_secret"
     t.string "password_digest"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
