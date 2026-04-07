@@ -317,7 +317,9 @@ Devise.setup do |config|
   config.unlock_in = 1.hour            # Auto-unlock 1hr
   config.remember_for = 2.weeks
 
-
+  # Rails 8.1 TSort circular dependency fix
+Devise.reload_routes = false
+Devise.try_block_paths = []
 
 
 
