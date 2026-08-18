@@ -319,7 +319,6 @@ Devise.setup do |config|
 
   # Rails 8.1 TSort circular dependency fix
 Devise.reload_routes = false
-Devise.try_block_paths = []
 
 
 
