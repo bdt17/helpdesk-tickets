@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   get "/home", to: "home#index", as: :home_index
   get "/dashboard", to: "home#dashboard", as: :home_dashboard
 
-  resources :tickets
+  resources :tickets do
+    resources :comments, only: [:create]
+  end
   get "/agents", to: "agents#index", as: :agents
   get "/reports", to: "reports#index", as: :reports_index
 

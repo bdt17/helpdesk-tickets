@@ -9,6 +9,9 @@ class TicketsController < ApplicationController
 
   def show
     authorize @ticket
+    @comments = current_user.agent? || current_user.admin? ? @ticket.comments : @ticket.comments.where(internal: false)
+    @comments = @comments.order(created_at: :asc)
+    @comment = @ticket.comments.build
   end
 
   def new

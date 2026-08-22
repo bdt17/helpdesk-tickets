@@ -3,6 +3,7 @@ class Ticket < ApplicationRecord
 
   belongs_to :user
   belongs_to :assignee, class_name: "User", optional: true
+  has_many :comments, dependent: :destroy
 
   enum :status, { open: "open", in_progress: "in_progress", resolved: "resolved", closed: "closed" }, default: :open
   enum :priority, { low: "low", medium: "medium", high: "high", critical: "critical" }, default: :medium

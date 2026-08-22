@@ -1,0 +1,16 @@
+<p>
+  Hi <%= @recipient.email %>,
+</p>
+
+<p>
+  <%= @comment.user.email %> commented on ticket
+  <strong>#<%= @ticket.id %> <%= @ticket.title %></strong>:
+</p>
+
+<blockquote style="border-left: 3px solid #ccc; padding-left: 1em; margin-left: 0; color: #333;">
+  <%= simple_format(@comment.body) %>
+</blockquote>
+
+<p>
+  <%= link_to "View ticket", ticket_url(@ticket) %>
+</p>

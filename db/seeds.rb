@@ -43,3 +43,10 @@ agent = User.find_by(email: "agent@thomasit.com")
 ].each do |attrs|
   Ticket.find_or_create_by!(title: attrs[:title]) { |t| t.assign_attributes(attrs) }
 end
+
+vpn_ticket = Ticket.find_by(title: "Can't connect to office VPN")
+if vpn_ticket && vpn_ticket.comments.none?
+  vpn_ticket.comments.create!(user: employee, body: "Still happening as of this afternoon, tried a different network too.")
+  vpn_ticket.comments.create!(user: agent, body: "Checking the VPN concentrator logs now.", internal: true)
+  vpn_ticket.comments.create!(user: agent, body: "Found it - your account's VPN group needs updating. Working on it.")
+end

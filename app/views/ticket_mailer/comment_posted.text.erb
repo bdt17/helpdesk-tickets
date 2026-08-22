@@ -1,0 +1,7 @@
+Hi <%= @recipient.email %>,
+
+<%= @comment.user.email %> commented on ticket #<%= @ticket.id %> <%= @ticket.title %>:
+
+<%= @comment.body %>
+
+View ticket: <%= ticket_url(@ticket) %>

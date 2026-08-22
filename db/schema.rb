@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_22_160102) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_22_161110) do
+  create_table "comments", force: :cascade do |t|
+    t.text "body", null: false
+    t.datetime "created_at", null: false
+    t.boolean "internal", default: false, null: false
+    t.integer "ticket_id", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["ticket_id"], name: "index_comments_on_ticket_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
   create_table "devices", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.date "eol_date"
@@ -107,6 +118,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_22_160102) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "comments", "tickets"
+  add_foreign_key "comments", "users"
   add_foreign_key "devices", "sites"
   add_foreign_key "drivers", "users"
   add_foreign_key "swap_tickets", "devices"
