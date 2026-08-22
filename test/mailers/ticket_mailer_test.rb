@@ -11,4 +11,14 @@ class TicketMailerTest < ActionMailer::TestCase
     assert_match "Any update on this?", mail.text_part.body.to_s
     assert_match "Any update on this?", mail.html_part.body.to_s
   end
+
+  test "escalated" do
+    ticket = tickets(:stale_high_priority)
+    mail = TicketMailer.escalated(ticket, users(:agent))
+
+    assert_equal "⚠️ Escalated: ##{ticket.id} #{ticket.title}", mail.subject
+    assert_equal [users(:agent).email], mail.to
+    assert_match ticket.title, mail.text_part.body.to_s
+    assert_match ticket.title, mail.html_part.body.to_s
+  end
 end

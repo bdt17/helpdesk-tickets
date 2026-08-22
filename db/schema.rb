@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_22_161110) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_22_162503) do
   create_table "comments", force: :cascade do |t|
     t.text "body", null: false
     t.datetime "created_at", null: false
@@ -89,6 +89,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_22_161110) do
     t.string "category"
     t.datetime "created_at", null: false
     t.text "description"
+    t.datetime "due_at"
+    t.datetime "escalated_at"
     t.string "priority", default: "medium", null: false
     t.datetime "resolved_at"
     t.string "status", default: "open", null: false
@@ -96,6 +98,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_22_161110) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.index ["assignee_id"], name: "index_tickets_on_assignee_id"
+    t.index ["due_at"], name: "index_tickets_on_due_at"
     t.index ["user_id"], name: "index_tickets_on_user_id"
   end
 

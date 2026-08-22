@@ -7,6 +7,7 @@ log/*.log
 storage/*.sqlite3
 storage/*.sqlite3-shm
 storage/*.sqlite3-wal
+storage/*.sqlite3_[0-9]*
 
 # Backups, dumps, and cookie jars — never commit these
 /backup-*.sql

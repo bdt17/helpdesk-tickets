@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root "home#index"
   get "/health", to: ->(_env) { [200, { "Content-Type" => "text/plain" }, ["OK"]] }
   get "/home", to: "home#index", as: :home_index
-  get "/dashboard", to: "home#dashboard", as: :home_dashboard
+  get "/dashboard", to: "dashboard#index", as: :dashboard
 
   resources :tickets do
     resources :comments, only: [:create]

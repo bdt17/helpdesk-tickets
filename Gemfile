@@ -65,10 +65,6 @@ gem "chartkick", "~> 5.2"
 gem "groupdate", "~> 6.7"
 gem "highcharts-rails", "~> 6.0"
 
-gem "twilio", "~> 3.1"
-gem "sidekiq", "~> 8.1"
-gem "twilio-ruby", "~> 7.9"
-
 gem "redis", "~> 5.4"
 
 
