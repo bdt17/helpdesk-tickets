@@ -1,0 +1,62 @@
+<div class="p-6">
+  <h1 class="mb-2"><%= @ticket.title %></h1>
+  <p class="text-muted">
+    Status: <%= @ticket.status.humanize %>
+    &middot; Priority: <%= @ticket.priority.humanize %>
+    &middot; Category: <%= @ticket.category&.humanize || "—" %>
+    &middot; Submitted by <%= @ticket.user&.email || "unknown" %>
+    &middot; Assigned to <%= @ticket.assignee&.email || "Unassigned" %>
+    &middot; <%= time_ago_in_words(@ticket.created_at) %> ago
+    <% if @ticket.resolved_at %>
+      &middot; Resolved <%= time_ago_in_words(@ticket.resolved_at) %> ago
+    <% end %>
+  </p>
+
+  <% if @ticket.description.present? %>
+    <p><%= simple_format(@ticket.description) %></p>
+  <% end %>
+
+  <% if policy(@ticket).update? %>
+    <%= link_to "Edit", edit_ticket_path(@ticket), class: "btn btn-warning btn-sm" %>
+  <% end %>
+  <% if policy(@ticket).destroy? %>
+    <%= button_to "Delete", ticket_path(@ticket), method: :delete, class: "btn btn-danger btn-sm",
+                  data: { turbo_confirm: "Are you sure?" } %>
+  <% end %>
+  <%= link_to "Back to tickets", tickets_path, class: "btn btn-link btn-sm" %>
+
+  <hr class="my-4">
+
+  <h2 class="h5 mb-3">Comments</h2>
+  <% @comments.each do |comment| %>
+    <div class="mb-3 pb-2 border-bottom">
+      <div class="small text-muted">
+        <strong><%= comment.user.email %></strong>
+        &middot; <%= time_ago_in_words(comment.created_at) %> ago
+        <% if comment.internal? %>
+          &middot; <span class="badge bg-warning text-dark">Internal</span>
+        <% end %>
+      </div>
+      <div><%= simple_format(comment.body) %></div>
+    </div>
+  <% end %>
+  <% if @comments.empty? %>
+    <p class="text-muted">No comments yet.</p>
+  <% end %>
+
+  <%= form_with model: [@ticket, @comment] do |f| %>
+    <div class="form-group mb-2">
+      <%= f.label :body, "Add a comment", class: "form-label" %>
+      <%= f.text_area :body, class: "form-control", rows: 3, required: true %>
+    </div>
+
+    <% if current_user.agent? || current_user.admin? %>
+      <div class="form-check mb-2">
+        <%= f.check_box :internal, class: "form-check-input" %>
+        <%= f.label :internal, "Internal note (hidden from requester)", class: "form-check-label" %>
+      </div>
+    <% end %>
+
+    <%= f.submit "Post comment", class: "btn btn-primary btn-sm" %>
+  <% end %>
+</div>

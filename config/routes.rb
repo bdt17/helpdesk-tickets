@@ -1,23 +1,19 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, skip: [ :registrations ]
 
-  root "analytics/dashboard#index"
+  root "home#index"
+  get "/health", to: ->(_env) { [ 200, { "Content-Type" => "text/plain" }, [ "OK" ] ] }
+  get "/home", to: "home#index", as: :home_index
+  get "/dashboard", to: "dashboard#index", as: :dashboard
 
-  get "/health", to: ->(_env) {
-    [200, { "Content-Type" => "text/plain" }, ["OK"]]
-  }
-
-  resources :tickets
+  resources :tickets do
+    resources :comments, only: [ :create ]
+  end
+  get "/agents", to: "agents#index", as: :agents
+  get "/reports", to: "reports#index", as: :reports_index
 
   namespace :api do
-    resources :tickets, only: [:index]
+    resources :tickets, only: [ :index ]
+    get "ai/status", to: "ai#status", as: :ai_status
   end
-
-  namespace :analytics do
-    get "dashboard", to: "dashboard#index", as: :dashboard
-  end
-
-  get "/network-dashboard", to: "dashboard#index"
-  get "/pharma-dashboard", to: "analytics/dashboard#index"
-  get "/new_ticket", to: "tickets#new"
 end

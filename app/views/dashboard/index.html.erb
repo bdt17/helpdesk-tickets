@@ -1,57 +1,113 @@
-<div class="container mx-auto p-8">
-  <h1 class="text-4xl font-bold mb-8">🖥️ Network Operations Dashboard</h1>
-  
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-    <div class="bg-blue-600 text-white p-6 rounded-xl">
-      <h3 class="text-3xl font-bold"><%= @total_tickets %></h3>
-      <p>Total Tickets</p>
+<div class="container-fluid p-4">
+  <h1 class="mb-4"><%= current_user.agent? || current_user.admin? ? "Team Dashboard" : "My Dashboard" %></h1>
+
+  <div class="row g-3 mb-4">
+    <div class="col-md-3">
+      <div class="card text-white bg-primary h-100">
+        <div class="card-body">
+          <h6 class="card-title">Total Tickets</h6>
+          <h2 class="fw-bold mb-0"><%= @total %></h2>
+        </div>
+      </div>
     </div>
-    <div class="bg-red-600 text-white p-6 rounded-xl">
-      <h3 class="text-3xl font-bold"><%= @critical_tickets %></h3>
-      <p>Critical Alerts</p>
+    <div class="col-md-3">
+      <div class="card text-white bg-warning h-100">
+        <div class="card-body">
+          <h6 class="card-title">Open</h6>
+          <h2 class="fw-bold mb-0"><%= @by_status["open"] || 0 %></h2>
+        </div>
+      </div>
     </div>
-    <div class="bg-yellow-500 text-white p-6 rounded-xl">
-      <h3 class="text-3xl font-bold"><%= @network_tickets %></h3>
-      <p>Network Tickets</p>
+    <div class="col-md-3">
+      <div class="card text-white bg-danger h-100">
+        <div class="card-body">
+          <h6 class="card-title">Overdue</h6>
+          <h2 class="fw-bold mb-0"><%= @overdue.size %></h2>
+        </div>
+      </div>
     </div>
-    <div class="bg-green-600 text-white p-6 rounded-xl">
-      <h3 class="text-3xl font-bold"><%= @open_tickets %></h3>
-      <p>Open Tickets</p>
+    <div class="col-md-3">
+      <div class="card text-white bg-success h-100">
+        <div class="card-body">
+          <h6 class="card-title">Resolved</h6>
+          <h2 class="fw-bold mb-0"><%= @by_status["resolved"] || 0 %></h2>
+        </div>
+      </div>
     </div>
   </div>
-  
-  <h2 class="text-2xl font-bold mb-4">Recent Network Activity</h2>
-  <div class="overflow-x-auto">
-    <table class="w-full bg-white border border-gray-200">
-      <thead>
-        <tr class="bg-gray-100">
-          <th class="px-4 py-2">Title</th>
-          <th class="px-4 py-2">Status</th>
-          <th class="px-4 py-2">Priority</th>
-          <th class="px-4 py-2">Created</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @recent_tickets.each do |ticket| %>
-          <tr class="border-b">
-            <td class="px-4 py-2 font-medium"><%= ticket.title %></td>
-            <td class="px-4 py-2">
-              <span class="px-2 py-1 rounded-full text-xs 
-                <%= ticket.status == 'open' ? 'bg-blue-100 text-blue-800' : 
-                    ticket.status == 'in_progress' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800' %>">
-                <%= ticket.status.titleize %>
-              </span>
-            </td>
-            <td class="px-4 py-2">
-              <span class="px-2 py-1 rounded-full text-xs 
-                <%= ticket.priority == 'critical' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800' %>">
-                <%= ticket.priority.titleize %>
-              </span>
-            </td>
-            <td class="px-4 py-2 text-sm text-gray-600"><%= ticket.created_at.strftime('%b %d') %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+
+  <% if @unassigned_count %>
+    <p class="text-muted">
+      <strong><%= @unassigned_count %></strong> unassigned open ticket<%= "s" unless @unassigned_count == 1 %>.
+    </p>
+  <% end %>
+
+  <div class="row g-4">
+    <div class="col-lg-6">
+      <div class="card shadow-sm h-100">
+        <div class="card-header bg-white">
+          <h5 class="mb-0">Overdue Tickets</h5>
+        </div>
+        <div class="card-body p-0">
+          <% if @overdue.any? %>
+            <table class="table table-hover mb-0">
+              <thead class="table-light">
+                <tr><th>Title</th><th>Priority</th><th>Assignee</th><th>Due</th></tr>
+              </thead>
+              <tbody>
+                <% @overdue.each do |ticket| %>
+                  <tr>
+                    <td><%= link_to ticket.title, ticket_path(ticket) %></td>
+                    <td><span class="badge bg-danger"><%= ticket.priority.humanize %></span></td>
+                    <td><%= ticket.assignee&.email || "Unassigned" %></td>
+                    <td><%= time_ago_in_words(ticket.due_at) %> ago</td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% else %>
+            <p class="text-muted p-3 mb-0">Nothing overdue right now.</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="card shadow-sm h-100">
+        <div class="card-header bg-white">
+          <h5 class="mb-0">By Priority</h5>
+        </div>
+        <div class="card-body">
+          <% Ticket.priorities.keys.each do |priority| %>
+            <div class="d-flex justify-content-between align-items-center mb-2 p-2 bg-light rounded">
+              <span class="fw-semibold"><%= priority.humanize %></span>
+              <span class="badge bg-primary px-3 py-2"><%= @by_priority[priority] || 0 %></span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mt-4">
+    <div class="card-header bg-white">
+      <h5 class="mb-0">Recent Tickets</h5>
+    </div>
+    <div class="card-body p-0">
+      <table class="table table-hover mb-0">
+        <thead class="table-light">
+          <tr><th>Title</th><th>Status</th><th>Created</th></tr>
+        </thead>
+        <tbody>
+          <% @recent.each do |ticket| %>
+            <tr>
+              <td><%= link_to ticket.title, ticket_path(ticket) %></td>
+              <td><%= ticket.status.humanize %></td>
+              <td><%= time_ago_in_words(ticket.created_at) %> ago</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

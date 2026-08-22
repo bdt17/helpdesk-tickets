@@ -1,0 +1,13 @@
+<p>
+  Hi <%= @recipient.email %>,
+</p>
+
+<p>
+  Ticket <strong>#<%= @ticket.id %> <%= @ticket.title %></strong> has passed its
+  <%= @ticket.priority.humanize %>-priority SLA (due <%= @ticket.due_at.strftime("%b %d, %Y %H:%M") %>)
+  and has been escalated.
+</p>
+
+<p>
+  <%= link_to "View ticket", ticket_url(@ticket) %>
+</p>

@@ -58,35 +58,23 @@ group :development do
 end
 
 
-gem 'devise'
-gem 'pundit'
-
-gem "chartkick", "~> 5.2"
-gem "groupdate", "~> 6.7"
-gem "highcharts-rails", "~> 6.0"
-
-gem "twilio", "~> 3.1"
-gem "sidekiq", "~> 8.1"
-gem "twilio-ruby", "~> 7.9"
+gem "devise"
+gem "pundit"
 
 gem "redis", "~> 5.4"
 
 
 # Database (Clean - No Duplicates)
 group :production do
-  gem 'pg', '~> 1.5'
+  gem "pg", "~> 1.5"
 end
 
 group :development, :test do
-  gem 'sqlite3'
+  gem "sqlite3"
 end
 
-
-gem "rspec", "~> 3.13", group: :test
-  gem "rspec-rails", "~> 6.1.0"
 
 group :test do
-  gem 'capybara'
-  gem 'selenium-webdriver'
+  gem "capybara"
+  gem "selenium-webdriver"
 end
- #gem 'devise-two-factor'

@@ -1,6 +1,6 @@
 class DriversController < ApplicationController
   before_action :require_login
-  before_action :set_driver, only: [:edit, :update, :destroy]
+  before_action :set_driver, only: [ :edit, :update, :destroy ]
 
   def index
     @drivers = current_user.drivers
