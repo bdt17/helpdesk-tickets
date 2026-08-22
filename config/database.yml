@@ -4,36 +4,16 @@ default: &default
   timeout: 5000
 
 development:
-  primary:
-    <<: *default
-    adapter: sqlite3
-    database: storage/development.sqlite3
-  queue:
-    <<: *default
-    adapter: sqlite3
-    database: storage/development_queue.sqlite3
-    migrations_paths: db/queue_migrate
+  <<: *default
+  adapter: sqlite3
+  database: storage/development.sqlite3
 
 test:
-  primary:
-    <<: *default
-    adapter: sqlite3
-    database: storage/test.sqlite3
-  queue:
-    <<: *default
-    adapter: sqlite3
-    database: storage/test_queue.sqlite3
-    migrations_paths: db/queue_migrate
+  <<: *default
+  adapter: sqlite3
+  database: storage/test.sqlite3
 
 production:
-  primary: &primary_production
-    <<: *default
-    adapter: postgresql
-    url: <%= ENV['DATABASE_URL'] %>
-  # Solid Queue's tables live in the same Postgres database as the app
-  # (there's only one DATABASE_URL provisioned) rather than a genuinely
-  # separate database - still a distinct connection/schema-load role from
-  # Rails' point of view, just not physically isolated infrastructure.
-  queue:
-    <<: *primary_production
-    migrations_paths: db/queue_migrate
+  <<: *default
+  adapter: postgresql
+  url: <%= ENV['DATABASE_URL'] %>

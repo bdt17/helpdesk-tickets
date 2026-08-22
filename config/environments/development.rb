@@ -56,10 +56,11 @@ Rails.application.configure do
   config.active_job.verbose_enqueue_logs = true
 
   # Use Solid Queue in development too, so the hourly escalation sweep
-  # actually runs (via the Puma plugin below) instead of just sitting
-  # configured but inert.
+  # actually runs (via the Puma plugin in config/puma.rb) instead of just
+  # sitting configured but inert. Single-database configuration - Solid
+  # Queue's tables live in storage/development.sqlite3 alongside
+  # everything else, no separate connection role.
   config.active_job.queue_adapter = :solid_queue
-  config.solid_queue.connects_to = { database: { writing: :queue } }
 
   # Highlight code that triggered redirect in logs.
   config.action_dispatch.verbose_redirect_logs = true
