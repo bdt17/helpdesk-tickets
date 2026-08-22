@@ -149,7 +149,7 @@ html body {
         <div class="navbar-nav ms-auto">
           <% if user_signed_in? %>
             <span class="navbar-text me-3 text-light small">
-              Welcome, <%= current_user.email %> (<%= current_user.role.humanize %>)!
+              Welcome, <%= current_user.email %> (<%= current_user.role&.humanize || "Employee" %>)!
             </span>
             <%= button_to "Log Out", destroy_user_session_path, method: :delete, class: "btn btn-primary btn-sm px-4" %>
           <% else %>
