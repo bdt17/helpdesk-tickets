@@ -58,7 +58,7 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     assert_emails 1 do
       post ticket_comments_url(tickets(:one)), params: { comment: { body: "Any update?" } }
     end
-    assert_equal [users(:agent).email], ActionMailer::Base.deliveries.last.to
+    assert_equal [ users(:agent).email ], ActionMailer::Base.deliveries.last.to
   end
 
   test "posting an internal comment does not email the ticket owner" do

@@ -36,7 +36,7 @@ class CommentsController < ApplicationController
   end
 
   def recipients(comment)
-    people = comment.internal? ? [@ticket.assignee] : [@ticket.user, @ticket.assignee]
-    people.compact.uniq - [current_user]
+    people = comment.internal? ? [ @ticket.assignee ] : [ @ticket.user, @ticket.assignee ]
+    people.compact.uniq - [ current_user ]
   end
 end

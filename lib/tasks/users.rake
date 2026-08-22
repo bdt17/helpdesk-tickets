@@ -1,6 +1,6 @@
 namespace :users do
   desc "Create a user: rails users:create[email,password,role]"
-  task :create, [:email, :password, :role] => :environment do |_t, args|
+  task :create, [ :email, :password, :role ] => :environment do |_t, args|
     email = args[:email]
     password = args[:password] || SecureRandom.hex(12)
     role = args[:role].presence || "employee"
@@ -20,7 +20,7 @@ namespace :users do
   end
 
   desc "Disable a user's account (blocks sign-in without deleting it)"
-  task :disable, [:email] => :environment do |_t, args|
+  task :disable, [ :email ] => :environment do |_t, args|
     user = User.find_by(email: args[:email])
     if user
       user.update!(status: :disabled)
@@ -31,7 +31,7 @@ namespace :users do
   end
 
   desc "Re-enable a disabled user's account"
-  task :activate, [:email] => :environment do |_t, args|
+  task :activate, [ :email ] => :environment do |_t, args|
     user = User.find_by(email: args[:email])
     if user
       user.update!(status: :active)
@@ -42,7 +42,7 @@ namespace :users do
   end
 
   desc "Reset a user's password (active users only)"
-  task :reset_password, [:email] => :environment do |_t, args|
+  task :reset_password, [ :email ] => :environment do |_t, args|
     user = User.find_by(email: args[:email])
     if user&.active?
       new_pass = SecureRandom.hex(12)

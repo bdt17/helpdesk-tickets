@@ -7,8 +7,7 @@ Bundler.require(*Rails.groups)
 module ThomasITHelpdesk
   class Application < Rails::Application
     config.load_defaults 8.1
-    
-    config.active_record.migration_error = false
+
     config.autoload_lib(ignore: %w[assets tasks])
 
     # Configuration for the application, engines, and railties goes here.

@@ -13,7 +13,7 @@ class EscalationAlertJobTest < ActiveJob::TestCase
     ticket.reload
     assert ticket.in_progress?
     assert_not_nil ticket.escalated_at
-    assert_equal [users(:agent).email], ActionMailer::Base.deliveries.last.to
+    assert_equal [ users(:agent).email ], ActionMailer::Base.deliveries.last.to
   end
 
   test "notifies every agent/admin when the ticket has no assignee" do

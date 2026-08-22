@@ -12,7 +12,7 @@ class Ticket < ApplicationRecord
   validates :title, presence: true
   validates :category, inclusion: { in: CATEGORIES }, allow_nil: true
 
-  scope :unresolved, -> { where.not(status: [:resolved, :closed]) }
+  scope :unresolved, -> { where.not(status: [ :resolved, :closed ]) }
   scope :overdue, -> { unresolved.where.not(due_at: nil).where("due_at < ?", Time.current) }
 
   before_save :set_resolved_at, if: :will_save_change_to_status?
