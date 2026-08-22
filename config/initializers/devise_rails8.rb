@@ -24,7 +24,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = 'helpdesk@thomasit.com'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -316,11 +316,4 @@ Devise.setup do |config|
   config.unlock_strategy = :both       # Email + time unlock
   config.unlock_in = 1.hour            # Auto-unlock 1hr
   config.remember_for = 2.weeks
-
-  # Rails 8.1 TSort circular dependency fix
-Devise.reload_routes = false
-Devise.try_block_paths = []
-
-
-
 end

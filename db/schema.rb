@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_29_225510) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_22_154643) do
   create_table "devices", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.date "eol_date"
@@ -89,28 +89,32 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_29_225510) do
     t.string "status"
     t.string "title"
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_tickets_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email"
     t.string "encrypted_password"
-    t.string "password_digest"
+    t.integer "failed_attempts", default: 0, null: false
+    t.datetime "locked_at"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
-    t.string "role"
-    t.datetime "sent_at"
+    t.string "role", default: "employee", null: false
     t.integer "status", default: 1, null: false
-    t.string "token"
+    t.string "unlock_token"
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["encrypted_password"], name: "index_users_on_encrypted_password"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token"
+    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
   add_foreign_key "devices", "sites"
   add_foreign_key "drivers", "users"
   add_foreign_key "swap_tickets", "devices"
   add_foreign_key "swap_tickets", "sites"
+  add_foreign_key "tickets", "users"
 end

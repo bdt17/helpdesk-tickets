@@ -3,55 +3,47 @@ class TicketsController < ApplicationController
   before_action :set_ticket, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tickets = current_user.agent? || current_user.admin? ? 
-               Ticket.all : current_user.tickets
+    @tickets = policy_scope(Ticket).order(created_at: :desc)
     @ticket = Ticket.new
   end
 
-  def dashboard
-    if current_user.agent? || current_user.admin?
-      @open_tickets = Ticket.where(status: 'open').count
-      @total_tickets = Ticket.count
-      @recent_tickets = Ticket.order(created_at: :desc).limit(10)
-      @stats = Ticket.group(:status).count
-    else
-      @open_tickets = current_user.tickets.where(status: 'open').count
-      @total_tickets = current_user.tickets.count
-      @recent_tickets = current_user.tickets.order(created_at: :desc).limit(10)
-      @stats = current_user.tickets.group(:status).count
-    end
+  def show
+    authorize @ticket
   end
-
-  def show; end
 
   def new
     @ticket = Ticket.new
+    authorize @ticket
   end
 
   def create
-    @ticket = Ticket.new(ticket_params)
-    @ticket.assignee = current_user if current_user.agent?
-    
+    @ticket = current_user.tickets.build(ticket_params)
+    authorize @ticket
+
     if @ticket.save
-      redirect_to tickets_path, notice: 'Ticket created!'
+      redirect_to tickets_path, notice: "Ticket created!"
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
-  def edit; end
+  def edit
+    authorize @ticket
+  end
 
   def update
+    authorize @ticket
     if @ticket.update(ticket_params)
-      redirect_to tickets_path, notice: 'Updated!'
+      redirect_to tickets_path, notice: "Updated!"
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
+    authorize @ticket
     @ticket.destroy
-    redirect_to tickets_path, notice: 'Deleted!'
+    redirect_to tickets_path, notice: "Deleted!"
   end
 
   private
@@ -61,6 +53,6 @@ class TicketsController < ApplicationController
   end
 
   def ticket_params
-    params.require(:ticket).permit(:title, :description, :status, :priority, :category)
+    params.require(:ticket).permit(:title, :status)
   end
 end

@@ -1,10 +1,10 @@
 class HomeController < ApplicationController
-  # skip_before_action :require_authentication  # Disabled - callback undefined
-  
+  before_action :authenticate_user!, only: :dashboard
+
   def index
-    @message = "Thomas IT Helpdesk - Phase 4 Complete!"
+    @message = "Thomas IT Helpdesk"
   end
-  
+
   def dashboard
     @message = "Agent Dashboard Ready"
   end
