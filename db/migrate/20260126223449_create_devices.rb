@@ -7,7 +7,7 @@ class CreateDevices < ActiveRecord::Migration[8.1]
       t.string :ip_address
       t.string :mac_address
       t.string :vendor
-      t.references :site, null: false, foreign_key: true
+      t.references :site, null: false
       t.integer :status
       t.date :eol_date
       t.string :snmp_community
