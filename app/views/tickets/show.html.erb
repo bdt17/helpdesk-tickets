@@ -1,10 +1,20 @@
 <div class="p-6">
   <h1 class="mb-2"><%= @ticket.title %></h1>
   <p class="text-muted">
-    Status: <%= @ticket.status&.humanize || "Open" %>
+    Status: <%= @ticket.status.humanize %>
+    &middot; Priority: <%= @ticket.priority.humanize %>
+    &middot; Category: <%= @ticket.category&.humanize || "—" %>
     &middot; Submitted by <%= @ticket.user&.email || "unknown" %>
+    &middot; Assigned to <%= @ticket.assignee&.email || "Unassigned" %>
     &middot; <%= time_ago_in_words(@ticket.created_at) %> ago
+    <% if @ticket.resolved_at %>
+      &middot; Resolved <%= time_ago_in_words(@ticket.resolved_at) %> ago
+    <% end %>
   </p>
+
+  <% if @ticket.description.present? %>
+    <p><%= simple_format(@ticket.description) %></p>
+  <% end %>
 
   <% if policy(@ticket).update? %>
     <%= link_to "Edit", edit_ticket_path(@ticket), class: "btn btn-warning btn-sm" %>

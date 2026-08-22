@@ -8,6 +8,9 @@
           <th class="border p-2">ID</th>
           <th class="border p-2">Title</th>
           <th class="border p-2">Status</th>
+          <th class="border p-2">Priority</th>
+          <th class="border p-2">Category</th>
+          <th class="border p-2">Assigned To</th>
           <th class="border p-2">Created</th>
           <th class="border p-2">Actions</th>
         </tr>
@@ -17,7 +20,10 @@
           <tr>
             <td class="border p-2"><%= ticket.id %></td>
             <td class="border p-2"><%= link_to ticket.title, ticket_path(ticket) %></td>
-            <td class="border p-2"><%= ticket.status&.humanize || 'Open' %></td>
+            <td class="border p-2"><%= ticket.status.humanize %></td>
+            <td class="border p-2"><%= ticket.priority.humanize %></td>
+            <td class="border p-2"><%= ticket.category&.humanize || "—" %></td>
+            <td class="border p-2"><%= ticket.assignee&.email || "Unassigned" %></td>
             <td class="border p-2"><%= time_ago_in_words(ticket.created_at) %> ago</td>
             <td class="border p-2">
               <%= link_to 'Edit', edit_ticket_path(ticket), class: 'bg-yellow-500 text-white px-2 py-1 rounded text-sm' %>

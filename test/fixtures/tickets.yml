@@ -2,12 +2,28 @@
 
 one:
   title: Printer not working
+  description: The 3rd floor printer jams on every print job.
   status: open
+  priority: medium
+  category: hardware
   user: employee
   created_at: 2026-01-15 00:16:10
 
 two:
   title: VPN access request
+  description: Need VPN access to reach the staging environment.
   status: in_progress
+  priority: high
+  category: access
   user: other_employee
+  assignee: agent
   created_at: 2026-01-15 00:16:10
+
+stale_high_priority:
+  title: Payroll system unreachable
+  description: Payroll system has been down since yesterday morning.
+  status: open
+  priority: high
+  category: software
+  user: employee
+  created_at: <%= 2.days.ago.iso8601 %>

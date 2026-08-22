@@ -5,6 +5,7 @@ class User < ApplicationRecord
   enum :status, { disabled: 0, active: 1 }, default: :active
 
   has_many :tickets, dependent: :nullify
+  has_many :assigned_tickets, class_name: "Ticket", foreign_key: :assignee_id, dependent: :nullify
 
   # Devise calls this to decide whether a disabled account may authenticate,
   # independent of the lockable failed-attempts lock.

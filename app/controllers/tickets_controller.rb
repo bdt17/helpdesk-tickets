@@ -53,6 +53,10 @@ class TicketsController < ApplicationController
   end
 
   def ticket_params
-    params.require(:ticket).permit(:title, :status)
+    permitted = params.require(:ticket).permit(:title, :description, :category)
+    if current_user.agent? || current_user.admin?
+      permitted.merge!(params.require(:ticket).permit(:status, :priority, :assignee_id))
+    end
+    permitted
   end
 end

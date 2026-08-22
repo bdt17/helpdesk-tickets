@@ -3,7 +3,7 @@ class Api::AiController < ApplicationController
     render json: { 
       status: 'active', 
       model: 'gpt-4o-mini', 
-      tickets_processed: SopTicket.count,
+      tickets_processed: Ticket.count,
       uptime: '99.9%'
     }
   end

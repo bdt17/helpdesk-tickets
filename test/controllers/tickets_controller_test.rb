@@ -36,4 +36,32 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_equal users(:employee), Ticket.last.user
   end
+
+  test "employee cannot set status, priority, or assignee on their own ticket" do
+    sign_in users(:employee)
+    ticket = tickets(:one)
+
+    patch ticket_url(ticket), params: {
+      ticket: { status: "resolved", priority: "critical", assignee_id: users(:agent).id }
+    }
+
+    ticket.reload
+    assert ticket.open? # unchanged
+    assert ticket.medium? # unchanged
+    assert_nil ticket.assignee_id # unchanged
+  end
+
+  test "agent can set status, priority, and assignee on any ticket" do
+    sign_in users(:agent)
+    ticket = tickets(:one)
+
+    patch ticket_url(ticket), params: {
+      ticket: { status: "resolved", priority: "critical", assignee_id: users(:agent).id }
+    }
+
+    ticket.reload
+    assert ticket.resolved?
+    assert ticket.critical?
+    assert_equal users(:agent), ticket.assignee
+  end
 end
