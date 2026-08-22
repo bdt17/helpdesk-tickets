@@ -2,10 +2,9 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-ENV['DATABASE_URL'] = ENV['DATABASE_URL'] || postgresql://network_swap_db_user:IVCMavoyjeFHono8liha9aXSYvwspSNl@dpg-d5ui2haqcgvc738tdp40-a.oregon-postgres.render.com/network_swap_db
-
-  puts "DATABASE_URL: #{ENV['DATABASE_URL']}" 
-  puts "Using URL: #{ActiveRecord::Base.connection_config}"
+  # DATABASE_URL must be set in the production environment (e.g. Render's
+  # dashboard). No hardcoded fallback is used here — a missing DATABASE_URL
+  # should fail loudly rather than silently default to a stale credential.
 
   # Code is not reloaded between requests.
   config.enable_reloading = false
