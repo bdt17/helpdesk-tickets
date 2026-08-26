@@ -19,3 +19,8 @@ admin:
   email: admin-fixture@thomasit.com
   encrypted_password: <%= Devise::Encryptor.digest(User, "password123") %>
   role: admin
+
+client:
+  email: client-fixture@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, "password123") %>
+  role: client

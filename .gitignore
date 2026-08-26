@@ -20,3 +20,8 @@ cookies.txt
 *.bak[0-9]
 *.backup
 *.broken
+
+# Local secrets (Stripe keys, etc.) — never commit, see .env.example
+/.env
+/.env.*
+!/.env.example

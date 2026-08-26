@@ -1,7 +1,7 @@
 class User < ApplicationRecord
-  devise :database_authenticatable, :recoverable, :rememberable, :validatable, :lockable
+  devise :database_authenticatable, :recoverable, :rememberable, :validatable, :lockable, :registerable
 
-  enum :role, { employee: "employee", agent: "agent", admin: "admin" }, default: :employee
+  enum :role, { employee: "employee", agent: "agent", admin: "admin", client: "client" }, default: :employee
   enum :status, { disabled: 0, active: 1 }, default: :active
 
   has_many :tickets, dependent: :nullify
@@ -16,5 +16,15 @@ class User < ApplicationRecord
 
   def inactive_message
     active? ? super : :account_disabled
+  end
+
+  # Subscription state is synced from Stripe webhooks (see
+  # Webhooks::StripeController), never set directly from user input.
+  def subscribed?
+    %w[active trialing].include?(subscription_status)
+  end
+
+  def plan_definition
+    Plan.find(plan)
   end
 end

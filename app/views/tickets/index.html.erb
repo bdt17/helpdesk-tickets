@@ -1,38 +1,46 @@
-<div class="p-6">
-  <h1 class="text-2xl font-bold mb-4">All Tickets</h1>
-  <%= link_to 'New Ticket', new_ticket_path, class: 'bg-blue-500 text-white px-4 py-2 rounded mb-4 inline-block' %>
+<% content_for :title, "Tickets — Thomas IT Helpdesk" %>
+
+<div class="container-fluid py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">Tickets</h1>
+    <%= link_to "New Ticket", new_ticket_path, class: "btn btn-primary" %>
+  </div>
+
   <% if @tickets.any? %>
-    <table class="w-full border-collapse border">
-      <thead>
-        <tr class="bg-gray-200">
-          <th class="border p-2">ID</th>
-          <th class="border p-2">Title</th>
-          <th class="border p-2">Status</th>
-          <th class="border p-2">Priority</th>
-          <th class="border p-2">Category</th>
-          <th class="border p-2">Assigned To</th>
-          <th class="border p-2">Created</th>
-          <th class="border p-2">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @tickets.each do |ticket| %>
-          <tr>
-            <td class="border p-2"><%= ticket.id %></td>
-            <td class="border p-2"><%= link_to ticket.title, ticket_path(ticket) %></td>
-            <td class="border p-2"><%= ticket.status.humanize %></td>
-            <td class="border p-2"><%= ticket.priority.humanize %></td>
-            <td class="border p-2"><%= ticket.category&.humanize || "—" %></td>
-            <td class="border p-2"><%= ticket.assignee&.email || "Unassigned" %></td>
-            <td class="border p-2"><%= time_ago_in_words(ticket.created_at) %> ago</td>
-            <td class="border p-2">
-              <%= link_to 'Edit', edit_ticket_path(ticket), class: 'bg-yellow-500 text-white px-2 py-1 rounded text-sm' %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Title</th>
+              <th>Status</th>
+              <th>Priority</th>
+              <th>Category</th>
+              <th>Assigned To</th>
+              <th>Created</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @tickets.each do |ticket| %>
+              <tr>
+                <td><%= link_to ticket.title, ticket_path(ticket), class: "text-decoration-none fw-semibold" %></td>
+                <td><span class="badge <%= ticket_status_badge_class(ticket.status) %>"><%= ticket.status.humanize %></span></td>
+                <td><span class="badge <%= ticket_priority_badge_class(ticket.priority) %>"><%= ticket.priority.humanize %></span></td>
+                <td><%= ticket.category&.humanize || "—" %></td>
+                <td><%= ticket.assignee&.email || "Unassigned" %></td>
+                <td class="text-muted small"><%= time_ago_in_words(ticket.created_at) %> ago</td>
+                <td class="text-end"><%= link_to "Edit", edit_ticket_path(ticket), class: "btn btn-sm btn-outline-secondary" %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
   <% else %>
-    <p>No tickets yet. <%= link_to 'Create first ticket', new_ticket_path %>.</p>
+    <div class="card p-5 text-center text-muted">
+      <p class="mb-2">No tickets yet.</p>
+      <div><%= link_to "Create your first ticket", new_ticket_path, class: "btn btn-primary" %></div>
+    </div>
   <% end %>
 </div>

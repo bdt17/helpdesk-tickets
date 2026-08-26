@@ -1,10 +1,96 @@
-<h1>Thomas IT Helpdesk</h1>
+<% content_for :title, "Thomas Information Technology — Managed IT Help Desk" %>
 
-<% if user_signed_in? %>
-  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 400px;">
-    <%= link_to "Dashboard", dashboard_path, class: "bg-green-500 text-white px-6 py-3 rounded text-center block text-decoration-none" %>
-    <%= link_to "Tickets", tickets_path, class: "bg-blue-500 text-white px-6 py-3 rounded text-center block text-decoration-none" %>
-  </div>
-<% else %>
-  <p><%= link_to "Log in", new_user_session_path %> to view your tickets.</p>
-<% end %>
+<main class="landing-page">
+  <section class="hero text-center py-5 px-3">
+    <h1 class="display-5 fw-bold mb-3">Thomas Information Technology</h1>
+    <p class="lead mb-4">
+      A fully staffed IT help desk for your business — ticket tracking, real technicians,
+      and response times you can hold us to. No in-house IT team required.
+    </p>
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+      <% if user_signed_in? %>
+        <%= link_to "Go to Dashboard", dashboard_path, class: "btn btn-primary btn-lg px-4" %>
+      <% else %>
+        <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary btn-lg px-4" %>
+        <%= link_to "Log In", new_user_session_path, class: "btn btn-outline-light btn-lg px-4" %>
+      <% end %>
+      <a href="mailto:support@thomasinformationtechnology.com?subject=New%20Client%20Inquiry"
+         class="btn btn-outline-light btn-lg px-4">Talk to Us First</a>
+    </div>
+  </section>
+
+  <section class="py-5 px-3">
+    <div class="container">
+      <h2 class="text-center fw-bold mb-4">What we cover</h2>
+      <div class="row g-4">
+        <div class="col-md-3 col-6">
+          <div class="card h-100 p-3 text-center">
+            <i class="fas fa-desktop fa-2x brand mb-2"></i>
+            <h5>Hardware</h5>
+            <p class="text-muted small mb-0">Workstations, peripherals, on-site repairs</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="card h-100 p-3 text-center">
+            <i class="fas fa-laptop-code fa-2x brand mb-2"></i>
+            <h5>Software</h5>
+            <p class="text-muted small mb-0">Installs, licensing, day-to-day troubleshooting</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="card h-100 p-3 text-center">
+            <i class="fas fa-network-wired fa-2x brand mb-2"></i>
+            <h5>Network</h5>
+            <p class="text-muted small mb-0">Connectivity, Wi-Fi, VPN, outages</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="card h-100 p-3 text-center">
+            <i class="fas fa-user-shield fa-2x brand mb-2"></i>
+            <h5>Access</h5>
+            <p class="text-muted small mb-0">Accounts, permissions, password resets</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5 px-3" id="plans">
+    <div class="container">
+      <h2 class="text-center fw-bold mb-2">Support Plans</h2>
+      <p class="text-center text-muted mb-4">
+        Every plan is backed by the same response-time commitment we hold our own team to.
+      </p>
+      <div class="row g-4 justify-content-center">
+        <% Plan::ALL.each do |plan| %>
+          <div class="col-md-4">
+            <div class="card h-100 p-4 d-flex flex-column <%= "border-primary border-2" if plan.key == "business" %>">
+              <h4 class="brand"><%= plan.name %></h4>
+              <p class="text-muted small mb-1"><%= plan.display_price %></p>
+              <p class="text-muted small"><%= plan.tagline %></p>
+              <ul class="small mb-3">
+                <% plan.features.each do |feature| %>
+                  <li><%= feature %></li>
+                <% end %>
+              </ul>
+              <%= link_to "Get Started", new_user_registration_path,
+                           class: "btn #{plan.key == 'business' ? 'btn-primary' : 'btn-outline-primary'} mt-auto" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <p class="text-center text-muted small mt-4">
+        Pricing quoted per client based on team size — reach out and we'll put together a quote.
+      </p>
+    </div>
+  </section>
+
+  <section class="cta text-center py-5 px-3">
+    <h2 class="fw-bold mb-3">Ready to stop firefighting IT issues yourself?</h2>
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+      <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary btn-lg px-4" %>
+      <a href="mailto:support@thomasinformationtechnology.com?subject=New%20Client%20Inquiry"
+         class="btn btn-outline-primary btn-lg px-4">Contact Sales</a>
+    </div>
+  </section>
+</main>

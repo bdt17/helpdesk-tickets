@@ -57,11 +57,20 @@ group :development do
   gem "web-console"
 end
 
+group :development, :test do
+  # Loads STRIPE_* keys from .env locally; production reads real env vars
+  # set in the Render dashboard, so this gem never runs there.
+  gem "dotenv-rails"
+end
+
 
 gem "devise"
 gem "pundit"
 
 gem "redis", "~> 5.4"
+
+# Stripe billing for recurring client support plans
+gem "stripe", "~> 13.0"
 
 
 # Database (Clean - No Duplicates)
@@ -77,4 +86,6 @@ end
 group :test do
   gem "capybara"
   gem "selenium-webdriver"
+  # minitest 6 dropped Object#stub/Minitest::Mock into this separate gem
+  gem "minitest-mock"
 end

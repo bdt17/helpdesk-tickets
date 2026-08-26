@@ -3,6 +3,7 @@ require_relative "../config/environment"
 require "rails/test_help"
 require "capybara/rails"
 require "selenium/webdriver"
+require "minitest/mock" # minitest 6 split Object#stub/Minitest::Mock out — used to stub the Stripe SDK in tests
 
 module ActiveSupport
   class TestCase

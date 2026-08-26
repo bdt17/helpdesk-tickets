@@ -1,1 +1,19 @@
-<h1>Agents</h1><% @agents.each do |agent| %><p><%= agent.email %></p><% end %>
+<% content_for :title, "Agents — Thomas IT Helpdesk" %>
+
+<div class="container py-4" style="max-width: 640px;">
+  <h1 class="mb-4">Agents</h1>
+
+  <div class="card">
+    <ul class="list-group list-group-flush">
+      <% @agents.each do |agent| %>
+        <li class="list-group-item d-flex align-items-center gap-2">
+          <i class="fas fa-headset text-muted"></i>
+          <%= agent.email %>
+        </li>
+      <% end %>
+      <% if @agents.empty? %>
+        <li class="list-group-item text-muted">No agents yet.</li>
+      <% end %>
+    </ul>
+  </div>
+</div>

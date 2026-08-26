@@ -14,6 +14,16 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_not_includes @response.body, tickets(:two).title
   end
 
+  test "client only sees their own tickets" do
+    ticket = Ticket.create!(title: "Client owned issue", user: users(:client))
+
+    sign_in users(:client)
+    get tickets_url
+    assert_response :success
+    assert_includes @response.body, ticket.title
+    assert_not_includes @response.body, tickets(:one).title
+  end
+
   test "agent sees every ticket" do
     sign_in users(:agent)
     get tickets_url

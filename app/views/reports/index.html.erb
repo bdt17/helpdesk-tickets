@@ -1,2 +1,88 @@
-<h1>Reports#index</h1>
-<p>Find me in app/views/reports/index.html.erb</p>
+<% content_for :title, "Reports — Thomas IT Helpdesk" %>
+
+<div class="container-fluid py-4">
+  <h1 class="mb-4">Reports</h1>
+
+  <div class="row g-3 mb-4">
+    <div class="col-md-3">
+      <div class="card text-white bg-primary h-100">
+        <div class="card-body">
+          <h6 class="card-title">Total Tickets</h6>
+          <h2 class="fw-bold mb-0"><%= @total %></h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-danger h-100">
+        <div class="card-body">
+          <h6 class="card-title">Overdue</h6>
+          <h2 class="fw-bold mb-0"><%= @overdue_count %></h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-success h-100">
+        <div class="card-body">
+          <h6 class="card-title">Resolved (30 days)</h6>
+          <h2 class="fw-bold mb-0"><%= @resolved_last_30_days %></h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-white bg-secondary h-100">
+        <div class="card-body">
+          <h6 class="card-title">Open Now</h6>
+          <h2 class="fw-bold mb-0"><%= @by_status["open"] || 0 %></h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-header bg-white"><h5 class="mb-0">By Status</h5></div>
+        <div class="card-body">
+          <% Ticket.statuses.keys.each do |status| %>
+            <div class="d-flex justify-content-between align-items-center mb-2 p-2 bg-light rounded">
+              <span class="fw-semibold"><%= status.humanize %></span>
+              <span class="badge <%= ticket_status_badge_class(status) %> px-3 py-2"><%= @by_status[status] || 0 %></span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-header bg-white"><h5 class="mb-0">By Priority</h5></div>
+        <div class="card-body">
+          <% Ticket.priorities.keys.each do |priority| %>
+            <div class="d-flex justify-content-between align-items-center mb-2 p-2 bg-light rounded">
+              <span class="fw-semibold"><%= priority.humanize %></span>
+              <span class="badge <%= ticket_priority_badge_class(priority) %> px-3 py-2"><%= @by_priority[priority] || 0 %></span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-header bg-white"><h5 class="mb-0">By Category</h5></div>
+        <div class="card-body">
+          <% if @by_category.any? %>
+            <% @by_category.each do |category, count| %>
+              <div class="d-flex justify-content-between align-items-center mb-2 p-2 bg-light rounded">
+                <span class="fw-semibold"><%= category&.humanize || "Uncategorized" %></span>
+                <span class="badge bg-secondary px-3 py-2"><%= count %></span>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-muted mb-0">No tickets yet.</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
