@@ -23,7 +23,7 @@ class BillingController < ApplicationController
       mode: "subscription",
       line_items: [ { price: Plan.price_id_for(plan.key), quantity: 1 } ],
       success_url: billing_success_url,
-      cancel_url: billing_path
+      cancel_url: billing_url
     )
 
     redirect_to session.url, allow_other_host: true

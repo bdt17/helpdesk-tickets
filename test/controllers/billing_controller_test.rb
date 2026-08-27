@@ -28,10 +28,11 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     sign_in client
     fake_customer = OpenStruct.new(id: "cus_123")
     fake_session = OpenStruct.new(url: "https://checkout.stripe.com/test-session")
+    captured_args = nil
 
     Stripe::Customer.stub(:create, fake_customer) do
       Plan.stub(:price_id_for, "price_basic_test") do
-        Stripe::Checkout::Session.stub(:create, fake_session) do
+        Stripe::Checkout::Session.stub(:create, ->(**kwargs) { captured_args = kwargs; fake_session }) do
           post billing_checkout_url(plan: "basic")
         end
       end
@@ -39,6 +40,11 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to fake_session.url
     assert_equal "cus_123", client.reload.stripe_customer_id
+    # Stripe rejects relative paths here (real API call, not just our own
+    # routing) — assert absolute URLs so a `_path` vs `_url` helper mixup
+    # like this controller once had can't slip through a mocked stub again.
+    assert_match %r{\Ahttps?://}, captured_args[:success_url]
+    assert_match %r{\Ahttps?://}, captured_args[:cancel_url]
   end
 
   test "checkout redirects back with an alert for an unknown plan" do
