@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_26_024627) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_26_194235) do
   create_table "comments", force: :cascade do |t|
     t.text "body", null: false
     t.datetime "created_at", null: false
@@ -20,54 +20,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_024627) do
     t.integer "user_id", null: false
     t.index ["ticket_id"], name: "index_comments_on_ticket_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
-  end
-
-  create_table "devices", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.date "eol_date"
-    t.string "ip_address"
-    t.string "mac_address"
-    t.string "model"
-    t.string "name"
-    t.string "serial"
-    t.integer "site_id", null: false
-    t.string "snmp_community"
-    t.integer "status"
-    t.datetime "updated_at", null: false
-    t.string "vendor"
-    t.index ["site_id"], name: "index_devices_on_site_id"
-  end
-
-  create_table "drivers", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.decimal "latitude", precision: 10, scale: 6
-    t.decimal "longitude", precision: 10, scale: 6
-    t.string "name"
-    t.string "status"
-    t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
-    t.index ["user_id"], name: "index_drivers_on_user_id"
-  end
-
-  create_table "shipments", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.string "delivery_location"
-    t.integer "driver_id"
-    t.string "pickup_location"
-    t.integer "status"
-    t.text "temperature_logs"
-    t.string "tracking_number"
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "sites", force: :cascade do |t|
-    t.string "address"
-    t.datetime "created_at", null: false
-    t.float "latitude"
-    t.float "longitude"
-    t.string "manager"
-    t.string "name"
-    t.datetime "updated_at", null: false
   end
 
   create_table "solid_queue_blocked_executions", force: :cascade do |t|
@@ -191,20 +143,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_024627) do
     t.index ["key"], name: "index_solid_queue_semaphores_on_key", unique: true
   end
 
-  create_table "swap_tickets", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.integer "device_id", null: false
-    t.text "notes"
-    t.string "priority"
-    t.date "scheduled_date"
-    t.integer "site_id", null: false
-    t.string "status"
-    t.datetime "updated_at", null: false
-    t.string "vendor_po"
-    t.index ["device_id"], name: "index_swap_tickets_on_device_id"
-    t.index ["site_id"], name: "index_swap_tickets_on_site_id"
-  end
-
   create_table "tickets", force: :cascade do |t|
     t.integer "assignee_id"
     t.string "category"
@@ -250,16 +188,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_024627) do
 
   add_foreign_key "comments", "tickets"
   add_foreign_key "comments", "users"
-  add_foreign_key "devices", "sites"
-  add_foreign_key "drivers", "users"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_failed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_ready_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_recurring_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
-  add_foreign_key "swap_tickets", "devices"
-  add_foreign_key "swap_tickets", "sites"
   add_foreign_key "tickets", "users"
   add_foreign_key "tickets", "users", column: "assignee_id"
 end
