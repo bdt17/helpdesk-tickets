@@ -18,6 +18,7 @@ class Ticket < ApplicationRecord
   before_save :set_resolved_at, if: :will_save_change_to_status?
   before_save :clear_escalation_on_reopen, if: :will_save_change_to_status?
   before_save :set_due_at, if: :will_save_change_to_priority?
+  after_create_commit :enqueue_ai_categorization, if: -> { category.blank? }
 
   def overdue?
     due_at.present? && due_at < Time.current && !resolved? && !closed?
@@ -38,5 +39,9 @@ class Ticket < ApplicationRecord
 
   def set_due_at
     self.due_at = Time.current + SLA_WINDOWS.fetch(priority.to_sym)
+  end
+
+  def enqueue_ai_categorization
+    TicketCategorizationJob.perform_later(id)
   end
 end

@@ -24,7 +24,6 @@ Rails.application.routes.draw do
   post "/billing/portal", to: "billing#portal", as: :billing_portal
 
   namespace :api do
-    resources :tickets, only: [ :index ]
     get "ai/status", to: "ai#status", as: :ai_status
   end
 

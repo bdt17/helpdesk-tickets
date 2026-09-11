@@ -22,6 +22,9 @@
   <div class="form-group mb-3">
     <%= f.label :category, class: "form-label" %>
     <%= f.select :category, Ticket::CATEGORIES, { include_blank: true }, class: "form-select" %>
+    <% if TicketCategorizer.configured? %>
+      <div class="form-text">Leave blank and we'll suggest one automatically.</div>
+    <% end %>
   </div>
 
   <% if policy(ticket).update? && (current_user.agent? || current_user.admin?) %>
