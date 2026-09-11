@@ -27,4 +27,43 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert user.client?
     assert_not user.admin?
   end
+
+  test "account edit page requires authentication" do
+    get edit_user_registration_url
+    assert_redirected_to new_user_session_url
+  end
+
+  test "a signed-in user can change their own email with their current password" do
+    user = users(:client)
+    sign_in user
+
+    patch user_registration_url, params: {
+      user: { email: "new-address@example.com", current_password: "password123" }
+    }
+
+    assert_redirected_to dashboard_url
+    assert_equal "new-address@example.com", user.reload.email
+  end
+
+  test "changing email fails without the correct current password" do
+    user = users(:client)
+    sign_in user
+
+    patch user_registration_url, params: {
+      user: { email: "new-address@example.com", current_password: "wrong-password" }
+    }
+
+    assert_equal "client-fixture@example.com", user.reload.email
+  end
+
+  test "role cannot be changed through the account edit form" do
+    user = users(:client)
+    sign_in user
+
+    patch user_registration_url, params: {
+      user: { role: "admin", current_password: "password123" }
+    }
+
+    assert_not user.reload.admin?
+  end
 end

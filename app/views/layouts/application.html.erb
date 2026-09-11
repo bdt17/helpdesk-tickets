@@ -96,6 +96,7 @@
             <% if current_user.client? %>
               <%= link_to "Billing", billing_path, class: "btn btn-outline-light btn-sm px-4 me-2" %>
             <% end %>
+            <%= link_to "Account", edit_user_registration_path, class: "btn btn-outline-light btn-sm px-4 me-2" %>
             <%= button_to "Log Out", destroy_user_session_path, method: :delete, class: "btn btn-primary btn-sm px-4" %>
           <% else %>
             <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-outline-light px-4 py-2 me-2" %>
