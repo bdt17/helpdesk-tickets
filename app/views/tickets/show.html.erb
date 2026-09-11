@@ -26,6 +26,21 @@
       <div class="mb-3"><%= simple_format(@ticket.description) %></div>
     <% end %>
 
+    <% if @ticket.attachments.attached? %>
+      <div class="mb-3">
+        <h2 class="h6 mb-2">Attachments</h2>
+        <ul class="list-unstyled small mb-0">
+          <% @ticket.attachments.each do |attachment| %>
+            <li>
+              <i class="fa-solid fa-paperclip text-muted"></i>
+              <%= link_to attachment.filename.to_s, ticket_attachment_path(@ticket, attachment) %>
+              <span class="text-muted">(<%= number_to_human_size(attachment.byte_size) %>)</span>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
     <div class="d-flex gap-2">
       <% if policy(@ticket).update? %>
         <%= link_to "Edit", edit_ticket_path(@ticket), class: "btn btn-outline-secondary btn-sm" %>

@@ -37,8 +37,12 @@ class TicketsController < ApplicationController
   def update
     authorize @ticket
     was_open = !(@ticket.resolved? || @ticket.closed?)
-
-    if @ticket.update(ticket_params)
+    # Attached separately from the rest of ticket_params, and always via
+    # .attach (append), never mass-assignment (which would replace every
+    # existing attachment) - see attach_uploaded_files. Short-circuits
+    # before touching the rest of ticket_params if the attachment itself
+    # was rejected, so nothing about a bad upload gets a false "Updated!".
+    if attach_uploaded_files(@ticket) && @ticket.update(ticket_params.except(:attachments))
       notify_resolution(@ticket) if was_open && (@ticket.resolved? || @ticket.closed?)
       redirect_to tickets_path, notice: "Updated!"
     else
@@ -63,6 +67,29 @@ class TicketsController < ApplicationController
 
   private
 
+  # has_many_attached's normal writer (mass-assignment via ticket_params)
+  # REPLACES the whole attachment set, which is exactly right for #create
+  # (a brand-new ticket has nothing to replace) but wrong for #update -
+  # uploading one more screenshot would silently delete every earlier one.
+  # .attach always appends instead, regardless of how many are already there.
+  #
+  # Returns whether the attach actually succeeded. For an already-persisted,
+  # otherwise-unchanged record (always true for @ticket at this point in
+  # #update - this runs before ticket_params touches anything else),
+  # Attached::Many#attach calls record.save internally, which runs this
+  # model's own validations (including attachments_are_valid) before
+  # anything is written - an invalid file (wrong type, too big, too many)
+  # is never persisted at all, it just leaves ticket.errors populated and
+  # returns without raising. Checking that here is what stops a rejected
+  # upload from silently vanishing behind a false "Updated!".
+  def attach_uploaded_files(ticket)
+    files = Array(params.dig(:ticket, :attachments)).reject(&:blank?)
+    return true if files.empty?
+
+    ticket.attachments.attach(files)
+    ticket.errors.empty?
+  end
+
   def notify_resolution(ticket)
     return if ticket.user.nil? || ticket.user == current_user
 
@@ -76,7 +103,7 @@ class TicketsController < ApplicationController
   end
 
   def ticket_params
-    permitted = params.require(:ticket).permit(:title, :description, :category)
+    permitted = params.require(:ticket).permit(:title, :description, :category, attachments: [])
     if current_user.agent? || current_user.admin?
       permitted.merge!(params.require(:ticket).permit(:status, :priority, :assignee_id))
     end

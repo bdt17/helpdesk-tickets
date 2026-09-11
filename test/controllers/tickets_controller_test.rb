@@ -77,6 +77,50 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal users(:agent), ticket.assignee
   end
 
+  test "can attach a file when creating a ticket" do
+    sign_in users(:employee)
+
+    assert_difference("Ticket.count", 1) do
+      post tickets_url, params: { ticket: { title: "Issue with screenshot", attachments: [ fixture_file_upload("test_image.png", "image/png") ] } }
+    end
+
+    assert Ticket.last.attachments.attached?
+    assert_equal 1, Ticket.last.attachments.count
+  end
+
+  test "uploading a disallowed file type on create re-renders with an error and creates nothing" do
+    sign_in users(:employee)
+
+    assert_no_difference("Ticket.count") do
+      post tickets_url, params: { ticket: { title: "Issue", attachments: [ fixture_file_upload("disallowed.html", "text/html") ] } }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
+  test "uploading another attachment on update appends rather than replaces" do
+    sign_in users(:employee)
+    ticket = tickets(:one)
+    ticket.attachments.attach(io: file_fixture("test_note.txt").open, filename: "existing.txt", content_type: "text/plain")
+
+    patch ticket_url(ticket), params: { ticket: { attachments: [ fixture_file_upload("test_image.png", "image/png") ] } }
+
+    ticket.reload
+    assert_equal 2, ticket.attachments.count
+    assert_includes ticket.attachments.map { |a| a.filename.to_s }, "existing.txt"
+    assert_includes ticket.attachments.map { |a| a.filename.to_s }, "test_image.png"
+  end
+
+  test "an invalid attachment on update is rejected, not silently dropped with a false success" do
+    sign_in users(:employee)
+    ticket = tickets(:one)
+
+    patch ticket_url(ticket), params: { ticket: { attachments: [ fixture_file_upload("disallowed.html", "text/html") ] } }
+
+    assert_response :unprocessable_entity
+    refute ticket.reload.attachments.attached?
+  end
+
   test "agent cannot set a client's ticket priority above their plan's limit" do
     organization = Organization.create!(name: "Acme", plan: "basic", subscription_status: "active")
     client = users(:client)

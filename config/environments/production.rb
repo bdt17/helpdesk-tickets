@@ -32,6 +32,17 @@ Rails.application.configure do
   # connects_to override is needed.
   config.active_job.queue_adapter = :solid_queue
 
+  # Ticket attachments (see Ticket#attachments). Local disk, same as
+  # dev/test - this makes uploads work immediately, but Render's web
+  # service filesystem is ephemeral by default: anything under `storage/`
+  # is wiped on every redeploy unless a persistent disk is attached
+  # (Render add-on) or this is switched to an S3-compatible service in
+  # config/storage.yml, neither of which this codebase can set up on its
+  # own since both need real infrastructure/credentials this app doesn't
+  # have. Don't treat client-uploaded attachments as durable until one of
+  # those is actually in place.
+  config.active_storage.service = :local
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
