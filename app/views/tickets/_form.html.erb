@@ -36,6 +36,12 @@
     <div class="form-group mb-3">
       <%= f.label :priority, class: "form-label" %>
       <%= f.select :priority, Ticket.priorities.keys, {}, class: "form-select" %>
+      <% if ticket.user&.client? %>
+        <div class="form-text">
+          <%= ticket.user.plan_definition&.name || "This client's" %> plan allows up to
+          <strong><%= ticket.user.max_ticket_priority %></strong> priority.
+        </div>
+      <% end %>
     </div>
 
     <div class="form-group mb-3">
