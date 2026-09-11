@@ -31,6 +31,10 @@ Rails.application.routes.draw do
   get "/billing/success", to: "billing#success", as: :billing_success
   post "/billing/portal", to: "billing#portal", as: :billing_portal
 
+  get "/team", to: "team#index", as: :team
+  post "/team", to: "team#create", as: :team_invite
+  delete "/team/:id", to: "team#destroy", as: :team_member
+
   namespace :api do
     get "ai/status", to: "ai#status", as: :ai_status
   end

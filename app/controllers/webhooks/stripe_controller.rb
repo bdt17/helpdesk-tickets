@@ -1,8 +1,10 @@
 module Webhooks
-  # The single source of truth for a client's subscription state. Stripe
-  # calls this from its own servers (no session/cookie), so it's outside
-  # Devise/Pundit entirely and authenticates the request via Stripe's
-  # signature on the payload instead of a login.
+  # The single source of truth for an organization's subscription state
+  # (Phase 12 moved billing off the individual User and onto Organization,
+  # so a subscription can cover multiple seats). Stripe calls this from
+  # its own servers (no session/cookie), so it's outside Devise/Pundit
+  # entirely and authenticates the request via Stripe's signature on the
+  # payload instead of a login.
   class StripeController < ActionController::Base
     skip_before_action :verify_authenticity_token
 
@@ -41,11 +43,11 @@ module Webhooks
     end
 
     def sync_subscription(subscription)
-      user = User.find_by(stripe_customer_id: subscription.customer)
-      return unless user # unknown customer — nothing in our system to update
+      organization = Organization.find_by(stripe_customer_id: subscription.customer)
+      return unless organization # unknown customer — nothing in our system to update
 
       price_id = subscription.items.data.first&.price&.id
-      user.update!(
+      organization.update!(
         stripe_subscription_id: subscription.id,
         subscription_status: subscription.status,
         plan: Plan.key_for_price_id(price_id)
