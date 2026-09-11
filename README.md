@@ -1,16 +1,62 @@
-# Thomas IT Helpdesk - Production Ready
+# Thomas IT Helpdesk
 
-## Agent Login
-- URL: https://helpdesk-tickets-zyfh.onrender.com/users/sign_in
-- Email: agent1@thomasit.com 
-- Password: [ROTATED - Check Render console or admin]
+A support-ticket helpdesk for Thomas Information Technology, with client
+self-service, team/multi-seat Stripe billing, SLA escalation, and AI
+ticket categorization. Deployed at
+`https://thomasinformationtechnology.com`.
 
-## Security Status
-✅ Devise Lockable (Phase 6)
-✅ 302 Route Protection
-✅ API Key Auth (Phase 7)
+## Roles
 
-## Manual Testing
-1. Login → Dashboard → Open Tickets: 8
-2. /tickets → Pharma table (Pfizer/FDA)
-3. /api/tickets → JSON endpoint
+- **client** — self-service sign-up (`/signup`). Sees only their own
+  organization's tickets, manages billing if they're the organization
+  owner, can rate a resolved ticket (CSAT).
+- **employee** — internal Thomas IT staff filing their own tickets.
+- **agent** / **admin** — see and work every ticket, plus `/agents`,
+  `/reports`, and the `/api/ai/status` endpoint. Only `admin` can delete a
+  ticket. Provisioning is still CLI/rake-based — there's no admin UI for
+  creating staff accounts yet.
+
+## Billing (Phase 12: team billing)
+
+Subscription state lives on `Organization`, not `User` — a client's first
+checkout creates their own organization; the owner can invite teammates
+(`/team`), who share the same plan and see the same tickets, but only the
+owner can change plans or open the Stripe billing portal. See
+`Plan::ALL` in `app/models/plan.rb` for the three tiers.
+
+## AI ticket categorization (Phase 14)
+
+`TicketCategorizer` calls the Claude API to suggest a category for any
+ticket a client leaves uncategorized, run async via `TicketCategorizationJob`
+so it can never slow down or fail ticket creation. Requires
+`ANTHROPIC_API_KEY`; with no key set, it's a no-op. `/api/ai/status`
+(staff-only) reports whether it's configured and how many tickets it has
+actually categorized.
+
+## Real-time updates (Phase 10)
+
+Ticket escalations and successful AI categorizations broadcast over
+Action Cable (`TicketUpdatesChannel`) and show up as a dismissible banner
+for staff. Production uses Solid Cable (not Redis — nothing else in this
+app needs a Redis service), running in the same database as everything
+else.
+
+## Running locally
+
+```
+bin/setup
+bin/rails db:seed  # employee@thomasit.com / agent@thomasit.com / admin@thomasit.com, password "changeme123"
+bin/rails server
+```
+
+Copy `.env.example` to `.env` for Stripe test keys. Run `bin/rails
+stripe:setup_plans` once to create the three Stripe Prices and print the
+`STRIPE_PRICE_*` env vars to set.
+
+## Tests
+
+```
+bin/rails test        # unit/integration
+bin/rails test:system # Capybara/system tests
+bin/ci                 # full CI suite (also runs in GitHub Actions)
+```

@@ -1,18 +1,32 @@
 <% content_for :title, "Billing — Thomas IT Helpdesk" %>
 
 <div class="container py-4">
-  <h1 class="mb-4">Billing</h1>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">Billing</h1>
+    <% if current_user.org_owner? %>
+      <%= link_to "Manage Team", team_path, class: "btn btn-outline-secondary btn-sm" %>
+    <% end %>
+  </div>
+
+  <% if @organization && !current_user.org_owner? %>
+    <div class="alert alert-info">
+      You're on <strong><%= @organization.owner&.email || "your organization" %>'s</strong> plan as a team member.
+      Only the account owner can change plans or payment details.
+    </div>
+  <% end %>
 
   <% if current_user.subscribed? %>
     <div class="card p-4 mb-4">
       <h4 class="brand mb-1">
-        Current plan: <%= current_user.plan_definition&.name || current_user.plan&.humanize %>
+        Current plan: <%= current_user.plan_definition&.name || @organization.plan&.humanize %>
       </h4>
-      <p class="text-muted mb-3">Status: <%= current_user.subscription_status.humanize %></p>
-      <%= button_to "Manage Billing", billing_portal_path, method: :post,
-                     class: "btn btn-primary", form: { class: "d-inline" } %>
+      <p class="text-muted mb-3">Status: <%= @organization.subscription_status.humanize %></p>
+      <% if current_user.org_owner? %>
+        <%= button_to "Manage Billing", billing_portal_path, method: :post,
+                       class: "btn btn-primary", form: { class: "d-inline" } %>
+      <% end %>
     </div>
-  <% elsif current_user.stripe_customer_id.present? %>
+  <% elsif @organization&.stripe_customer_id.present? && current_user.org_owner? %>
     <div class="alert alert-warning">
       No active subscription — pick a plan below to get started, or
       <%= button_to "manage billing", billing_portal_path, method: :post,
@@ -20,26 +34,28 @@
     </div>
   <% end %>
 
-  <div class="row g-4">
-    <% @plans.each do |plan| %>
-      <div class="col-md-4">
-        <div class="card h-100 p-4 d-flex flex-column">
-          <h4 class="brand"><%= plan.name %></h4>
-          <p class="text-muted small mb-1"><%= plan.display_price %></p>
-          <p class="text-muted small"><%= plan.tagline %></p>
-          <ul class="small mb-3">
-            <% plan.features.each do |feature| %>
-              <li><%= feature %></li>
+  <% if current_user.org_owner? || @organization.nil? %>
+    <div class="row g-4">
+      <% @plans.each do |plan| %>
+        <div class="col-md-4">
+          <div class="card h-100 p-4 d-flex flex-column">
+            <h4 class="brand"><%= plan.name %></h4>
+            <p class="text-muted small mb-1"><%= plan.display_price %></p>
+            <p class="text-muted small"><%= plan.tagline %></p>
+            <ul class="small mb-3">
+              <% plan.features.each do |feature| %>
+                <li><%= feature %></li>
+              <% end %>
+            </ul>
+            <% if @organization&.plan == plan.key && current_user.subscribed? %>
+              <span class="badge bg-success align-self-start mt-auto">Current Plan</span>
+            <% else %>
+              <%= button_to "Subscribe", billing_checkout_path(plan: plan.key), method: :post,
+                             class: "btn btn-primary mt-auto", form: { class: "d-inline" } %>
             <% end %>
-          </ul>
-          <% if current_user.plan == plan.key && current_user.subscribed? %>
-            <span class="badge bg-success align-self-start mt-auto">Current Plan</span>
-          <% else %>
-            <%= button_to "Subscribe", billing_checkout_path(plan: plan.key), method: :post,
-                           class: "btn btn-primary mt-auto", form: { class: "d-inline" } %>
-          <% end %>
+          </div>
         </div>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>

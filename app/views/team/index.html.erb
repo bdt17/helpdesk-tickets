@@ -1,0 +1,45 @@
+<% content_for :title, "Team — Thomas IT Helpdesk" %>
+
+<div class="container py-4" style="max-width: 640px;">
+  <%= link_to "← Back to billing", billing_path, class: "text-decoration-none small text-muted" %>
+
+  <h1 class="mb-1 mt-2">Team</h1>
+  <p class="text-muted mb-4"><%= @organization.name %> &middot; <%= @organization.plan_definition&.name || "No plan yet" %></p>
+
+  <div class="card p-4 mb-4">
+    <h2 class="h6 mb-3">Invite a teammate</h2>
+    <%= form_with url: team_invite_path, method: :post, local: true, class: "d-flex gap-2" do |f| %>
+      <%= f.email_field :email, class: "form-control", placeholder: "teammate@company.com", required: true %>
+      <%= f.submit "Invite", class: "btn btn-primary text-nowrap" %>
+    <% end %>
+    <small class="text-muted d-block mt-2">They'll get an email to set their own password and share this organization's plan.</small>
+  </div>
+
+  <div class="card p-0">
+    <div class="table-responsive">
+      <table class="table mb-0">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Role</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @members.each do |member| %>
+            <tr>
+              <td><%= member.email %></td>
+              <td><span class="badge <%= member.org_owner? ? "bg-primary" : "bg-secondary" %>"><%= member.org_role&.humanize %></span></td>
+              <td class="text-end">
+                <% unless member == current_user %>
+                  <%= button_to "Remove", team_member_path(member), method: :delete, class: "btn btn-outline-danger btn-sm",
+                                data: { turbo_confirm: "Remove #{member.email} from the team?" } %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -13,4 +13,10 @@ class RegistrationsController < Devise::RegistrationsController
   def after_sign_up_path_for(resource)
     new_ticket_path
   end
+
+  # Devise's default already redirects home after a password/email change;
+  # send everyone back to their own dashboard instead, whatever their role.
+  def after_update_path_for(resource)
+    dashboard_path
+  end
 end

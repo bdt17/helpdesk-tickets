@@ -22,6 +22,9 @@
   <div class="form-group mb-3">
     <%= f.label :category, class: "form-label" %>
     <%= f.select :category, Ticket::CATEGORIES, { include_blank: true }, class: "form-select" %>
+    <% if TicketCategorizer.configured? %>
+      <div class="form-text">Leave blank and we'll suggest one automatically.</div>
+    <% end %>
   </div>
 
   <% if policy(ticket).update? && (current_user.agent? || current_user.admin?) %>
@@ -33,6 +36,12 @@
     <div class="form-group mb-3">
       <%= f.label :priority, class: "form-label" %>
       <%= f.select :priority, Ticket.priorities.keys, {}, class: "form-select" %>
+      <% if ticket.user&.client? %>
+        <div class="form-text">
+          <%= ticket.user.plan_definition&.name || "This client's" %> plan allows up to
+          <strong><%= ticket.user.max_ticket_priority %></strong> priority.
+        </div>
+      <% end %>
     </div>
 
     <div class="form-group mb-3">

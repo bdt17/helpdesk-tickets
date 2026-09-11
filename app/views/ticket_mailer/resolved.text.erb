@@ -1,0 +1,5 @@
+Hi <%= @recipient.email %>,
+
+Your ticket #<%= @ticket.id %> <%= @ticket.title %> has been marked <%= @ticket.status.humanize.downcase %>.
+
+View ticket and leave feedback: <%= ticket_url(@ticket) %>

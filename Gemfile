@@ -67,8 +67,6 @@ end
 gem "devise"
 gem "pundit"
 
-gem "redis", "~> 5.4"
-
 # Stripe billing for recurring client support plans
 gem "stripe", "~> 13.0"
 

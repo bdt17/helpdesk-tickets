@@ -65,6 +65,80 @@ class TicketTest < ActiveSupport::TestCase
     refute overdue_but_resolved.overdue?
   end
 
+  test "staff/employee tickets are never plan-limited on priority" do
+    ticket = tickets(:one) # owned by users(:employee), not a client
+    ticket.priority = :critical
+    assert ticket.valid?
+  end
+
+  test "an unsubscribed client is capped at medium priority" do
+    client = User.create!(email: "unsubbed@example.com", password: "password123", role: :client)
+    ticket = Ticket.create!(title: "Issue", user: client, priority: :low)
+
+    ticket.priority = :medium
+    assert ticket.valid?
+
+    ticket.priority = :high
+    refute ticket.valid?
+    assert_includes ticket.errors[:priority].join, "exceeds"
+  end
+
+  test "Basic and Business plans cap out at high priority" do
+    organization = Organization.create!(name: "Acme", plan: "basic", subscription_status: "active")
+    client = User.create!(email: "basic-client@example.com", password: "password123", role: :client, organization: organization, org_role: "owner")
+    ticket = Ticket.create!(title: "Issue", user: client, priority: :medium)
+
+    ticket.priority = :high
+    assert ticket.valid?
+
+    ticket.priority = :critical
+    refute ticket.valid?
+
+    organization.update!(plan: "business")
+    ticket.priority = :critical
+    refute ticket.valid?
+  end
+
+  test "the Priority plan unlocks critical priority" do
+    organization = Organization.create!(name: "Acme", plan: "priority", subscription_status: "active")
+    client = User.create!(email: "priority-client@example.com", password: "password123", role: :client, organization: organization, org_role: "owner")
+    ticket = Ticket.create!(title: "Issue", user: client, priority: :medium)
+
+    ticket.priority = :critical
+    assert ticket.valid?
+  end
+
+  test "does not re-validate priority against the plan on an unrelated update" do
+    organization = Organization.create!(name: "Acme", plan: "priority", subscription_status: "active")
+    client = User.create!(email: "downgrading-client@example.com", password: "password123", role: :client, organization: organization, org_role: "owner")
+    ticket = Ticket.create!(title: "Issue", user: client, priority: :critical)
+
+    organization.update!(plan: "basic") # client downgrades after the fact
+
+    ticket.status = :resolved
+    assert ticket.valid?, "a status-only change shouldn't be blocked by a priority set before the downgrade"
+  end
+
+  test "rateable? only once resolved or closed and not yet rated" do
+    ticket = tickets(:one)
+    refute ticket.rateable? # still open
+
+    ticket.update!(status: :resolved)
+    assert ticket.rateable?
+
+    ticket.update!(satisfaction_rating: 5)
+    refute ticket.rateable? # already rated
+  end
+
+  test "satisfaction_rating must be between 1 and 5" do
+    ticket = tickets(:one)
+    ticket.satisfaction_rating = 6
+    refute ticket.valid?
+
+    ticket.satisfaction_rating = 5
+    assert ticket.valid?
+  end
+
   test "escalated_at is cleared when a resolved ticket is reopened, but not on a plain status change" do
     ticket = tickets(:stale_high_priority)
     ticket.update!(escalated_at: Time.current, status: :in_progress)

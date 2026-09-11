@@ -38,6 +38,20 @@
     </div>
   </div>
 
+  <div class="row g-3 mb-4">
+    <div class="col-md-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <h6 class="card-title text-muted">CSAT Average</h6>
+          <h2 class="fw-bold mb-0">
+            <%= @csat_average ? "#{@csat_average} / 5" : "—" %>
+          </h2>
+          <small class="text-muted"><%= @csat_responses %> response<%= "s" unless @csat_responses == 1 %></small>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="row g-4">
     <div class="col-lg-4">
       <div class="card shadow-sm h-100">
@@ -81,6 +95,41 @@
           <% else %>
             <p class="text-muted mb-0">No tickets yet.</p>
           <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4 mt-1">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-header bg-white"><h5 class="mb-0">Agent Performance</h5></div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-striped mb-0">
+              <thead>
+                <tr>
+                  <th>Agent</th>
+                  <th>Open</th>
+                  <th>Resolved</th>
+                  <th>Avg. resolution time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @agent_performance.each do |row| %>
+                  <tr>
+                    <td><%= row[:agent].email %></td>
+                    <td><%= row[:open] %></td>
+                    <td><%= row[:resolved] %></td>
+                    <td><%= row[:avg_resolution_hours] ? "#{row[:avg_resolution_hours]} hrs" : "—" %></td>
+                  </tr>
+                <% end %>
+                <% if @agent_performance.empty? %>
+                  <tr><td colspan="4" class="text-muted text-center py-3">No agents yet.</td></tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

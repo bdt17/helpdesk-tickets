@@ -37,6 +37,31 @@
     </div>
   </div>
 
+  <% if policy(@ticket).rate? %>
+    <div class="card p-3 mb-3 border-primary">
+      <h2 class="h6 mb-2">How did we do?</h2>
+      <%= form_with url: ticket_satisfaction_path(@ticket), method: :patch do |f| %>
+        <div class="btn-group mb-2" role="group" aria-label="Satisfaction rating">
+          <% (1..5).each do |n| %>
+            <input type="radio" class="btn-check" name="ticket[satisfaction_rating]" id="rating_<%= n %>" value="<%= n %>" required>
+            <label class="btn btn-outline-primary" for="rating_<%= n %>"><%= n %></label>
+          <% end %>
+        </div>
+        <div class="form-group mb-2">
+          <%= text_area_tag "ticket[satisfaction_comment]", nil, class: "form-control", rows: 2, placeholder: "Anything you'd like to add? (optional)" %>
+        </div>
+        <%= submit_tag "Submit feedback", class: "btn btn-primary btn-sm" %>
+      <% end %>
+    </div>
+  <% elsif @ticket.satisfaction_rating.present? %>
+    <div class="card p-3 mb-3 bg-light">
+      <span class="small text-muted">Your rating: <strong><%= @ticket.satisfaction_rating %>/5</strong></span>
+      <% if @ticket.satisfaction_comment.present? %>
+        <p class="mb-0 mt-1"><%= @ticket.satisfaction_comment %></p>
+      <% end %>
+    </div>
+  <% end %>
+
   <h2 class="h5 mb-3">Comments</h2>
   <% @comments.each do |comment| %>
     <div class="card p-3 mb-2">

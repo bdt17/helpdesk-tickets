@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_26_194235) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_11_021650) do
   create_table "comments", force: :cascade do |t|
     t.text "body", null: false
     t.datetime "created_at", null: false
@@ -20,6 +20,28 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_194235) do
     t.integer "user_id", null: false
     t.index ["ticket_id"], name: "index_comments_on_ticket_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "organizations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.string "plan"
+    t.string "stripe_customer_id"
+    t.string "stripe_subscription_id"
+    t.string "subscription_status"
+    t.datetime "updated_at", null: false
+    t.index ["stripe_customer_id"], name: "index_organizations_on_stripe_customer_id", unique: true
+    t.index ["stripe_subscription_id"], name: "index_organizations_on_stripe_subscription_id", unique: true
+  end
+
+  create_table "solid_cable_messages", force: :cascade do |t|
+    t.binary "channel", limit: 1024, null: false
+    t.integer "channel_hash", limit: 8, null: false
+    t.datetime "created_at", null: false
+    t.binary "payload", limit: 536870912, null: false
+    t.index ["channel"], name: "index_solid_cable_messages_on_channel"
+    t.index ["channel_hash"], name: "index_solid_cable_messages_on_channel_hash"
+    t.index ["created_at"], name: "index_solid_cable_messages_on_created_at"
   end
 
   create_table "solid_queue_blocked_executions", force: :cascade do |t|
@@ -146,12 +168,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_194235) do
   create_table "tickets", force: :cascade do |t|
     t.integer "assignee_id"
     t.string "category"
+    t.string "category_source", default: "manual", null: false
     t.datetime "created_at", null: false
     t.text "description"
     t.datetime "due_at"
     t.datetime "escalated_at"
     t.string "priority", default: "medium", null: false
     t.datetime "resolved_at"
+    t.text "satisfaction_comment"
+    t.integer "satisfaction_rating"
     t.string "status", default: "open", null: false
     t.string "title"
     t.datetime "updated_at", null: false
@@ -167,22 +192,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_194235) do
     t.string "encrypted_password"
     t.integer "failed_attempts", default: 0, null: false
     t.datetime "locked_at"
-    t.string "plan"
+    t.string "org_role"
+    t.integer "organization_id"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
     t.string "role", default: "employee", null: false
     t.integer "status", default: 1, null: false
-    t.string "stripe_customer_id"
-    t.string "stripe_subscription_id"
-    t.string "subscription_status"
     t.string "unlock_token"
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["encrypted_password"], name: "index_users_on_encrypted_password"
+    t.index ["organization_id"], name: "index_users_on_organization_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token"
-    t.index ["stripe_customer_id"], name: "index_users_on_stripe_customer_id"
-    t.index ["stripe_subscription_id"], name: "index_users_on_stripe_subscription_id"
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
@@ -196,4 +218,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_194235) do
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "tickets", "users"
   add_foreign_key "tickets", "users", column: "assignee_id"
+  add_foreign_key "users", "organizations"
 end

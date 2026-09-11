@@ -13,4 +13,11 @@ class TicketMailer < ApplicationMailer
 
     mail(to: recipient.email, subject: "⚠️ Escalated: ##{@ticket.id} #{@ticket.title}")
   end
+
+  def resolved(ticket, recipient)
+    @ticket = ticket
+    @recipient = recipient
+
+    mail(to: recipient.email, subject: "Resolved: ##{@ticket.id} #{@ticket.title}")
+  end
 end

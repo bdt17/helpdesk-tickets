@@ -95,7 +95,11 @@
             </span>
             <% if current_user.client? %>
               <%= link_to "Billing", billing_path, class: "btn btn-outline-light btn-sm px-4 me-2" %>
+              <% if current_user.org_owner? %>
+                <%= link_to "Team", team_path, class: "btn btn-outline-light btn-sm px-4 me-2" %>
+              <% end %>
             <% end %>
+            <%= link_to "Account", edit_user_registration_path, class: "btn btn-outline-light btn-sm px-4 me-2" %>
             <%= button_to "Log Out", destroy_user_session_path, method: :delete, class: "btn btn-primary btn-sm px-4" %>
           <% else %>
             <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-outline-light px-4 py-2 me-2" %>
@@ -122,7 +126,14 @@
         </div>
       </div>
     <% end %>
-    
+
+    <% if user_signed_in? && (current_user.agent? || current_user.admin?) %>
+      <!-- Live escalation/AI-categorization notices (see TicketUpdatesChannel
+           and app/javascript/controllers/ticket_updates_controller.js).
+           Staff-only: the broadcast isn't scoped per-client. -->
+      <div class="container mt-3" data-controller="ticket-updates" data-ticket-updates-target="list"></div>
+    <% end %>
+
     <main class="main-content">
       <%= yield %>
     </main>
