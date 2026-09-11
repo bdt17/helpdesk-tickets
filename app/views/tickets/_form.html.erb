@@ -27,6 +27,28 @@
     <% end %>
   </div>
 
+  <div class="form-group mb-3">
+    <%= f.label :attachments, "Add attachments", class: "form-label" %>
+    <%= f.file_field :attachments, multiple: true, class: "form-control" %>
+    <div class="form-text">
+      Images, PDF, or plain text — up to <%= Ticket::MAX_ATTACHMENTS %> files,
+      <%= Ticket::MAX_ATTACHMENT_SIZE / 1.megabyte %>MB each.
+      <% if ticket.persisted? %>New files are added to what's already attached.<% end %>
+    </div>
+  </div>
+
+  <% persisted_attachments = ticket.persisted? ? ticket.attachments.select(&:persisted?) : [] %>
+  <% if persisted_attachments.any? %>
+    <div class="form-group mb-3">
+      <span class="form-label d-block">Already attached</span>
+      <ul class="list-unstyled small mb-0">
+        <% persisted_attachments.each do |attachment| %>
+          <li><%= link_to attachment.filename.to_s, ticket_attachment_path(ticket, attachment) %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
   <% if policy(ticket).update? && (current_user.agent? || current_user.admin?) %>
     <div class="form-group mb-3">
       <%= f.label :status, class: "form-label" %>

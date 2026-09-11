@@ -41,6 +41,20 @@ for staff. Production uses Solid Cable (not Redis — nothing else in this
 app needs a Redis service), running in the same database as everything
 else.
 
+## Ticket attachments
+
+Clients and staff can attach files (image/PNG/JPEG/GIF/WebP, PDF, or
+plain text — deliberately no SVG or HTML, both can carry an embedded
+script) when creating or editing a ticket, up to 5 files / 10MB each (see
+`Ticket::ALLOWED_ATTACHMENT_TYPES`). Downloads go through
+`TicketAttachmentsController`, which checks `TicketPolicy` before
+redirecting to the file — Active Storage's own blob URLs don't check our
+authorization on their own. **Production caveat**: storage is local disk
+(`config.active_storage.service = :local`), same as dev/test, which makes
+uploads work immediately but means files are lost on every Render
+redeploy unless a persistent disk or an S3-compatible service is
+configured — neither of which this codebase can set up on its own.
+
 ## Running locally
 
 ```

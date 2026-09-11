@@ -119,6 +119,40 @@ class TicketTest < ActiveSupport::TestCase
     assert ticket.valid?, "a status-only change shouldn't be blocked by a priority set before the downgrade"
   end
 
+  test "accepts an allowed attachment type" do
+    ticket = tickets(:one)
+    ticket.attachments.attach(io: file_fixture("test_image.png").open, filename: "test_image.png", content_type: "image/png")
+
+    assert ticket.valid?
+  end
+
+  test "rejects a disallowed attachment type" do
+    ticket = tickets(:one)
+    ticket.attachments.attach(io: file_fixture("disallowed.html").open, filename: "disallowed.html", content_type: "text/html")
+
+    refute ticket.valid?
+    assert_includes ticket.errors[:attachments].join, "must be an image, PDF, or plain text file"
+  end
+
+  test "rejects an attachment over the size limit" do
+    ticket = tickets(:one)
+    oversized = StringIO.new("x" * (Ticket::MAX_ATTACHMENT_SIZE + 1))
+    ticket.attachments.attach(io: oversized, filename: "big.txt", content_type: "text/plain")
+
+    refute ticket.valid?
+    assert_includes ticket.errors[:attachments].join, "too large"
+  end
+
+  test "rejects more than the maximum number of attachments" do
+    ticket = tickets(:one)
+    (Ticket::MAX_ATTACHMENTS + 1).times do |n|
+      ticket.attachments.attach(io: file_fixture("test_note.txt").open, filename: "note#{n}.txt", content_type: "text/plain")
+    end
+
+    refute ticket.valid?
+    assert_includes ticket.errors[:attachments].join, "cannot include more than"
+  end
+
   test "rateable? only once resolved or closed and not yet rated" do
     ticket = tickets(:one)
     refute ticket.rateable? # still open
