@@ -4,7 +4,12 @@ development:
 test:
   adapter: test
 
+# Solid Cable, not Redis: this app runs single-database (see
+# config/database.yml — no separate `cable` entry), so it uses the main
+# connection, the same way Solid Queue does. No REDIS_URL is provisioned in
+# Render, so the previous `adapter: redis` here silently never delivered a
+# single broadcast in production.
 production:
-  adapter: redis
-  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
-  channel_prefix: pharma_transport_production
+  adapter: solid_cable
+  polling_interval: 0.5.seconds
+  message_retention: 1.day

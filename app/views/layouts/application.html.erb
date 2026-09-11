@@ -122,7 +122,14 @@
         </div>
       </div>
     <% end %>
-    
+
+    <% if user_signed_in? && (current_user.agent? || current_user.admin?) %>
+      <!-- Live escalation/AI-categorization notices (see TicketUpdatesChannel
+           and app/javascript/controllers/ticket_updates_controller.js).
+           Staff-only: the broadcast isn't scoped per-client. -->
+      <div class="container mt-3" data-controller="ticket-updates" data-ticket-updates-target="list"></div>
+    <% end %>
+
     <main class="main-content">
       <%= yield %>
     </main>
