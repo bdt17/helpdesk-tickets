@@ -1,0 +1,17 @@
+default: &default
+  store_options:
+    max_size: <%= 256.megabytes %>
+    namespace: <%= Rails.env %>
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+# No `database:`/`connects_to:` key: this app runs single-database (see
+# config/database.yml), same as Solid Queue and Solid Cable, so this uses
+# the main connection rather than provisioning a separate one Render
+# doesn't have.
+production:
+  <<: *default

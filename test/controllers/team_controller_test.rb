@@ -4,6 +4,7 @@ class TeamControllerTest < ActionDispatch::IntegrationTest
   include ActionMailer::TestHelper
 
   setup do
+    Rails.cache.clear
     @organization = Organization.create!(name: "Acme", plan: "business", subscription_status: "active")
     @owner = users(:client)
     @owner.update!(organization: @organization, org_role: "owner")
@@ -78,5 +79,42 @@ class TeamControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal @organization, @owner.reload.organization
     assert_equal "You can't remove yourself from the team.", flash[:alert]
+  end
+
+  test "invites are rate-limited per owner after 10 within an hour" do
+    sign_in @owner
+
+    10.times { |n| post team_invite_url, params: { email: "rl-#{n}@example.com" } }
+
+    assert_no_difference "User.count" do
+      post team_invite_url, params: { email: "rl-blocked@example.com" }
+    end
+
+    assert_redirected_to team_url
+    assert_equal "Too many invites sent. Please try again in a bit.", flash[:alert]
+  end
+
+  test "the invite rate limit is per owner, not global" do
+    other_organization = Organization.create!(name: "Globex", plan: "business", subscription_status: "active")
+    other_owner = User.create!(email: "other-owner@example.com", password: "password123", role: :client, organization: other_organization, org_role: "owner")
+
+    sign_in @owner
+    10.times { |n| post team_invite_url, params: { email: "rl-#{n}@example.com" } }
+
+    sign_out @owner
+    sign_in other_owner
+    assert_difference "User.count", 1 do
+      post team_invite_url, params: { email: "not-blocked@example.com" }
+    end
+  end
+
+  test "removing a teammate isn't affected by the invite rate limit" do
+    member = User.create!(email: "member@example.com", password: "password123", role: :client, organization: @organization, org_role: "member")
+    sign_in @owner
+
+    10.times { |n| post team_invite_url, params: { email: "rl-#{n}@example.com" } }
+
+    delete team_member_url(member)
+    assert_nil member.reload.organization_id
   end
 end

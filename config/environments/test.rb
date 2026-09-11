@@ -20,7 +20,13 @@ Rails.application.configure do
 
   # Show full error reports.
   config.consider_all_requests_local = true
-  config.cache_store = :null_store
+  # :null_store previously - switched to :memory_store so rate_limit
+  # (RegistrationsController, TeamController) has something that actually
+  # counts to test against; nothing else in the app reads or writes
+  # Rails.cache today. Tests that rely on rate limiting clear it in
+  # setup, since a bare in-process store otherwise persists across tests
+  # sharing the same parallel-test worker.
+  config.cache_store = :memory_store
 
   # Render exception templates for rescuable exceptions and raise for other exceptions.
   config.action_dispatch.show_exceptions = :rescuable

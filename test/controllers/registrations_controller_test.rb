@@ -1,6 +1,8 @@
 require "test_helper"
 
 class RegistrationsControllerTest < ActionDispatch::IntegrationTest
+  setup { Rails.cache.clear }
+
   test "sign up page is reachable without authentication" do
     get new_user_registration_url
     assert_response :success
@@ -65,5 +67,43 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     }
 
     assert_not user.reload.admin?
+  end
+
+  test "signup is rate-limited per IP after 5 attempts within an hour" do
+    5.times do |n|
+      post user_registration_url, params: {
+        user: { email: "rl-#{n}@example.com", password: "password123", password_confirmation: "password123" }
+      }
+      # A successful signup auto-signs the new user in, and Devise itself
+      # refuses to process another signup for an already-authenticated
+      # session (require_no_authentication) - sign back out between
+      # attempts so all 5 genuinely reach the rate limiter, the same way
+      # 5 signups from 5 different anonymous browser tabs would.
+      sign_out :user
+    end
+
+    assert_no_difference "User.count" do
+      post user_registration_url, params: {
+        user: { email: "rl-blocked@example.com", password: "password123", password_confirmation: "password123" }
+      }
+    end
+
+    assert_redirected_to new_user_registration_url
+    assert_equal "Too many signup attempts. Please try again in a bit.", flash[:alert]
+  end
+
+  test "the account-edit action isn't affected by the signup rate limit" do
+    user = users(:client)
+
+    5.times do |n|
+      post user_registration_url, params: {
+        user: { email: "rl2-#{n}@example.com", password: "password123", password_confirmation: "password123" }
+      }
+    end
+
+    sign_in user
+    patch user_registration_url, params: { user: { email: "still-works@example.com", current_password: "password123" } }
+
+    assert_equal "still-works@example.com", user.reload.email
   end
 end
