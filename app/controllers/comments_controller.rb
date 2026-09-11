@@ -31,7 +31,7 @@ class CommentsController < ApplicationController
 
   def notify_recipients(comment)
     recipients(comment).each do |recipient|
-      TicketMailer.comment_posted(comment, recipient).deliver_now
+      TicketMailer.comment_posted(comment, recipient).deliver_later
     end
   end
 

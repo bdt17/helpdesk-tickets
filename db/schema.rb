@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_11_020327) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_11_020738) do
   create_table "comments", force: :cascade do |t|
     t.text "body", null: false
     t.datetime "created_at", null: false
@@ -163,6 +163,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_11_020327) do
     t.datetime "escalated_at"
     t.string "priority", default: "medium", null: false
     t.datetime "resolved_at"
+    t.text "satisfaction_comment"
+    t.integer "satisfaction_rating"
     t.string "status", default: "open", null: false
     t.string "title"
     t.datetime "updated_at", null: false

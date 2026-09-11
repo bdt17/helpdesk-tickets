@@ -1,6 +1,6 @@
 class TicketsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_ticket, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_ticket, only: [ :show, :edit, :update, :destroy, :rate ]
 
   def index
     @tickets = policy_scope(Ticket).order(created_at: :desc)
@@ -36,7 +36,10 @@ class TicketsController < ApplicationController
 
   def update
     authorize @ticket
+    was_open = !(@ticket.resolved? || @ticket.closed?)
+
     if @ticket.update(ticket_params)
+      notify_resolution(@ticket) if was_open && (@ticket.resolved? || @ticket.closed?)
       redirect_to tickets_path, notice: "Updated!"
     else
       render :edit, status: :unprocessable_entity
@@ -49,10 +52,27 @@ class TicketsController < ApplicationController
     redirect_to tickets_path, notice: "Deleted!"
   end
 
+  def rate
+    authorize @ticket, :rate?
+    if @ticket.update(satisfaction_params)
+      redirect_to ticket_path(@ticket), notice: "Thanks for the feedback!"
+    else
+      redirect_to ticket_path(@ticket), alert: @ticket.errors.full_messages.to_sentence
+    end
+  end
+
   private
 
+  def notify_resolution(ticket)
+    return if ticket.user.nil? || ticket.user == current_user
+
+    TicketMailer.resolved(ticket, ticket.user).deliver_later
+  end
+
   def set_ticket
-    @ticket = Ticket.find(params[:id])
+    # :rate is routed as a nested /tickets/:ticket_id/satisfaction, so its
+    # id param comes in as :ticket_id rather than :id.
+    @ticket = Ticket.find(params[:id] || params[:ticket_id])
   end
 
   def ticket_params
@@ -61,5 +81,9 @@ class TicketsController < ApplicationController
       permitted.merge!(params.require(:ticket).permit(:status, :priority, :assignee_id))
     end
     permitted
+  end
+
+  def satisfaction_params
+    params.require(:ticket).permit(:satisfaction_rating, :satisfaction_comment)
   end
 end

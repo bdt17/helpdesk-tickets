@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   resources :tickets do
     resources :comments, only: [ :create ]
+    patch "satisfaction", to: "tickets#rate", as: :satisfaction
   end
   get "/agents", to: "agents#index", as: :agents
   get "/reports", to: "reports#index", as: :reports_index

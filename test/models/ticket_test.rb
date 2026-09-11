@@ -65,6 +65,26 @@ class TicketTest < ActiveSupport::TestCase
     refute overdue_but_resolved.overdue?
   end
 
+  test "rateable? only once resolved or closed and not yet rated" do
+    ticket = tickets(:one)
+    refute ticket.rateable? # still open
+
+    ticket.update!(status: :resolved)
+    assert ticket.rateable?
+
+    ticket.update!(satisfaction_rating: 5)
+    refute ticket.rateable? # already rated
+  end
+
+  test "satisfaction_rating must be between 1 and 5" do
+    ticket = tickets(:one)
+    ticket.satisfaction_rating = 6
+    refute ticket.valid?
+
+    ticket.satisfaction_rating = 5
+    assert ticket.valid?
+  end
+
   test "escalated_at is cleared when a resolved ticket is reopened, but not on a plain status change" do
     ticket = tickets(:stale_high_priority)
     ticket.update!(escalated_at: Time.current, status: :in_progress)

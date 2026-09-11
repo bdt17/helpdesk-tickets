@@ -11,6 +11,7 @@ class Ticket < ApplicationRecord
 
   validates :title, presence: true
   validates :category, inclusion: { in: CATEGORIES }, allow_nil: true
+  validates :satisfaction_rating, inclusion: { in: 1..5 }, allow_nil: true
 
   scope :unresolved, -> { where.not(status: [ :resolved, :closed ]) }
   scope :overdue, -> { unresolved.where.not(due_at: nil).where("due_at < ?", Time.current) }
@@ -22,6 +23,10 @@ class Ticket < ApplicationRecord
 
   def overdue?
     due_at.present? && due_at < Time.current && !resolved? && !closed?
+  end
+
+  def rateable?
+    (resolved? || closed?) && satisfaction_rating.nil?
   end
 
   private

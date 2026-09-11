@@ -41,4 +41,19 @@ class TicketPolicyTest < ActiveSupport::TestCase
     assert_includes scope, @own_ticket
     assert_includes scope, @other_ticket
   end
+
+  test "owner can rate their own resolved ticket, but not while it's still open" do
+    refute TicketPolicy.new(users(:employee), @own_ticket).rate?
+
+    @own_ticket.update!(status: :resolved)
+    assert TicketPolicy.new(users(:employee), @own_ticket).rate?
+  end
+
+  test "cannot rate someone else's ticket, or one already rated" do
+    @other_ticket.update!(status: :resolved)
+    refute TicketPolicy.new(users(:employee), @other_ticket).rate?
+
+    @own_ticket.update!(status: :resolved, satisfaction_rating: 5)
+    refute TicketPolicy.new(users(:employee), @own_ticket).rate?
+  end
 end

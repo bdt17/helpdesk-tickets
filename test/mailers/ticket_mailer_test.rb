@@ -21,4 +21,15 @@ class TicketMailerTest < ActionMailer::TestCase
     assert_match ticket.title, mail.text_part.body.to_s
     assert_match ticket.title, mail.html_part.body.to_s
   end
+
+  test "resolved" do
+    ticket = tickets(:one)
+    ticket.update!(status: :resolved)
+    mail = TicketMailer.resolved(ticket, users(:employee))
+
+    assert_equal "Resolved: ##{ticket.id} #{ticket.title}", mail.subject
+    assert_equal [ users(:employee).email ], mail.to
+    assert_match ticket.title, mail.text_part.body.to_s
+    assert_match ticket.title, mail.html_part.body.to_s
+  end
 end
