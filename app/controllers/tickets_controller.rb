@@ -3,7 +3,7 @@ class TicketsController < ApplicationController
   before_action :set_ticket, only: [ :show, :edit, :update, :destroy, :rate ]
 
   def index
-    @tickets = policy_scope(Ticket).order(created_at: :desc)
+    @tickets = filtered_tickets(policy_scope(Ticket)).order(created_at: :desc)
     @ticket = Ticket.new
   end
 
@@ -88,6 +88,28 @@ class TicketsController < ApplicationController
 
     ticket.attachments.attach(files)
     ticket.errors.empty?
+  end
+
+  # Filters are applied on top of policy_scope, never instead of it - a
+  # client filtering by status still only ever sees their own
+  # organization's tickets, since `scope` here is already the
+  # authorized set.
+  def filtered_tickets(scope)
+    scope = scope.where(status: params[:status]) if params[:status].present?
+    scope = scope.where(priority: params[:priority]) if params[:priority].present?
+    scope = scope.where(category: params[:category]) if params[:category].present?
+    scope = scope.where(assignee_id: params[:assignee_id]) if params[:assignee_id].present?
+
+    if params[:q].present?
+      # LOWER(...) LIKE rather than ILIKE/case-insensitive collation
+      # tricks, since this app runs SQLite in dev/test and PostgreSQL in
+      # production and this is the one pattern that behaves the same on
+      # both.
+      term = "%#{params[:q].downcase}%"
+      scope = scope.where("LOWER(title) LIKE :term OR LOWER(description) LIKE :term", term: term)
+    end
+
+    scope
   end
 
   def notify_resolution(ticket)

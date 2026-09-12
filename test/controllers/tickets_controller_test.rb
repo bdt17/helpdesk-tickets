@@ -34,6 +34,74 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_includes @response.body, tickets(:two).title
   end
 
+  test "filters by status" do
+    sign_in users(:agent)
+    get tickets_url, params: { status: "in_progress" }
+
+    assert_includes @response.body, tickets(:two).title
+    assert_not_includes @response.body, tickets(:one).title
+  end
+
+  test "filters by priority" do
+    sign_in users(:agent)
+    get tickets_url, params: { priority: "high" }
+
+    assert_includes @response.body, tickets(:two).title
+    assert_includes @response.body, tickets(:stale_high_priority).title
+    assert_not_includes @response.body, tickets(:one).title
+  end
+
+  test "filters by category" do
+    sign_in users(:agent)
+    get tickets_url, params: { category: "hardware" }
+
+    assert_includes @response.body, tickets(:one).title
+    assert_not_includes @response.body, tickets(:two).title
+  end
+
+  test "filters by assignee" do
+    sign_in users(:agent)
+    get tickets_url, params: { assignee_id: users(:agent).id }
+
+    assert_includes @response.body, tickets(:two).title
+    assert_not_includes @response.body, tickets(:one).title
+  end
+
+  test "searches title and description, case-insensitively" do
+    sign_in users(:agent)
+    get tickets_url, params: { q: "PAYROLL" }
+
+    assert_includes @response.body, tickets(:stale_high_priority).title
+    assert_not_includes @response.body, tickets(:one).title
+  end
+
+  test "searching description text also matches" do
+    sign_in users(:agent)
+    get tickets_url, params: { q: "staging environment" }
+
+    assert_includes @response.body, tickets(:two).title
+  end
+
+  test "filters combine with policy_scope - a client can't use a filter to see another org's ticket" do
+    ticket = Ticket.create!(title: "Client owned issue", user: users(:client), priority: :low)
+
+    sign_in users(:client)
+    get tickets_url, params: { priority: "high" } # matches tickets(:two) and (:stale_high_priority), neither the client's
+
+    assert_response :success
+    assert_not_includes @response.body, tickets(:two).title
+    assert_not_includes @response.body, tickets(:stale_high_priority).title
+    assert_includes @response.body, "No tickets match that filter."
+  end
+
+  test "shows a distinct empty state for a filter with no matches, vs. having no tickets at all" do
+    sign_in users(:agent)
+    get tickets_url, params: { q: "nothing matches this" }
+
+    assert_includes @response.body, "No tickets match that filter."
+    assert_not_includes @response.body, "No tickets yet."
+  end
+
   test "employee cannot view another employee's ticket" do
     sign_in users(:employee)
     get ticket_url(tickets(:two))

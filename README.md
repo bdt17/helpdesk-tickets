@@ -55,6 +55,14 @@ uploads work immediately but means files are lost on every Render
 redeploy unless a persistent disk or an S3-compatible service is
 configured — neither of which this codebase can set up on its own.
 
+## Ticket search and filtering
+
+`/tickets` can be filtered by status, priority, category, and (staff
+only) assignee, plus a free-text search across title and description —
+all applied on top of `policy_scope`, so a client filtering never sees
+outside their own organization's tickets. The search match is
+case-insensitive on both SQLite (dev/test) and PostgreSQL (production).
+
 ## Running locally
 
 ```
