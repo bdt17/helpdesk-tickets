@@ -11,26 +11,36 @@ class Plan
   # it; Basic and Business share the same "up to High" ceiling since
   # Business's copy only adds a Medium commitment on top of Basic's,
   # never mentioning Critical.
-  Definition = Struct.new(:key, :name, :display_price, :tagline, :features, :price_id_env, :max_priority, keyword_init: true)
+  #
+  # max_seats is the enforced side of team billing (see
+  # Organization#max_seats / TeamController#create): before this, an
+  # organization on any plan could invite unlimited teammates for the
+  # same price, which given this business's recurring-plans direction is
+  # a real revenue gap, the same shape as the priority one was. THE
+  # NUMBERS BELOW ARE PLACEHOLDERS, same status as display_price - picked
+  # to be directionally reasonable (a small safety-net plan needs fewer
+  # seats than a "for growing teams" one) but not an actual pricing
+  # decision. Revisit before relying on them.
+  Definition = Struct.new(:key, :name, :display_price, :tagline, :features, :price_id_env, :max_priority, :max_seats, keyword_init: true)
 
   ALL = [
     Definition.new(
       key: "basic", name: "Basic", display_price: "$49/mo",
       tagline: "For small teams that need a safety net",
       features: [ "Business-hours ticket support", "High priority: 24 hr response", "Low priority: 7 day response" ],
-      price_id_env: "STRIPE_PRICE_BASIC", max_priority: "high"
+      price_id_env: "STRIPE_PRICE_BASIC", max_priority: "high", max_seats: 3
     ),
     Definition.new(
       key: "business", name: "Business", display_price: "$149/mo",
       tagline: "Our most popular plan for growing teams",
       features: [ "Everything in Basic", "Medium priority: 3 day response", "Dedicated agent assignment" ],
-      price_id_env: "STRIPE_PRICE_BUSINESS", max_priority: "high"
+      price_id_env: "STRIPE_PRICE_BUSINESS", max_priority: "high", max_seats: 10
     ),
     Definition.new(
       key: "priority", name: "Priority", display_price: "$399/mo",
       tagline: "For teams where downtime isn't an option",
       features: [ "Everything in Business", "Critical priority: 4 hr response", "Escalation on missed SLA" ],
-      price_id_env: "STRIPE_PRICE_PRIORITY", max_priority: "critical"
+      price_id_env: "STRIPE_PRICE_PRIORITY", max_priority: "critical", max_seats: 25
     )
   ].freeze
 

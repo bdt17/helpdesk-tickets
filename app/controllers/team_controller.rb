@@ -21,8 +21,13 @@ class TeamController < ApplicationController
   end
 
   def create
+    organization = current_user.organization
     email = params[:email].to_s.strip.downcase
 
+    unless organization.seats_available?
+      plan_name = organization.plan_definition&.name || "current"
+      return redirect_to team_path, alert: "The #{plan_name} plan allows up to #{organization.max_seats} seats - remove a teammate or upgrade to invite more."
+    end
     if email.blank?
       return redirect_to team_path, alert: "Enter an email address."
     end
@@ -33,7 +38,7 @@ class TeamController < ApplicationController
     temp_password = SecureRandom.hex(16)
     member = User.new(
       email: email, password: temp_password, password_confirmation: temp_password,
-      role: :client, organization: current_user.organization, org_role: "member"
+      role: :client, organization: organization, org_role: "member"
     )
 
     if member.save

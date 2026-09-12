@@ -43,6 +43,7 @@
             <p class="text-muted small mb-1"><%= plan.display_price %></p>
             <p class="text-muted small"><%= plan.tagline %></p>
             <ul class="small mb-3">
+              <li>Up to <%= plan.max_seats %> seats</li>
               <% plan.features.each do |feature| %>
                 <li><%= feature %></li>
               <% end %>

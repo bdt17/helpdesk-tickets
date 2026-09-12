@@ -24,6 +24,12 @@ checkout creates their own organization; the owner can invite teammates
 owner can change plans or open the Stripe billing portal. See
 `Plan::ALL` in `app/models/plan.rb` for the three tiers.
 
+Each plan caps how many seats an organization can have
+(`Plan::Definition#max_seats` / `Organization#seats_available?`) — an
+unsubscribed organization is capped at 1 (the owner, no invites). **The
+seat counts, like the dollar prices, are placeholders** pending an actual
+pricing decision, not a real figure to rely on.
+
 ## AI ticket categorization (Phase 14)
 
 `TicketCategorizer` calls the Claude API to suggest a category for any
