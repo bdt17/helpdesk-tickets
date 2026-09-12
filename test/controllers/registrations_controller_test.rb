@@ -1,6 +1,8 @@
 require "test_helper"
 
 class RegistrationsControllerTest < ActionDispatch::IntegrationTest
+  include ActionMailer::TestHelper
+
   setup { Rails.cache.clear }
 
   test "sign up page is reachable without authentication" do
@@ -18,6 +20,23 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     user = User.find_by(email: "new-client@example.com")
     assert user.client?
     assert_redirected_to new_ticket_url
+  end
+
+  test "signing up sends a welcome email" do
+    post user_registration_url, params: {
+      user: { email: "new-client@example.com", password: "password123", password_confirmation: "password123" }
+    }
+
+    user = User.find_by(email: "new-client@example.com")
+    assert_enqueued_email_with UserMailer, :welcome, args: [ user ]
+  end
+
+  test "a failed sign up does not send a welcome email" do
+    assert_no_enqueued_emails do
+      post user_registration_url, params: {
+        user: { email: "not-an-email", password: "short", password_confirmation: "different" }
+      }
+    end
   end
 
   test "role cannot be elevated through the sign up form" do

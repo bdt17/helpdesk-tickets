@@ -7,9 +7,10 @@ ticket categorization. Deployed at
 
 ## Roles
 
-- **client** — self-service sign-up (`/signup`). Sees only their own
-  organization's tickets, manages billing if they're the organization
-  owner, can rate a resolved ticket (CSAT).
+- **client** — self-service sign-up (`/signup`), gets a welcome email
+  pointing at filing their first ticket and setting up billing. Sees only
+  their own organization's tickets, manages billing if they're the
+  organization owner, can rate a resolved ticket (CSAT).
 - **employee** — internal Thomas IT staff filing their own tickets.
 - **agent** / **admin** — see and work every ticket, plus `/agents`,
   `/reports`, and the `/api/ai/status` endpoint. Only `admin` can delete a
