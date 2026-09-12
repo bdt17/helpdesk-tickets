@@ -28,6 +28,15 @@ class Ticket < ApplicationRecord
   scope :unresolved, -> { where.not(status: [ :resolved, :closed ]) }
   scope :overdue, -> { unresolved.where.not(due_at: nil).where("due_at < ?", Time.current) }
 
+  # The category <select> renders include_blank: true (see
+  # tickets/_form.html.erb), which submits "" rather than omitting the
+  # param entirely - without this, every ticket left uncategorized (the
+  # case the AI-categorization hint text actively encourages) fails
+  # validation with "Category is not included in the list" and can never
+  # be created at all. Runs before the inclusion validation below, not
+  # instead of it, so a real bogus value is still rejected.
+  before_validation :nilify_blank_category
+
   before_save :set_resolved_at, if: :will_save_change_to_status?
   before_save :clear_escalation_on_reopen, if: :will_save_change_to_status?
   before_save :set_due_at, if: :will_save_change_to_priority?
@@ -42,6 +51,10 @@ class Ticket < ApplicationRecord
   end
 
   private
+
+  def nilify_blank_category
+    self.category = nil if category.blank?
+  end
 
   # Enforces the priority ceiling each plan tier's copy promises (see
   # Plan::Definition#max_priority) — e.g. only the Priority plan actually

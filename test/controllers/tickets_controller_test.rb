@@ -49,6 +49,14 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal users(:employee), Ticket.last.user
   end
 
+  test "creating a ticket with the category left blank on the real form (submits '', not nil) succeeds" do
+    sign_in users(:employee)
+    assert_difference("Ticket.count", 1) do
+      post tickets_url, params: { ticket: { title: "New issue", category: "" } }
+    end
+    assert_response :redirect
+  end
+
   test "employee cannot set status, priority, or assignee on their own ticket" do
     sign_in users(:employee)
     ticket = tickets(:one)
