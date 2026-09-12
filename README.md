@@ -56,6 +56,18 @@ set, so production was silently falling back to an ephemeral file-store
 cache under `tmp/cache/`. Neither limit touches sign-in attempts or
 existing account edits.
 
+## `data-turbo-confirm` (Delete ticket, Remove teammate)
+
+`turbo-rails` was in the Gemfile but never pinned in `config/importmap.rb`
+or imported in `app/javascript/application.js` — `data-turbo-confirm`
+attributes on the Delete-ticket and Remove-teammate buttons rendered
+correctly in the HTML but did nothing at all, since nothing was loaded to
+honor them: clicking either button submitted the destructive request
+immediately, with no "Are you sure?" dialog. Verified: `window.Turbo` was
+`undefined`; fixed by pinning/importing Turbo the standard way, then
+re-verified both the cancel and accept paths (stubbing `window.confirm`
+rather than triggering a real one) actually gate the request now.
+
 ## Ticket attachments
 
 Clients and staff can attach files (image/PNG/JPEG/GIF/WebP, PDF, or
