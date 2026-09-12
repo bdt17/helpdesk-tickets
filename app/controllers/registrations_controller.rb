@@ -12,6 +12,16 @@ class RegistrationsController < Devise::RegistrationsController
   rate_limit to: 5, within: 1.hour, only: :create,
              with: -> { redirect_to new_user_registration_path, alert: "Too many signup attempts. Please try again in a bit." }
 
+  # Devise's own #create yields the just-built resource to this block
+  # after attempting to save it - only send the welcome email if it
+  # actually persisted, not on a validation failure that re-renders the
+  # sign-up form.
+  def create
+    super do |resource|
+      UserMailer.welcome(resource).deliver_later if resource.persisted?
+    end
+  end
+
   private
 
   def build_resource(hash = {})
