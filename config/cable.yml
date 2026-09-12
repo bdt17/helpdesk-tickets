@@ -1,5 +1,22 @@
+# :async's pub/sub is per-process, in-memory - it silently cannot work
+# here, in dev or anywhere else this app might run outside of production.
+# Solid Queue's plugin :solid_queue (config/puma.rb) forks its
+# dispatcher/worker/scheduler as separate OS processes from Puma itself,
+# and EscalationAlertJob/TicketCategorizationJob - the only things that
+# ever broadcast to TicketUpdatesChannel - always run as Solid Queue jobs,
+# never inline in a request. A broadcast from that forked worker process
+# can never reach a WebSocket held open by the parent Puma process; found
+# by testing this for real (broadcasts logged as sent server-side, ping
+# frames confirmed the socket itself was alive, but the actual message
+# never arrived) rather than by reading the code. Solid Cable doesn't have
+# this problem - it polls the shared database table, so it doesn't care
+# which process wrote the row - and its table already exists in this
+# database (see the migration from the PR that first added it), so this
+# is a one-line fix, not a new dependency.
 development:
-  adapter: async
+  adapter: solid_cable
+  polling_interval: 0.5.seconds
+  message_retention: 1.day
 
 test:
   adapter: test

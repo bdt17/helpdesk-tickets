@@ -37,9 +37,15 @@ actually categorized.
 
 Ticket escalations and successful AI categorizations broadcast over
 Action Cable (`TicketUpdatesChannel`) and show up as a dismissible banner
-for staff. Production uses Solid Cable (not Redis — nothing else in this
-app needs a Redis service), running in the same database as everything
-else.
+for staff. Every environment uses Solid Cable, not Redis (nothing else in
+this app needs a Redis service) and not `:async` — `:async`'s pub/sub is
+per-process and in-memory, and can't deliver a broadcast from Solid
+Queue's forked worker process (`config/puma.rb`'s `plugin :solid_queue`)
+to a WebSocket held by the parent Puma process, which is the *only* way
+this feature is ever triggered (EscalationAlertJob and
+TicketCategorizationJob both run as Solid Queue jobs). Solid Cable polls
+the shared database table instead, so it doesn't care which process wrote
+the row.
 
 ## Ticket attachments
 
