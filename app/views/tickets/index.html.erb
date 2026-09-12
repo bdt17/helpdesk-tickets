@@ -6,6 +6,42 @@
     <%= link_to "New Ticket", new_ticket_path, class: "btn btn-primary" %>
   </div>
 
+  <%= form_with url: tickets_path, method: :get, local: true, class: "card p-3 mb-3" do %>
+    <div class="row g-2 align-items-end">
+      <div class="col-md-3">
+        <%= label_tag :q, "Search", class: "form-label small mb-1" %>
+        <%= text_field_tag :q, params[:q], class: "form-control form-control-sm", placeholder: "Title or description" %>
+      </div>
+      <div class="col-md-2">
+        <%= label_tag :status, "Status", class: "form-label small mb-1" %>
+        <%= select_tag :status, options_for_select(Ticket.statuses.keys.map { |s| [ s.humanize, s ] }, params[:status]),
+                        include_blank: "Any", class: "form-select form-select-sm" %>
+      </div>
+      <div class="col-md-2">
+        <%= label_tag :priority, "Priority", class: "form-label small mb-1" %>
+        <%= select_tag :priority, options_for_select(Ticket.priorities.keys.map { |p| [ p.humanize, p ] }, params[:priority]),
+                        include_blank: "Any", class: "form-select form-select-sm" %>
+      </div>
+      <div class="col-md-2">
+        <%= label_tag :category, "Category", class: "form-label small mb-1" %>
+        <%= select_tag :category, options_for_select(Ticket::CATEGORIES.map { |c| [ c.humanize, c ] }, params[:category]),
+                        include_blank: "Any", class: "form-select form-select-sm" %>
+      </div>
+      <% if current_user.agent? || current_user.admin? %>
+        <div class="col-md-2">
+          <%= label_tag :assignee_id, "Assigned to", class: "form-label small mb-1" %>
+          <%= select_tag :assignee_id,
+                          options_for_select(User.where(role: [ :agent, :admin ]).order(:email).pluck(:email, :id), params[:assignee_id]),
+                          include_blank: "Any", class: "form-select form-select-sm" %>
+        </div>
+      <% end %>
+      <div class="col-md-auto d-flex gap-2">
+        <%= submit_tag "Filter", class: "btn btn-outline-primary btn-sm" %>
+        <%= link_to "Clear", tickets_path, class: "btn btn-outline-secondary btn-sm" %>
+      </div>
+    </div>
+  <% end %>
+
   <% if @tickets.any? %>
     <div class="card">
       <div class="table-responsive">
@@ -36,6 +72,10 @@
           </tbody>
         </table>
       </div>
+    </div>
+  <% elsif params.values_at(:q, :status, :priority, :category, :assignee_id).any?(&:present?) %>
+    <div class="card p-5 text-center text-muted">
+      <p class="mb-0">No tickets match that filter.</p>
     </div>
   <% else %>
     <div class="card p-5 text-center text-muted">
