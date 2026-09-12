@@ -4,6 +4,19 @@ tmp/sessions/*
 tmp/storage/*
 log/*.log
 
+# Propshaft's compiled output. A stale copy of this was committed at some
+# point (predating this app's current form entirely - it still had
+# highcharts/chartkick files in it) and silently broke the importmap:
+# Propshaft resolved asset_path against this manifest ahead of the live
+# filesystem, so any JS pinned after the manifest was generated (the
+# entire Action Cable live-updates feature included) returned a 404-style
+# "missing asset" and Import maps quietly dropped the pin - the browser
+# never got a working module and the whole feature was dead on arrival,
+# with no error anywhere in server logs pointing at the real cause. Render
+# runs `assets:precompile` fresh on every deploy; there's never a reason
+# to have this directory's contents in version control.
+/public/assets
+
 # Ignore SQLite databases
 storage/*.sqlite3
 storage/*.sqlite3-shm
