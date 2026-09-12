@@ -7,6 +7,14 @@ class TeamController < ApplicationController
   before_action :authenticate_user!
   before_action :require_org_owner!
 
+  # By current_user, not IP - this is authenticated and already
+  # owner-only, so the threat here isn't an anonymous bot but a
+  # compromised or careless owner account mass-creating seats/sending
+  # invite emails. #destroy isn't limited - removing a teammate doesn't
+  # create anything or send mail, so there's nothing to blunt.
+  rate_limit to: 10, within: 1.hour, only: :create, by: -> { current_user.id },
+             with: -> { redirect_to team_path, alert: "Too many invites sent. Please try again in a bit." }
+
   def index
     @organization = current_user.organization
     @members = @organization.users.order(:email)

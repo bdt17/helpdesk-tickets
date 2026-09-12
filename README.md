@@ -47,6 +47,15 @@ TicketCategorizationJob both run as Solid Queue jobs). Solid Cable polls
 the shared database table instead, so it doesn't care which process wrote
 the row.
 
+## Rate limiting
+
+`/signup` (5/hour per IP) and `/team` invites (10/hour per owner) use
+Rails' built-in `rate_limit`, backed by Solid Cache — also newly wired up
+here; it was in the Gemfile but `config.cache_store` was never actually
+set, so production was silently falling back to an ephemeral file-store
+cache under `tmp/cache/`. Neither limit touches sign-in attempts or
+existing account edits.
+
 ## Ticket attachments
 
 Clients and staff can attach files (image/PNG/JPEG/GIF/WebP, PDF, or

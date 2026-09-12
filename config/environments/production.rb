@@ -23,8 +23,13 @@ Rails.application.configure do
   # Don't log any deprecations.
   config.active_support.report_deprecations = false
 
-  # Replace the default in-process memory cache store with a durable alternative.
-  # config.cache_store = :mem_cache_store
+  # Was left unconfigured, silently defaulting to Rails' file-store cache
+  # under tmp/cache/ - ephemeral on Render, same problem Action Cable had
+  # with Redis before that got fixed. Solid Cache was already in the
+  # Gemfile, unused; this is also what backs rate_limit
+  # (RegistrationsController, TeamController) with something durable
+  # across restarts instead of resetting on every deploy.
+  config.cache_store = :solid_cache_store
 
   # Replace the default in-process and non-durable queuing backend for Active Job.
   # Solid Queue's tables live in this same database (single-database

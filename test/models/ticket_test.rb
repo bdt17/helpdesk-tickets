@@ -29,6 +29,17 @@ class TicketTest < ActiveSupport::TestCase
     assert ticket.valid?
   end
 
+  test "an empty string category (what the form's blank <select> actually submits) is treated as blank, not rejected" do
+    # Caught via real browser testing, not this suite: the category
+    # <select> renders include_blank: true, which submits "" rather than
+    # omitting the param - every ticket left uncategorized (the case the
+    # AI-categorization hint text actively encourages) used to fail with
+    # "Category is not included in the list" and could never be created.
+    ticket = Ticket.new(title: "Broken laptop", user: users(:employee), category: "")
+    assert ticket.valid?
+    assert_nil ticket.category
+  end
+
   test "resolved_at is stamped when status moves to resolved and cleared when reopened" do
     ticket = tickets(:one)
     assert_nil ticket.resolved_at
