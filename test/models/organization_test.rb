@@ -26,4 +26,29 @@ class OrganizationTest < ActiveSupport::TestCase
     assert_equal owner, organization.owner
     assert_equal [ member ], organization.members.to_a
   end
+
+  test "an unsubscribed organization is capped at 1 seat" do
+    organization = Organization.create!(name: "Acme")
+    assert_equal 1, organization.max_seats
+  end
+
+  test "max_seats comes from the plan once subscribed" do
+    organization = Organization.create!(name: "Acme", plan: "business", subscription_status: "active")
+    assert_equal Plan.find("business").max_seats, organization.max_seats
+  end
+
+  test "seats_used counts every user on the organization, owner included" do
+    organization = Organization.create!(name: "Acme", plan: "basic", subscription_status: "active")
+    User.create!(email: "owner@example.com", password: "password123", role: :client, organization: organization, org_role: "owner")
+    User.create!(email: "member@example.com", password: "password123", role: :client, organization: organization, org_role: "member")
+
+    assert_equal 2, organization.seats_used
+  end
+
+  test "seats_available? is false once seats_used reaches max_seats" do
+    organization = Organization.create!(name: "Acme", plan: "basic", subscription_status: "active") # max_seats: 3
+    3.times { |n| User.create!(email: "user#{n}@example.com", password: "password123", role: :client, organization: organization, org_role: "member") }
+
+    refute organization.seats_available?
+  end
 end

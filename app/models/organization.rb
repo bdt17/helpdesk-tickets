@@ -23,4 +23,20 @@ class Organization < ApplicationRecord
   def members
     users.where.not(org_role: "owner")
   end
+
+  # An unsubscribed organization (never paid, or lapsed) is capped at 1 -
+  # just the owner, no invited seats - the same floor
+  # User#max_ticket_priority uses: a plan actually has to be bought to
+  # unlock anything beyond the bare minimum.
+  def max_seats
+    subscribed? ? (plan_definition&.max_seats || 1) : 1
+  end
+
+  def seats_used
+    users.count
+  end
+
+  def seats_available?
+    seats_used < max_seats
+  end
 end

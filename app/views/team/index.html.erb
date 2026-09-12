@@ -4,15 +4,26 @@
   <%= link_to "← Back to billing", billing_path, class: "text-decoration-none small text-muted" %>
 
   <h1 class="mb-1 mt-2">Team</h1>
-  <p class="text-muted mb-4"><%= @organization.name %> &middot; <%= @organization.plan_definition&.name || "No plan yet" %></p>
+  <p class="text-muted mb-4">
+    <%= @organization.name %> &middot; <%= @organization.plan_definition&.name || "No plan yet" %>
+    &middot; <%= @organization.seats_used %> of <%= @organization.max_seats %> seats used
+  </p>
 
   <div class="card p-4 mb-4">
     <h2 class="h6 mb-3">Invite a teammate</h2>
-    <%= form_with url: team_invite_path, method: :post, local: true, class: "d-flex gap-2" do |f| %>
-      <%= f.email_field :email, class: "form-control", placeholder: "teammate@company.com", required: true %>
-      <%= f.submit "Invite", class: "btn btn-primary text-nowrap" %>
+    <% if @organization.seats_available? %>
+      <%= form_with url: team_invite_path, method: :post, local: true, class: "d-flex gap-2" do |f| %>
+        <%= f.email_field :email, class: "form-control", placeholder: "teammate@company.com", required: true %>
+        <%= f.submit "Invite", class: "btn btn-primary text-nowrap" %>
+      <% end %>
+      <small class="text-muted d-block mt-2">They'll get an email to set their own password and share this organization's plan.</small>
+    <% else %>
+      <p class="text-muted mb-0">
+        You've used all <%= @organization.max_seats %> seats on the
+        <%= @organization.plan_definition&.name || "current" %> plan. Remove a
+        teammate or <%= link_to "upgrade your plan", billing_path %> to invite more.
+      </p>
     <% end %>
-    <small class="text-muted d-block mt-2">They'll get an email to set their own password and share this organization's plan.</small>
   </div>
 
   <div class="card p-0">
