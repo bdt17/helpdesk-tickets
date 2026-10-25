@@ -57,4 +57,35 @@ class ReportsControllerTest < ActionDispatch::IntegrationTest
     assert_includes @response.body, users(:agent).email
     assert_includes @response.body, "10.0 hrs"
   end
+
+  test "admins see estimated revenue from paying organizations only" do
+    Organization.create!(name: "A", subscription_status: "active", plan: "basic")
+    Organization.create!(name: "B", subscription_status: "active", plan: "priority")
+    Organization.create!(name: "C", subscription_status: "trialing", plan: "business")
+    Organization.create!(name: "D", subscription_status: "canceled", plan: "priority")
+
+    sign_in users(:admin)
+    get reports_index_url
+    assert_response :success
+    assert_select "h2", text: "$597" # 49 + 399 + 149 (trialing counted, canceled not)
+    assert_match "System health", response.body
+  end
+
+  test "system health reflects configuration" do
+    ENV["SMTP_ADDRESS"] = "smtp.example.com"
+    sign_in users(:admin)
+    get reports_index_url
+    assert_select "li.health-check[data-ok=true]", text: /Outgoing email configured/
+    assert_select "li.health-check[data-ok=false]", text: /persistent disk/
+  ensure
+    ENV.delete("SMTP_ADDRESS")
+  end
+
+  test "agents see reports but not revenue" do
+    sign_in users(:agent)
+    get reports_index_url
+    assert_response :success
+    assert_no_match "Est. monthly revenue", response.body
+    assert_no_match "System health", response.body
+  end
 end

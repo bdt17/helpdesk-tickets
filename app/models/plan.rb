@@ -44,6 +44,13 @@ class Plan
     )
   ].freeze
 
+  # Whole dollars per month parsed from display_price, for the admin
+  # revenue estimate on /reports. An estimate only - Stripe's Price (and
+  # any coupon/trial) is what's actually charged.
+  def self.monthly_dollars(plan)
+    plan.display_price.to_s[/\d[\d,]*/].to_s.delete(",").to_i
+  end
+
   def self.find(key)
     ALL.find { |plan| plan.key == key.to_s }
   end
