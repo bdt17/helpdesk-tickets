@@ -17,6 +17,9 @@ class TicketsController < ApplicationController
   def new
     @ticket = Ticket.new
     authorize @ticket
+    return unless current_user.ticket_limit_reached?
+
+    redirect_to billing_path, alert: ticket_limit_message
   end
 
   def create
@@ -110,6 +113,14 @@ class TicketsController < ApplicationController
     end
 
     scope
+  end
+
+  def ticket_limit_message
+    if current_user.subscribed?
+      "Your #{current_user.plan_definition&.name} plan includes #{current_user.monthly_ticket_limit} tickets a month and you've used them all - upgrade to keep filing this month."
+    else
+      "You've used your free ticket#{'s' unless Plan.free_tickets_per_month == 1} for this month. Pick a plan to keep getting support."
+    end
   end
 
   def notify_resolution(ticket)

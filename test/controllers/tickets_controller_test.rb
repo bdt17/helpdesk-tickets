@@ -274,4 +274,36 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
 
     assert_nil ticket.reload.satisfaction_rating
   end
+
+  test "a free client who has used their free ticket is sent to billing instead of the form" do
+    client = users(:client)
+    Ticket.create!(title: "Free one", user: client)
+    sign_in client
+
+    get new_ticket_url
+    assert_redirected_to billing_url
+    assert_match(/free ticket/, flash[:alert])
+
+    assert_no_difference "Ticket.count" do
+      post tickets_url, params: { ticket: { title: "Sneaky direct POST" } }
+    end
+    assert_response :unprocessable_entity
+  end
+
+  test "a free client still under the limit sees the form and their usage" do
+    sign_in users(:client)
+    get new_ticket_url
+    assert_response :success
+    get tickets_url
+    assert_select ".alert", text: /0 of 1\s+free tickets/
+    assert_select ".alert a[href=?]", billing_path
+  end
+
+  test "agents are never limited or shown a usage banner" do
+    sign_in users(:agent)
+    3.times { |n| post tickets_url, params: { ticket: { title: "Agent ticket #{n}" } } }
+    assert_equal 3, Ticket.where(user: users(:agent)).count
+    get tickets_url
+    assert_select ".alert", text: /tickets used this month/, count: 0
+  end
 end
