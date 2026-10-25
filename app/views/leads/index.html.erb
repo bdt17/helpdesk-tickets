@@ -1,0 +1,50 @@
+<% content_for :title, "Leads — Thomas IT Helpdesk" %>
+
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="mb-0">Leads</h1>
+    <span class="text-muted small">Inquiries from the homepage contact form</span>
+  </div>
+
+  <div class="d-flex gap-2 flex-wrap mb-3">
+    <%= link_to "All (#{@counts.values.sum})", leads_path, class: "btn btn-sm #{@status ? 'btn-outline-secondary' : 'btn-secondary'}" %>
+    <% Lead::STATUSES.each do |status| %>
+      <%= link_to "#{status.humanize} (#{@counts.fetch(status, 0)})", leads_path(status: status),
+                  class: "btn btn-sm #{@status == status ? 'btn-secondary' : 'btn-outline-secondary'}" %>
+    <% end %>
+  </div>
+
+  <% if @leads.any? %>
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table mb-0 align-middle">
+          <thead>
+            <tr><th>Received</th><th>Contact</th><th>Message</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <% @leads.each do |lead| %>
+              <tr>
+                <td class="text-nowrap small text-muted"><%= time_ago_in_words(lead.created_at) %> ago</td>
+                <td>
+                  <strong><%= lead.name %></strong><% if lead.company.present? %> · <%= lead.company %><% end %><br>
+                  <%= mail_to lead.email, lead.email, class: "small" %>
+                  <% if lead.phone.present? %><br><span class="small"><%= lead.phone %></span><% end %>
+                </td>
+                <td class="small" style="max-width: 420px;"><%= simple_format(lead.message.presence || "—") %></td>
+                <td>
+                  <%= form_with model: lead, method: :patch, class: "d-flex gap-1" do |f| %>
+                    <%= hidden_field_tag :return_status, @status %>
+                    <%= f.select :status, Lead::STATUSES.map { |s| [ s.humanize, s ] }, {}, class: "form-select form-select-sm" %>
+                    <%= f.submit "Save", class: "btn btn-sm btn-outline-primary" %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% else %>
+    <p class="text-muted">No leads <%= "marked #{@status}" if @status %> yet.</p>
+  <% end %>
+</div>

@@ -14,8 +14,7 @@
         <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary btn-lg px-4" %>
         <%= link_to "Log In", new_user_session_path, class: "btn btn-outline-light btn-lg px-4" %>
       <% end %>
-      <a href="mailto:support@thomasinformationtechnology.com?subject=New%20Client%20Inquiry"
-         class="btn btn-outline-light btn-lg px-4">Talk to Us First</a>
+      <a href="#contact" class="btn btn-outline-light btn-lg px-4">Talk to Us First</a>
     </div>
   </section>
 
@@ -89,8 +88,48 @@
     <h2 class="fw-bold mb-3">Ready to stop firefighting IT issues yourself?</h2>
     <div class="d-flex justify-content-center gap-3 flex-wrap">
       <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary btn-lg px-4" %>
-      <a href="mailto:support@thomasinformationtechnology.com?subject=New%20Client%20Inquiry"
-         class="btn btn-outline-primary btn-lg px-4">Contact Sales</a>
+      <a href="#contact" class="btn btn-outline-primary btn-lg px-4">Contact Sales</a>
+    </div>
+  </section>
+
+  <section class="py-5 px-3" id="contact">
+    <div class="container" style="max-width: 640px;">
+      <h2 class="text-center fw-bold mb-2">Talk to us</h2>
+      <p class="text-center text-muted mb-4">
+        Tell us a bit about your team and what's breaking. We'll get back to you with a plan and a quote.
+      </p>
+      <%= form_with model: Lead.new, url: leads_path, class: "card p-4" do |f| %>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <%= f.label :name, "Your name", class: "form-label" %>
+            <%= f.text_field :name, class: "form-control", required: true, maxlength: 100, autocomplete: "name" %>
+          </div>
+          <div class="col-md-6">
+            <%= f.label :email, "Work email", class: "form-label" %>
+            <%= f.email_field :email, class: "form-control", required: true, maxlength: 255, autocomplete: "email" %>
+          </div>
+          <div class="col-md-6">
+            <%= f.label :company, class: "form-label" %>
+            <%= f.text_field :company, class: "form-control", maxlength: 100, autocomplete: "organization" %>
+          </div>
+          <div class="col-md-6">
+            <%= f.label :phone, "Phone (optional)", class: "form-label" %>
+            <%= f.telephone_field :phone, class: "form-control", maxlength: 100, autocomplete: "tel" %>
+          </div>
+          <div class="col-12">
+            <%= f.label :message, "How can we help?", class: "form-label" %>
+            <%= f.text_area :message, rows: 4, class: "form-control", maxlength: 5000 %>
+          </div>
+          <%# Honeypot - hidden from people, filled in by bots (see LeadsController#create). %>
+          <div class="d-none" aria-hidden="true">
+            <%= label_tag :website, "Website" %>
+            <%= text_field_tag :website, nil, tabindex: -1, autocomplete: "off" %>
+          </div>
+          <div class="col-12">
+            <%= f.submit "Send message", class: "btn btn-primary w-100" %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </section>
 </main>

@@ -1,0 +1,9 @@
+<h2>New inquiry from the website</h2>
+<p>
+  <strong>Name:</strong> <%= @lead.name %><br>
+  <strong>Email:</strong> <%= mail_to @lead.email %><br>
+  <strong>Company:</strong> <%= @lead.company.presence || "-" %><br>
+  <strong>Phone:</strong> <%= @lead.phone.presence || "-" %>
+</p>
+<p><%= simple_format(@lead.message) %></p>
+<p><%= link_to "View all leads", leads_url %></p>
