@@ -11,6 +11,7 @@
           <div class="card-body">
             <h6 class="card-title text-muted">Est. monthly revenue</h6>
             <h2 class="fw-bold mb-0 text-success"><%= number_to_currency(@revenue[:mrr], precision: 0) %></h2>
+            <small class="text-muted">+ <%= number_to_currency(@revenue[:extra_ticket_revenue_30_days], precision: 0) %> extra tickets (30 days)</small>
           </div>
         </div>
       </div>

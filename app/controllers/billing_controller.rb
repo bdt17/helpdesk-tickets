@@ -50,8 +50,47 @@ class BillingController < ApplicationController
   end
 
   def success
-    flash[:notice] = "Thanks! Your subscription is being set up — this can take a few seconds to confirm."
+    flash[:notice] = if params[:purchase] == "extra_tickets"
+      "Thanks! Your extra tickets will be ready in a few seconds - refresh if they don't show yet."
+    else
+      "Thanks! Your subscription is being set up — this can take a few seconds to confirm."
+    end
     redirect_to billing_path
+  end
+
+  # One-time purchase of extra tickets. Like #checkout, this only starts a
+  # Stripe Checkout - credits are added by the webhook once Stripe confirms
+  # payment, never here.
+  def extra_tickets
+    return redirect_to billing_path, alert: "Extra tickets aren't available right now." unless Plan.extra_tickets_enabled?
+    return redirect_to billing_path, alert: "Only the account owner can buy extra tickets." unless current_user.organization.nil? || current_user.org_owner?
+
+    quantity = params[:quantity].to_i.clamp(1, Plan::MAX_EXTRA_TICKETS_PER_PURCHASE)
+    ensure_organization_and_stripe_customer!
+    organization = current_user.organization
+
+    session = Stripe::Checkout::Session.create(
+      customer: organization.stripe_customer_id,
+      client_reference_id: current_user.id.to_s,
+      mode: "payment",
+      line_items: [ {
+        price_data: {
+          currency: "usd",
+          unit_amount: Plan.extra_ticket_price_cents,
+          product_data: { name: "Extra support ticket" }
+        },
+        quantity: quantity
+      } ],
+      metadata: { kind: "extra_tickets", organization_id: organization.id.to_s, quantity: quantity.to_s },
+      allow_promotion_codes: true,
+      success_url: billing_success_url(purchase: "extra_tickets"),
+      cancel_url: billing_url
+    )
+
+    redirect_to session.url, allow_other_host: true
+  rescue Stripe::StripeError => e
+    Rails.logger.error "Stripe error (extra tickets): #{e.class} #{e.message}"
+    redirect_to billing_path, alert: "Couldn't start checkout. Please try again or contact support."
   end
 
   def portal

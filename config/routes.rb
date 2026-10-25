@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   post "/billing/checkout/:plan", to: "billing#checkout", as: :billing_checkout
   get "/billing/success", to: "billing#success", as: :billing_success
   post "/billing/portal", to: "billing#portal", as: :billing_portal
+  post "/billing/extra_tickets", to: "billing#extra_tickets", as: :billing_extra_tickets
 
   get "/team", to: "team#index", as: :team
   post "/team", to: "team#create", as: :team_invite

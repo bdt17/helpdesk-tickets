@@ -202,4 +202,64 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
   ensure
     ENV.delete("STRIPE_PRICE_BASIC_ANNUAL")
   end
+
+  test "buying extra tickets starts a one-time checkout with our metadata, creating the org if needed" do
+    client = users(:client)
+    sign_in client
+    captured = nil
+    Stripe::Customer.stub(:create, OpenStruct.new(id: "cus_new")) do
+      Stripe::Checkout::Session.stub(:create, ->(**kw) { captured = kw; OpenStruct.new(url: "https://checkout.stripe.com/x") }) do
+        post billing_extra_tickets_url, params: { quantity: 3 }
+      end
+    end
+
+    assert_redirected_to "https://checkout.stripe.com/x"
+    org = client.reload.organization
+    assert client.org_owner?
+    assert_equal "payment", captured[:mode]
+    assert_equal 3, captured[:line_items].first[:quantity]
+    assert_equal 3900, captured[:line_items].first[:price_data][:unit_amount]
+    assert_equal({ kind: "extra_tickets", organization_id: org.id.to_s, quantity: "3" }, captured[:metadata])
+    assert_equal 0, org.extra_ticket_credits # nothing granted until Stripe confirms payment
+  end
+
+  test "extra-ticket quantity is clamped to 1..10" do
+    client = users(:client)
+    client.update!(organization: Organization.create!(name: "Org", stripe_customer_id: "cus_existing"), org_role: "owner")
+    sign_in client
+    quantities = []
+    Stripe::Checkout::Session.stub(:create, ->(**kw) { quantities << kw[:line_items].first[:quantity]; OpenStruct.new(url: "https://checkout.stripe.com/x") }) do
+      post billing_extra_tickets_url, params: { quantity: 500 }
+      post billing_extra_tickets_url, params: { quantity: -4 }
+    end
+    assert_equal [ 10, 1 ], quantities
+  end
+
+  test "a team member can't buy extra tickets" do
+    org = Organization.create!(name: "Org", stripe_customer_id: "cus_existing")
+    member = users(:client)
+    member.update!(organization: org, org_role: "member")
+    sign_in member
+    post billing_extra_tickets_url, params: { quantity: 1 }
+    assert_equal "Only the account owner can buy extra tickets.", flash[:alert]
+  end
+
+  test "extra tickets can be switched off with a zero price" do
+    ENV["EXTRA_TICKET_PRICE_CENTS"] = "0"
+    sign_in users(:client)
+    post billing_extra_tickets_url, params: { quantity: 1 }
+    assert_equal "Extra tickets aren't available right now.", flash[:alert]
+    get billing_url
+    assert_no_match "Buy extra tickets", response.body
+  ensure
+    ENV.delete("EXTRA_TICKET_PRICE_CENTS")
+  end
+
+  test "the billing page offers extra tickets to a client who is out of tickets" do
+    client = users(:client)
+    Ticket.create!(title: "Free one", user: client)
+    sign_in client
+    get billing_url
+    assert_select "form[action=?] input[type=submit][value=?]", billing_extra_tickets_path, "Buy extra tickets"
+  end
 end

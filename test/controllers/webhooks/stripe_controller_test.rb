@@ -76,6 +76,32 @@ module Webhooks
       assert_response :ok
     end
 
+    test "a paid extra-tickets checkout credits the organization exactly once" do
+      organization = Organization.create!(name: "Acme", stripe_customer_id: "cus_123")
+      event = extra_tickets_event(organization)
+
+      post_event event
+      assert_response :ok
+      assert_equal 3, organization.reload.extra_ticket_credits
+      assert_equal 11700, organization.ticket_credit_purchases.sum(:amount_cents)
+
+      post_event event # Stripe redelivers
+      assert_equal 3, organization.reload.extra_ticket_credits
+      assert_equal 1, organization.ticket_credit_purchases.count
+    end
+
+    test "extra-tickets metadata pointing at another customer's organization is ignored" do
+      victim = Organization.create!(name: "Victim", stripe_customer_id: "cus_victim")
+      post_event extra_tickets_event(victim, customer: "cus_attacker")
+      assert_equal 0, victim.reload.extra_ticket_credits
+    end
+
+    test "an unpaid extra-tickets checkout grants nothing" do
+      organization = Organization.create!(name: "Acme", stripe_customer_id: "cus_123")
+      post_event extra_tickets_event(organization, payment_status: "unpaid")
+      assert_equal 0, organization.reload.extra_ticket_credits
+    end
+
     test "a yearly subscription is recorded as annual" do
       organization = Organization.create!(name: "Acme", stripe_customer_id: "cus_123")
       ENV["STRIPE_PRICE_BUSINESS_ANNUAL"] = "price_business_year"
@@ -150,6 +176,13 @@ module Webhooks
       Stripe::Webhook.stub(:construct_event, event) do
         post webhooks_stripe_url, params: "{}", headers: { "Stripe-Signature" => "valid" }
       end
+    end
+
+    def extra_tickets_event(organization, customer: organization.stripe_customer_id, payment_status: "paid")
+      session = OpenStruct.new(id: "cs_extra_1", mode: "payment", customer: customer, payment_status: payment_status,
+                               amount_total: 11700, subscription: nil,
+                               metadata: { "kind" => "extra_tickets", "organization_id" => organization.id.to_s, "quantity" => "3" })
+      OpenStruct.new(id: "evt_cs_1", type: "checkout.session.completed", data: OpenStruct.new(object: session))
     end
 
     def payment_failed_event(id, customer: "cus_123")

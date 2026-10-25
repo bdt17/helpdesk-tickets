@@ -63,6 +63,7 @@ class ReportsController < ApplicationController
                                     .or(Organization.where(subscription_status: %w[past_due unpaid]))
                                     .order(payment_failed_at: :desc).includes(:users).to_a,
       by_plan: by_plan,
+      extra_ticket_revenue_30_days: TicketCreditPurchase.where(created_at: 30.days.ago..).sum(:amount_cents) / 100.0,
       clients_total: clients.count,
       clients_new_30_days: clients.where(created_at: 30.days.ago..).count,
       clients_never_subscribed: clients.where(organization_id: nil).count

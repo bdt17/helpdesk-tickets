@@ -40,6 +40,7 @@ module Webhooks
     end
 
     def handle_checkout_completed(session)
+      return handle_extra_tickets_purchase(session) if session.mode == "payment"
       return if session.subscription.blank?
 
       subscription = Stripe::Subscription.retrieve(session.subscription)
@@ -72,6 +73,30 @@ module Webhooks
       User.admin.find_each do |admin|
         BillingMailer.payment_failed_staff_alert(organization, admin, details).deliver_later
       end
+    end
+
+    # The organization comes from metadata *we* set when creating the
+    # session, cross-checked against the paying customer, and the quantity
+    # is read from Stripe's record of what was actually paid for.
+    def handle_extra_tickets_purchase(session)
+      metadata = session.metadata.to_h.transform_keys(&:to_s)
+      return unless metadata["kind"] == "extra_tickets" && session.payment_status == "paid"
+
+      organization = Organization.find_by(id: metadata["organization_id"], stripe_customer_id: session.customer)
+      return unless organization
+
+      quantity = metadata["quantity"].to_i
+      return unless quantity.positive?
+
+      Organization.transaction do
+        organization.ticket_credit_purchases.create!(
+          stripe_checkout_session_id: session.id, quantity: quantity, amount_cents: session.amount_total.to_i
+        )
+        Organization.where(id: organization.id).update_all([ "extra_ticket_credits = extra_ticket_credits + ?", quantity ])
+      end
+    rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid
+      # Already credited for this session - Stripe redelivered the event.
+      nil
     end
 
     def handle_invoice_paid(invoice)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_25_201031) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_25_201153) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -66,6 +66,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_25_201031) do
   create_table "organizations", force: :cascade do |t|
     t.string "billing_interval"
     t.datetime "created_at", null: false
+    t.integer "extra_ticket_credits", default: 0, null: false
     t.string "last_payment_failure_event_id"
     t.string "name", null: false
     t.datetime "payment_failed_at"
@@ -220,6 +221,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_25_201031) do
     t.index ["key"], name: "index_solid_queue_semaphores_on_key", unique: true
   end
 
+  create_table "ticket_credit_purchases", force: :cascade do |t|
+    t.integer "amount_cents", null: false
+    t.datetime "created_at", null: false
+    t.integer "organization_id", null: false
+    t.integer "quantity", null: false
+    t.string "stripe_checkout_session_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_ticket_credit_purchases_on_organization_id"
+    t.index ["stripe_checkout_session_id"], name: "index_ticket_credit_purchases_on_stripe_checkout_session_id", unique: true
+  end
+
   create_table "tickets", force: :cascade do |t|
     t.integer "assignee_id"
     t.string "category"
@@ -273,6 +285,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_25_201031) do
   add_foreign_key "solid_queue_ready_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_recurring_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_scheduled_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
+  add_foreign_key "ticket_credit_purchases", "organizations"
   add_foreign_key "tickets", "users"
   add_foreign_key "tickets", "users", column: "assignee_id"
   add_foreign_key "users", "organizations"
