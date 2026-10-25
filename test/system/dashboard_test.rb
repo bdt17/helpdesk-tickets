@@ -24,7 +24,11 @@ class DashboardTest < ApplicationSystemTestCase
   def sign_in_via_form(user)
     visit new_user_session_path
     fill_in "Email", with: user.email
-    fill_in "Password", with: "password123"
+    fill_in "Password", with: "password1234"
     click_button "Log In"
+    # Wait for the sign-in to actually land before the caller's next
+    # visit - otherwise that visit can race the form submission, arrive
+    # without the session cookie, and get bounced back to the login page.
+    assert_text "Welcome, #{user.email}"
   end
 end

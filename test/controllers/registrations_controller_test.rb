@@ -13,7 +13,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   test "signing up creates a client and signs them in" do
     assert_difference "User.count", 1 do
       post user_registration_url, params: {
-        user: { email: "new-client@example.com", password: "password123", password_confirmation: "password123" }
+        user: { email: "new-client@example.com", password: "password1234", password_confirmation: "password1234" }
       }
     end
 
@@ -24,7 +24,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
   test "signing up sends a welcome email" do
     post user_registration_url, params: {
-      user: { email: "new-client@example.com", password: "password123", password_confirmation: "password123" }
+      user: { email: "new-client@example.com", password: "password1234", password_confirmation: "password1234" }
     }
 
     user = User.find_by(email: "new-client@example.com")
@@ -41,7 +41,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
   test "role cannot be elevated through the sign up form" do
     post user_registration_url, params: {
-      user: { email: "sneaky@example.com", password: "password123", password_confirmation: "password123", role: "admin" }
+      user: { email: "sneaky@example.com", password: "password1234", password_confirmation: "password1234", role: "admin" }
     }
 
     user = User.find_by(email: "sneaky@example.com")
@@ -59,7 +59,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     sign_in user
 
     patch user_registration_url, params: {
-      user: { email: "new-address@example.com", current_password: "password123" }
+      user: { email: "new-address@example.com", current_password: "password1234" }
     }
 
     assert_redirected_to dashboard_url
@@ -82,7 +82,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     sign_in user
 
     patch user_registration_url, params: {
-      user: { role: "admin", current_password: "password123" }
+      user: { role: "admin", current_password: "password1234" }
     }
 
     assert_not user.reload.admin?
@@ -91,7 +91,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   test "signup is rate-limited per IP after 5 attempts within an hour" do
     5.times do |n|
       post user_registration_url, params: {
-        user: { email: "rl-#{n}@example.com", password: "password123", password_confirmation: "password123" }
+        user: { email: "rl-#{n}@example.com", password: "password1234", password_confirmation: "password1234" }
       }
       # A successful signup auto-signs the new user in, and Devise itself
       # refuses to process another signup for an already-authenticated
@@ -103,7 +103,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
     assert_no_difference "User.count" do
       post user_registration_url, params: {
-        user: { email: "rl-blocked@example.com", password: "password123", password_confirmation: "password123" }
+        user: { email: "rl-blocked@example.com", password: "password1234", password_confirmation: "password1234" }
       }
     end
 
@@ -116,13 +116,22 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
     5.times do |n|
       post user_registration_url, params: {
-        user: { email: "rl2-#{n}@example.com", password: "password123", password_confirmation: "password123" }
+        user: { email: "rl2-#{n}@example.com", password: "password1234", password_confirmation: "password1234" }
       }
     end
 
     sign_in user
-    patch user_registration_url, params: { user: { email: "still-works@example.com", current_password: "password123" } }
+    patch user_registration_url, params: { user: { email: "still-works@example.com", current_password: "password1234" } }
 
     assert_equal "still-works@example.com", user.reload.email
+  end
+
+  test "rejects passwords shorter than 12 characters" do
+    assert_no_difference "User.count" do
+      post user_registration_url, params: {
+        user: { email: "shortpw@example.com", password: "elevenchars", password_confirmation: "elevenchars" }
+      }
+    end
+    assert_response :unprocessable_entity
   end
 end

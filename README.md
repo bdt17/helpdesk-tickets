@@ -101,7 +101,7 @@ case-insensitive on both SQLite (dev/test) and PostgreSQL (production).
 
 ```
 bin/setup
-bin/rails db:seed  # employee@thomasit.com / agent@thomasit.com / admin@thomasit.com, password "changeme123"
+bin/rails db:seed  # employee@thomasit.com / agent@thomasit.com / admin@thomasit.com, password "changeme-dev-only" (override with SEED_PASSWORD; refuses to run in production)
 bin/rails server
 ```
 

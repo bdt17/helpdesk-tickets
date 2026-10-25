@@ -15,14 +15,32 @@ class TicketAttachmentsControllerTest < ActionDispatch::IntegrationTest
   test "the ticket's owner can fetch their own attachment" do
     sign_in users(:employee)
     get ticket_attachment_url(@ticket, @attachment)
-    assert_response :redirect
-    assert_match %r{/rails/active_storage/}, response.location
+    assert_response :success
+    assert_equal "image/png", response.media_type
+    assert_equal file_fixture("test_image.png").binread, response.body
+    assert_match(/\Ainline/, response.headers["Content-Disposition"])
+  end
+
+  test "non-image attachments download rather than render inline" do
+    @ticket.attachments.attach(io: file_fixture("test_note.txt").open, filename: "note.txt", content_type: "text/plain")
+    note = @ticket.reload.attachments.find_by!(blob: ActiveStorage::Blob.find_by!(filename: "note.txt"))
+
+    sign_in users(:employee)
+    get ticket_attachment_url(@ticket, note)
+    assert_response :success
+    assert_match(/\Aattachment/, response.headers["Content-Disposition"])
+  end
+
+  test "never hands out a reusable, unauthenticated Active Storage URL" do
+    sign_in users(:employee)
+    get ticket_attachment_url(@ticket, @attachment)
+    assert_no_match %r{/rails/active_storage/}, response.headers["Location"].to_s
   end
 
   test "staff can fetch a client's attachment" do
     sign_in users(:agent)
     get ticket_attachment_url(@ticket, @attachment)
-    assert_response :redirect
+    assert_response :success
   end
 
   test "another employee cannot fetch someone else's attachment" do

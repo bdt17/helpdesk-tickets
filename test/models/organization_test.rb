@@ -20,8 +20,8 @@ class OrganizationTest < ActiveSupport::TestCase
 
   test "owner and members split users by org_role" do
     organization = Organization.create!(name: "Acme")
-    owner = User.create!(email: "owner@example.com", password: "password123", role: :client, organization: organization, org_role: "owner")
-    member = User.create!(email: "member@example.com", password: "password123", role: :client, organization: organization, org_role: "member")
+    owner = User.create!(email: "owner@example.com", password: "password1234", role: :client, organization: organization, org_role: "owner")
+    member = User.create!(email: "member@example.com", password: "password1234", role: :client, organization: organization, org_role: "member")
 
     assert_equal owner, organization.owner
     assert_equal [ member ], organization.members.to_a
@@ -39,15 +39,15 @@ class OrganizationTest < ActiveSupport::TestCase
 
   test "seats_used counts every user on the organization, owner included" do
     organization = Organization.create!(name: "Acme", plan: "basic", subscription_status: "active")
-    User.create!(email: "owner@example.com", password: "password123", role: :client, organization: organization, org_role: "owner")
-    User.create!(email: "member@example.com", password: "password123", role: :client, organization: organization, org_role: "member")
+    User.create!(email: "owner@example.com", password: "password1234", role: :client, organization: organization, org_role: "owner")
+    User.create!(email: "member@example.com", password: "password1234", role: :client, organization: organization, org_role: "member")
 
     assert_equal 2, organization.seats_used
   end
 
   test "seats_available? is false once seats_used reaches max_seats" do
     organization = Organization.create!(name: "Acme", plan: "basic", subscription_status: "active") # max_seats: 3
-    3.times { |n| User.create!(email: "user#{n}@example.com", password: "password123", role: :client, organization: organization, org_role: "member") }
+    3.times { |n| User.create!(email: "user#{n}@example.com", password: "password1234", role: :client, organization: organization, org_role: "member") }
 
     refute organization.seats_available?
   end

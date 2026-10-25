@@ -44,3 +44,10 @@ cookies.txt
 /.env
 /.env.*
 !/.env.example
+
+# Rails master key - decrypts config/credentials.yml.enc. Never commit it.
+/config/master.key
+
+# Ignore key files for decrypting credentials and more.
+/config/*.key
+
