@@ -164,4 +164,42 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
   ensure
     ENV.delete("STRIPE_TRIAL_DAYS")
   end
+
+  test "yearly checkout uses the plan's annual price" do
+    client = users(:client)
+    client.update!(organization: Organization.create!(name: "Org", stripe_customer_id: "cus_existing"), org_role: "owner")
+    sign_in client
+    captured = nil
+    ENV["STRIPE_PRICE_BASIC_ANNUAL"] = "price_basic_year"
+
+    Stripe::Checkout::Session.stub(:create, ->(**kw) { captured = kw; OpenStruct.new(url: "https://checkout.stripe.com/y") }) do
+      post billing_checkout_url(plan: "basic", interval: "year")
+    end
+
+    assert_redirected_to "https://checkout.stripe.com/y"
+    assert_equal [ { price: "price_basic_year", quantity: 1 } ], captured[:line_items]
+  ensure
+    ENV.delete("STRIPE_PRICE_BASIC_ANNUAL")
+  end
+
+  test "yearly checkout without an annual price configured is refused" do
+    sign_in users(:client)
+    ENV.delete("STRIPE_PRICE_BASIC_ANNUAL")
+    Plan.stub(:price_id_for, "price_basic_month") do
+      post billing_checkout_url(plan: "basic", interval: "year")
+    end
+    assert_redirected_to billing_url
+    assert_equal "Unknown plan.", flash[:alert]
+  end
+
+  test "the billing page offers yearly only for plans with an annual price" do
+    sign_in users(:client)
+    ENV["STRIPE_PRICE_BASIC_ANNUAL"] = "price_basic_year"
+    get billing_url
+    assert_select "form[action=?]", billing_checkout_path(plan: "basic", interval: "year")
+    assert_select "form[action=?]", billing_checkout_path(plan: "business", interval: "year"), count: 0
+    assert_match "$490/yr", response.body
+  ensure
+    ENV.delete("STRIPE_PRICE_BASIC_ANNUAL")
+  end
 end

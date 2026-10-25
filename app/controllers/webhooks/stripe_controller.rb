@@ -87,7 +87,8 @@ module Webhooks
       organization.update!(
         stripe_subscription_id: subscription.id,
         subscription_status: subscription.status,
-        plan: Plan.key_for_price_id(price_id)
+        plan: Plan.key_for_price_id(price_id),
+        billing_interval: Plan.interval_for_price_id(price_id)
       )
     end
   end

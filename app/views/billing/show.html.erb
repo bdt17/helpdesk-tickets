@@ -50,10 +50,21 @@
               <% end %>
             </ul>
             <% if @organization&.plan == plan.key && current_user.subscribed? %>
-              <span class="badge bg-success align-self-start mt-auto">Current Plan</span>
+              <span class="badge bg-success align-self-start mt-auto">
+                Current Plan<%= " (annual)" if @organization.annual? %>
+              </span>
             <% else %>
-              <%= button_to "Subscribe", billing_checkout_path(plan: plan.key), method: :post,
-                             class: "btn btn-primary mt-auto", form: { class: "d-inline" } %>
+              <div class="mt-auto d-grid gap-2">
+                <%= button_to "Subscribe monthly", billing_checkout_path(plan: plan.key), method: :post,
+                               class: "btn btn-primary w-100" %>
+                <% if Plan.annual_price_id_for(plan.key) %>
+                  <%= button_to billing_checkout_path(plan: plan.key, interval: "year"), method: :post,
+                                 class: "btn btn-outline-primary w-100" do %>
+                    Pay yearly - <%= number_to_currency(Plan.annual_dollars(plan), precision: 0) %>/yr
+                    <span class="d-block small">2 months free</span>
+                  <% end %>
+                <% end %>
+              </div>
             <% end %>
           </div>
         </div>

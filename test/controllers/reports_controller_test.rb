@@ -88,4 +88,13 @@ class ReportsControllerTest < ActionDispatch::IntegrationTest
     assert_no_match "Est. monthly revenue", response.body
     assert_no_match "System health", response.body
   end
+
+  test "annual subscribers count toward MRR at a twelfth of their yearly price" do
+    Organization.create!(name: "Yearly", subscription_status: "active", plan: "business", billing_interval: "year") # 1490/12 = 124.17
+    Organization.create!(name: "Monthly", subscription_status: "active", plan: "basic", billing_interval: "month") # 49
+
+    sign_in users(:admin)
+    get reports_index_url
+    assert_select "h2", text: "$173"
+  end
 end
