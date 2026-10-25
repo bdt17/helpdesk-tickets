@@ -3,6 +3,53 @@
 <div class="container-fluid py-4">
   <h1 class="mb-4">Reports</h1>
 
+  <% if @revenue %>
+    <h5 class="mb-3">Revenue <small class="text-muted fw-normal">(admins only · estimated from listed prices; Stripe is the source of truth)</small></h5>
+    <div class="row g-3 mb-3">
+      <div class="col-md-3">
+        <div class="card h-100 border-success border-2">
+          <div class="card-body">
+            <h6 class="card-title text-muted">Est. monthly revenue</h6>
+            <h2 class="fw-bold mb-0 text-success"><%= number_to_currency(@revenue[:mrr], precision: 0) %></h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card h-100"><div class="card-body">
+          <h6 class="card-title text-muted">Paying clients</h6>
+          <h2 class="fw-bold mb-0"><%= @revenue[:active] %></h2>
+          <small class="text-muted"><%= @revenue[:trialing] %> trialing · <%= @revenue[:past_due] %> past due</small>
+        </div></div>
+      </div>
+      <div class="col-md-3">
+        <div class="card h-100"><div class="card-body">
+          <h6 class="card-title text-muted">Client accounts</h6>
+          <h2 class="fw-bold mb-0"><%= @revenue[:clients_total] %></h2>
+          <small class="text-muted"><%= @revenue[:clients_new_30_days] %> new in 30 days · <%= @revenue[:clients_never_subscribed] %> never subscribed</small>
+        </div></div>
+      </div>
+      <div class="col-md-3">
+        <div class="card h-100"><div class="card-body">
+          <h6 class="card-title text-muted">By plan</h6>
+          <% Plan::ALL.each do |plan| %>
+            <div class="d-flex justify-content-between small"><span><%= plan.name %></span><strong><%= @revenue[:by_plan].fetch(plan.key, 0) %></strong></div>
+          <% end %>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-body">
+        <h6 class="card-title">System health</h6>
+        <ul class="list-unstyled mb-0 small">
+          <% @health.each do |label, ok| %>
+            <li class="health-check" data-ok="<%= ok %>"><%= ok ? "✅" : "⚠️" %> <%= label %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
   <div class="row g-3 mb-4">
     <div class="col-md-3">
       <div class="card text-white bg-primary h-100">
