@@ -1,0 +1,17 @@
+Hi,
+
+Here's what Thomas IT handled for <%= @organization.name %> in <%= @stats[:month_name] %>:
+
+  Tickets filed:          <%= @stats[:filed] %>
+  Tickets resolved:       <%= @stats[:resolved] %>
+<% if @stats[:avg_resolution_hours] %>  Average time to fix:    <%= @stats[:avg_resolution_hours] %> hours
+<% end %><% if @stats[:sla_met_percent] %>  Resolved within SLA:    <%= @stats[:sla_met_percent] %>%
+<% end %><% if @stats[:csat_average] %>  Your team's rating:     <%= @stats[:csat_average] %> / 5
+<% end %>  Still open right now:   <%= @stats[:still_open] %>
+<%= "\nBy type: #{@stats[:by_category].map { |category, count| "#{category} (#{count})" }.join(", ")}\n" if @stats[:by_category].any? -%>
+<%= "\nA quiet month - no new issues. Your plan stays on standby so the next\nproblem gets handled fast.\n" if @stats[:filed].zero? -%>
+
+See every ticket: <%= tickets_url %>
+
+Thanks for trusting us with your IT.
+Thomas Information Technology

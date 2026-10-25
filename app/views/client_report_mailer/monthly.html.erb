@@ -1,0 +1,24 @@
+<p>Hi,</p>
+<p>Here's what Thomas IT handled for <strong><%= @organization.name %></strong> in <%= @stats[:month_name] %>:</p>
+<table cellpadding="6" style="border-collapse: collapse;">
+  <tr><td>Tickets filed</td><td><strong><%= @stats[:filed] %></strong></td></tr>
+  <tr><td>Tickets resolved</td><td><strong><%= @stats[:resolved] %></strong></td></tr>
+  <% if @stats[:avg_resolution_hours] %>
+    <tr><td>Average time to fix</td><td><strong><%= @stats[:avg_resolution_hours] %> hours</strong></td></tr>
+  <% end %>
+  <% if @stats[:sla_met_percent] %>
+    <tr><td>Resolved within SLA</td><td><strong><%= @stats[:sla_met_percent] %>%</strong></td></tr>
+  <% end %>
+  <% if @stats[:csat_average] %>
+    <tr><td>Your team's rating</td><td><strong><%= @stats[:csat_average] %> / 5</strong></td></tr>
+  <% end %>
+  <tr><td>Still open right now</td><td><strong><%= @stats[:still_open] %></strong></td></tr>
+</table>
+<% if @stats[:by_category].any? %>
+  <p>By type: <%= @stats[:by_category].map { |category, count| "#{category} (#{count})" }.join(", ") %></p>
+<% end %>
+<% if @stats[:filed].zero? %>
+  <p>A quiet month - no new issues. Your plan stays on standby so the next problem gets handled fast.</p>
+<% end %>
+<p><%= link_to "See every ticket", tickets_url %></p>
+<p>Thanks for trusting us with your IT.<br>Thomas Information Technology</p>
