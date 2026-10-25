@@ -23,4 +23,14 @@ class DashboardControllerTest < ActionDispatch::IntegrationTest
     assert_includes @response.body, tickets(:two).title
     assert_includes @response.body, tickets(:stale_high_priority).title
   end
+
+  test "every signed-in role can reach the ticket form from the top nav" do
+    %i[client employee agent admin].each do |role|
+      sign_in users(role)
+      get dashboard_url
+      assert_select "nav a[href=?]", new_ticket_path, text: "Open a Ticket"
+      assert_select "nav a[href=?]", tickets_path, text: "Tickets"
+      sign_out :user
+    end
+  end
 end
