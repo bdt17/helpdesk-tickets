@@ -12,7 +12,7 @@
       <span>
         <strong><%= [ used, limit ].min %> of <%= limit %></strong>
         <%= current_user.subscribed? ? "tickets included in your #{current_user.plan_definition&.name} plan" : "free tickets" %>
-        used this month.
+        used this month<% if current_user.extra_ticket_credits.positive? %>, plus <strong><%= current_user.extra_ticket_credits %> extra</strong> available<% end %>.
       </span>
       <%= link_to(current_user.subscribed? ? "Upgrade plan" : "See plans", billing_path, class: "btn btn-sm btn-primary") if current_user.org_owner? || current_user.organization.nil? %>
     </div>

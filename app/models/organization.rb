@@ -5,6 +5,7 @@
 # it was on User before this existed - never set directly from user input.
 class Organization < ApplicationRecord
   has_many :users, dependent: :nullify
+  has_many :ticket_credit_purchases, dependent: :restrict_with_exception
 
   validates :name, presence: true
 

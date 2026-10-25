@@ -116,10 +116,11 @@ class TicketsController < ApplicationController
   end
 
   def ticket_limit_message
+    extra = Plan.extra_tickets_enabled? ? " or buy extra tickets" : ""
     if current_user.subscribed?
-      "Your #{current_user.plan_definition&.name} plan includes #{current_user.monthly_ticket_limit} tickets a month and you've used them all - upgrade to keep filing this month."
+      "Your #{current_user.plan_definition&.name} plan includes #{current_user.monthly_ticket_limit} tickets a month and you've used them all - upgrade#{extra} to keep filing this month."
     else
-      "You've used your free ticket#{'s' unless Plan.free_tickets_per_month == 1} for this month. Pick a plan to keep getting support."
+      "You've used your free ticket#{'s' unless Plan.free_tickets_per_month == 1} for this month. Pick a plan#{extra} to keep getting support."
     end
   end
 

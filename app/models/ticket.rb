@@ -38,6 +38,7 @@ class Ticket < ApplicationRecord
   # instead of it, so a real bogus value is still rejected.
   before_validation :nilify_blank_category
 
+  before_create :consume_extra_ticket_credit
   before_save :set_resolved_at, if: :will_save_change_to_status?
   before_save :clear_escalation_on_reopen, if: :will_save_change_to_status?
   before_save :set_due_at, if: :will_save_change_to_priority?
@@ -81,6 +82,20 @@ class Ticket < ApplicationRecord
     return if user.nil? || !user.ticket_limit_reached?
 
     errors.add(:base, "You've used all #{user.monthly_ticket_limit} tickets included this month. Upgrade your plan to file more.")
+  end
+
+  # Past the allowance, a ticket uses up one purchased credit. The
+  # conditional UPDATE is what makes this safe if two teammates file at the
+  # same moment with one credit left: only one decrement can succeed.
+  def consume_extra_ticket_credit
+    return unless user&.over_ticket_allowance?
+
+    used = Organization.where(id: user.organization_id).where("extra_ticket_credits > 0")
+                       .update_all("extra_ticket_credits = extra_ticket_credits - 1")
+    return if used == 1
+
+    errors.add(:base, "You've used all your tickets for this month.")
+    throw :abort
   end
 
   # Only checks the content type the browser declared on upload, not the

@@ -99,6 +99,21 @@ class Plan
     "month" if ALL.any? { |plan| ENV[plan.price_id_env] == price_id }
   end
 
+  # One-off extra tickets for when a client has used their monthly
+  # allowance (or free tier): EXTRA_TICKET_PRICE_CENTS each, charged via a
+  # one-time Stripe Checkout with inline pricing, so there's nothing to
+  # create in the Stripe dashboard first. Set it to 0 to turn the add-on
+  # off. The default is a PLACEHOLDER like every other price here.
+  MAX_EXTRA_TICKETS_PER_PURCHASE = 10
+
+  def self.extra_ticket_price_cents
+    ENV.fetch("EXTRA_TICKET_PRICE_CENTS", 3900).to_i
+  end
+
+  def self.extra_tickets_enabled?
+    extra_ticket_price_cents.positive?
+  end
+
   def self.find(key)
     ALL.find { |plan| plan.key == key.to_s }
   end

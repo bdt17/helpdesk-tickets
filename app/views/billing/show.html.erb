@@ -34,6 +34,25 @@
     </div>
   <% end %>
 
+  <% if Plan.extra_tickets_enabled? && current_user.monthly_ticket_limit && (current_user.org_owner? || @organization.nil?) %>
+    <div class="card p-4 mb-4 <%= "border-warning border-2" if current_user.ticket_limit_reached? %>">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div>
+          <h5 class="mb-1">Need more tickets this month?</h5>
+          <p class="text-muted small mb-0">
+            Extra tickets are <%= number_to_currency(Plan.extra_ticket_price_cents / 100.0) %> each, no plan change needed.
+            You've used <%= current_user.tickets_filed_this_month %> of <%= current_user.monthly_ticket_limit %> this month<% if current_user.extra_ticket_credits.positive? %>, with <strong><%= current_user.extra_ticket_credits %> extra</strong> still available<% end %>.
+          </p>
+        </div>
+        <%= form_with url: billing_extra_tickets_path, method: :post, class: "d-flex gap-2 align-items-center" do %>
+          <%= select_tag :quantity, options_for_select((1..Plan::MAX_EXTRA_TICKETS_PER_PURCHASE).to_a, 1),
+                         class: "form-select form-select-sm", style: "width: auto;", "aria-label": "Number of extra tickets" %>
+          <%= submit_tag "Buy extra tickets", class: "btn btn-warning btn-sm" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
   <% if current_user.org_owner? || @organization.nil? %>
     <div class="row g-4">
       <% @plans.each do |plan| %>

@@ -62,9 +62,19 @@ class User < ApplicationRecord
     Ticket.where(user: filers).where(created_at: Time.current.beginning_of_month..).count
   end
 
-  def ticket_limit_reached?
+  # Past the monthly allowance - from here each new ticket needs one of
+  # the organization's purchased extra-ticket credits.
+  def over_ticket_allowance?
     limit = monthly_ticket_limit
     limit.present? && tickets_filed_this_month >= limit
+  end
+
+  def extra_ticket_credits
+    organization&.extra_ticket_credits.to_i
+  end
+
+  def ticket_limit_reached?
+    over_ticket_allowance? && extra_ticket_credits <= 0
   end
 
   def org_owner?
