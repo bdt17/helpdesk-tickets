@@ -7,7 +7,7 @@ class TicketMailerTest < ActionMailer::TestCase
 
     assert_equal "New comment on ##{comment.ticket.id} #{comment.ticket.title}", mail.subject
     assert_equal [ users(:agent).email ], mail.to
-    assert_equal [ "helpdesk@thomasit.com" ], mail.from
+    assert_equal [ "support@thomasinformationtechnology.com" ], mail.from
     assert_match "Any update on this?", mail.text_part.body.to_s
     assert_match "Any update on this?", mail.html_part.body.to_s
   end
