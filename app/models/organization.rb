@@ -24,6 +24,10 @@ class Organization < ApplicationRecord
     payment_failed_at.present? || %w[past_due unpaid].include?(subscription_status)
   end
 
+  def annual?
+    billing_interval == "year"
+  end
+
   def plan_definition
     Plan.find(plan)
   end

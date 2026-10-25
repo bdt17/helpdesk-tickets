@@ -21,7 +21,9 @@ class BillingController < ApplicationController
 
   def checkout
     plan = Plan.find(params[:plan])
-    return redirect_to billing_path, alert: "Unknown plan." unless plan && Plan.price_id_for(plan.key).present?
+    annual = params[:interval] == "year"
+    price_id = plan && (annual ? Plan.annual_price_id_for(plan.key) : Plan.price_id_for(plan.key))
+    return redirect_to billing_path, alert: "Unknown plan." unless price_id.present?
     return redirect_to billing_path, alert: "Only the account owner can change plans." unless current_user.organization.nil? || current_user.org_owner?
 
     ensure_organization_and_stripe_customer!
@@ -30,7 +32,7 @@ class BillingController < ApplicationController
       customer: current_user.organization.stripe_customer_id,
       client_reference_id: current_user.id.to_s,
       mode: "subscription",
-      line_items: [ { price: Plan.price_id_for(plan.key), quantity: 1 } ],
+      line_items: [ { price: price_id, quantity: 1 } ],
       # Lets a client enter a coupon created in the Stripe dashboard -
       # e.g. a launch discount for early clients - without a code change.
       allow_promotion_codes: true,

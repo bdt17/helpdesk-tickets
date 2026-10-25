@@ -44,12 +44,19 @@ class ReportsController < ApplicationController
   def revenue_summary
     paying = Organization.where(subscription_status: %w[active trialing])
     by_plan = paying.group(:plan).count
-    mrr = by_plan.sum { |key, count| (plan = Plan.find(key)) ? Plan.monthly_dollars(plan) * count : 0 }
+    # Annual subscribers count at their monthly equivalent (yearly price / 12).
+    mrr = paying.group(:plan, :billing_interval).count.sum do |(key, interval), count|
+      next 0 unless (plan = Plan.find(key))
+
+      per_month = interval == "year" ? Plan.annual_dollars(plan) / 12.0 : Plan.monthly_dollars(plan)
+      per_month * count
+    end.round
     clients = User.client
 
     {
       mrr: mrr,
       active: paying.where(subscription_status: "active").count,
+      annual: paying.where(billing_interval: "year").count,
       trialing: paying.where(subscription_status: "trialing").count,
       past_due: Organization.where(subscription_status: %w[past_due unpaid]).count,
       payment_problems: Organization.where.not(payment_failed_at: nil)

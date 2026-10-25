@@ -80,6 +80,9 @@
           </div>
         <% end %>
       </div>
+      <% if Plan.annual_billing_available? %>
+        <p class="text-center fw-semibold mt-4 mb-0">Pay yearly and get 2 months free.</p>
+      <% end %>
       <p class="text-center text-muted small mt-4">
         Pricing quoted per client based on team size — reach out and we'll put together a quote.
       </p>

@@ -76,6 +76,20 @@ module Webhooks
       assert_response :ok
     end
 
+    test "a yearly subscription is recorded as annual" do
+      organization = Organization.create!(name: "Acme", stripe_customer_id: "cus_123")
+      ENV["STRIPE_PRICE_BUSINESS_ANNUAL"] = "price_business_year"
+      event = OpenStruct.new(type: "customer.subscription.updated",
+                             data: OpenStruct.new(object: fake_subscription(customer: "cus_123", status: "active", price_id: "price_business_year")))
+      post_event event
+
+      organization.reload
+      assert_equal "business", organization.plan
+      assert organization.annual?
+    ensure
+      ENV.delete("STRIPE_PRICE_BUSINESS_ANNUAL")
+    end
+
     test "invoice.payment_failed records the failure and emails the owner and admins" do
       organization = Organization.create!(name: "Acme", stripe_customer_id: "cus_123", plan: "business", subscription_status: "active")
       users(:client).update!(organization: organization, org_role: "owner")

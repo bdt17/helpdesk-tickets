@@ -69,6 +69,36 @@ class Plan
     limit ? "Up to #{limit} tickets/month" : "Unlimited tickets"
   end
 
+  # Annual billing: a separate yearly Stripe Price per plan, priced at
+  # ANNUAL_MONTHS_CHARGED x the monthly price ("2 months free"). Optional -
+  # until STRIPE_PRICE_<PLAN>_ANNUAL is set (see `bin/rails
+  # stripe:setup_annual_prices`), the billing page simply doesn't offer it.
+  ANNUAL_MONTHS_CHARGED = 10
+
+  def self.annual_price_env(key)
+    find(key)&.price_id_env&.then { |env_var| "#{env_var}_ANNUAL" }
+  end
+
+  def self.annual_price_id_for(key)
+    annual_price_env(key)&.then { |env_var| ENV[env_var].presence }
+  end
+
+  def self.annual_dollars(plan)
+    monthly_dollars(plan) * ANNUAL_MONTHS_CHARGED
+  end
+
+  def self.annual_billing_available?
+    ALL.any? { |plan| annual_price_id_for(plan.key) }
+  end
+
+  # "year" or "month" for one of our configured Price ids, nil if unknown.
+  def self.interval_for_price_id(price_id)
+    return nil if price_id.blank?
+    return "year" if ALL.any? { |plan| annual_price_id_for(plan.key) == price_id }
+
+    "month" if ALL.any? { |plan| ENV[plan.price_id_env] == price_id }
+  end
+
   def self.find(key)
     ALL.find { |plan| plan.key == key.to_s }
   end
@@ -78,6 +108,8 @@ class Plan
   end
 
   def self.key_for_price_id(price_id)
-    ALL.find { |plan| ENV[plan.price_id_env] == price_id }&.key
+    return nil if price_id.blank?
+
+    ALL.find { |plan| ENV[plan.price_id_env] == price_id || annual_price_id_for(plan.key) == price_id }&.key
   end
 end
