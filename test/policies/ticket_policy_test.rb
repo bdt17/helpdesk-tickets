@@ -59,8 +59,8 @@ class TicketPolicyTest < ActiveSupport::TestCase
 
   test "teammates on the same organization can view and update each other's tickets" do
     organization = Organization.create!(name: "Acme")
-    owner = User.create!(email: "owner@example.com", password: "password123", role: :client, organization: organization, org_role: "owner")
-    member = User.create!(email: "member@example.com", password: "password123", role: :client, organization: organization, org_role: "member")
+    owner = User.create!(email: "owner@example.com", password: "password1234", role: :client, organization: organization, org_role: "owner")
+    member = User.create!(email: "member@example.com", password: "password1234", role: :client, organization: organization, org_role: "member")
     ticket = Ticket.create!(title: "Printer issue", user: owner)
 
     policy = TicketPolicy.new(member, ticket)
@@ -70,8 +70,8 @@ class TicketPolicyTest < ActiveSupport::TestCase
 
   test "a teammate cannot rate a ticket they didn't personally file" do
     organization = Organization.create!(name: "Acme")
-    owner = User.create!(email: "owner@example.com", password: "password123", role: :client, organization: organization, org_role: "owner")
-    member = User.create!(email: "member@example.com", password: "password123", role: :client, organization: organization, org_role: "member")
+    owner = User.create!(email: "owner@example.com", password: "password1234", role: :client, organization: organization, org_role: "owner")
+    member = User.create!(email: "member@example.com", password: "password1234", role: :client, organization: organization, org_role: "member")
     ticket = Ticket.create!(title: "Printer issue", user: owner, status: :resolved)
 
     refute TicketPolicy.new(member, ticket).rate?
@@ -81,8 +81,8 @@ class TicketPolicyTest < ActiveSupport::TestCase
   test "clients on different organizations still can't see each other's tickets" do
     org_a = Organization.create!(name: "Acme")
     org_b = Organization.create!(name: "Globex")
-    user_a = User.create!(email: "a@example.com", password: "password123", role: :client, organization: org_a, org_role: "owner")
-    user_b = User.create!(email: "b@example.com", password: "password123", role: :client, organization: org_b, org_role: "owner")
+    user_a = User.create!(email: "a@example.com", password: "password1234", role: :client, organization: org_a, org_role: "owner")
+    user_b = User.create!(email: "b@example.com", password: "password1234", role: :client, organization: org_b, org_role: "owner")
     ticket = Ticket.create!(title: "Printer issue", user: user_a)
 
     refute TicketPolicy.new(user_b, ticket).show?

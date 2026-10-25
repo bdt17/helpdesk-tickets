@@ -6,4 +6,4 @@ curl -s https://thomasinformationtechnology.com/users/sign_in | grep -q "Email" 
 
 # Test dashboard after login (manual browser test recommended)
 echo "📱 Manual test: https://thomasinformationtechnology.com/users/sign_in"
-echo "Email: test@example.com | Password: changeme123"
+echo "Sign in with a real account - no shared test credentials are kept in this repo."

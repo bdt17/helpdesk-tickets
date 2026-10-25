@@ -16,9 +16,14 @@ Rails.application.configure do
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
   config.log_tags = [ :request_id ]
 
-  # Render terminates SSL at the edge and forwards plain HTTP internally;
-  # force_ssl here would redirect-loop without X-Forwarded-Proto handling.
-  config.force_ssl = false
+  # Render terminates SSL at the edge and forwards plain HTTP internally.
+  # assume_ssl tells Rails every request arrived over HTTPS regardless of
+  # the internal hop, so force_ssl never issues a redirect (no loop) - it
+  # only adds HSTS and marks the session/remember-me cookies Secure, which
+  # they weren't before (a session cookie could be sent over plain HTTP if
+  # anyone ever followed an http:// link).
+  config.assume_ssl = true
+  config.force_ssl = true
 
   # Don't log any deprecations.
   config.active_support.report_deprecations = false

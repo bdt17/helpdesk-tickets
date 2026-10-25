@@ -83,7 +83,7 @@ class TicketTest < ActiveSupport::TestCase
   end
 
   test "an unsubscribed client is capped at medium priority" do
-    client = User.create!(email: "unsubbed@example.com", password: "password123", role: :client)
+    client = User.create!(email: "unsubbed@example.com", password: "password1234", role: :client)
     ticket = Ticket.create!(title: "Issue", user: client, priority: :low)
 
     ticket.priority = :medium
@@ -96,7 +96,7 @@ class TicketTest < ActiveSupport::TestCase
 
   test "Basic and Business plans cap out at high priority" do
     organization = Organization.create!(name: "Acme", plan: "basic", subscription_status: "active")
-    client = User.create!(email: "basic-client@example.com", password: "password123", role: :client, organization: organization, org_role: "owner")
+    client = User.create!(email: "basic-client@example.com", password: "password1234", role: :client, organization: organization, org_role: "owner")
     ticket = Ticket.create!(title: "Issue", user: client, priority: :medium)
 
     ticket.priority = :high
@@ -112,7 +112,7 @@ class TicketTest < ActiveSupport::TestCase
 
   test "the Priority plan unlocks critical priority" do
     organization = Organization.create!(name: "Acme", plan: "priority", subscription_status: "active")
-    client = User.create!(email: "priority-client@example.com", password: "password123", role: :client, organization: organization, org_role: "owner")
+    client = User.create!(email: "priority-client@example.com", password: "password1234", role: :client, organization: organization, org_role: "owner")
     ticket = Ticket.create!(title: "Issue", user: client, priority: :medium)
 
     ticket.priority = :critical
@@ -121,7 +121,7 @@ class TicketTest < ActiveSupport::TestCase
 
   test "does not re-validate priority against the plan on an unrelated update" do
     organization = Organization.create!(name: "Acme", plan: "priority", subscription_status: "active")
-    client = User.create!(email: "downgrading-client@example.com", password: "password123", role: :client, organization: organization, org_role: "owner")
+    client = User.create!(email: "downgrading-client@example.com", password: "password1234", role: :client, organization: organization, org_role: "owner")
     ticket = Ticket.create!(title: "Issue", user: client, priority: :critical)
 
     organization.update!(plan: "basic") # client downgrades after the fact

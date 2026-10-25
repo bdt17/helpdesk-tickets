@@ -2,7 +2,7 @@ require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
   test "role defaults to employee" do
-    user = User.create!(email: "new-hire@thomasit.com", password: "password123", password_confirmation: "password123")
+    user = User.create!(email: "new-hire@thomasit.com", password: "password1234", password_confirmation: "password1234")
     assert user.employee?
   end
 
@@ -48,8 +48,8 @@ class UserTest < ActiveSupport::TestCase
 
   test "teammates returns other users on the same organization, excluding self" do
     organization = Organization.create!(name: "Acme")
-    owner = User.create!(email: "owner@example.com", password: "password123", role: :client, organization: organization, org_role: "owner")
-    member = User.create!(email: "member@example.com", password: "password123", role: :client, organization: organization, org_role: "member")
+    owner = User.create!(email: "owner@example.com", password: "password1234", role: :client, organization: organization, org_role: "owner")
+    member = User.create!(email: "member@example.com", password: "password1234", role: :client, organization: organization, org_role: "member")
 
     assert_equal [ member ], owner.teammates.to_a
     assert_empty users(:employee).teammates

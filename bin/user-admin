@@ -1,88 +1,100 @@
 #!/bin/bash
 # Thomas IT User Admin Script
 # Usage: ./bin/user-admin [create|delete|password|list]
+#
+# Email/password values are handed to Ruby through environment variables,
+# never interpolated into the `rails runner` source - an argument
+# containing a quote would otherwise be executed as Ruby code. Passwords
+# are prompted for (not taken as an argument) so they don't land in shell
+# history or `ps` output, and there's no default password.
 
 set -e
 
 RAILS_ENV=${RAILS_ENV:-development}
-SITE_URL="https://thomasinformationtechnology.com"
+export RAILS_ENV
 
 echo "👤 Thomas IT User Management"
 echo "============================="
 
+read_password() {
+  read -r -s -p "Password: " UA_PASSWORD; echo
+  read -r -s -p "Confirm password: " UA_PASSWORD_CONFIRMATION; echo
+  export UA_PASSWORD UA_PASSWORD_CONFIRMATION
+}
+
 case "$1" in
   "create")
-    EMAIL=$2
-    PASSWORD=${3:-changeme123}
-    if [ -z "$EMAIL" ]; then
-      echo "Usage: $0 create user@example.com [password]"
+    if [ -z "$2" ]; then
+      echo "Usage: $0 create user@example.com"
       exit 1
     fi
-    echo "Creating user: $EMAIL"
-    bundle exec rails runner "
-      user = User.new(email: '$EMAIL', password: '$PASSWORD', password_confirmation: '$PASSWORD')
+    export UA_EMAIL="$2"
+    read_password
+    echo "Creating user: $UA_EMAIL"
+    bundle exec rails runner '
+      user = User.new(email: ENV["UA_EMAIL"], password: ENV["UA_PASSWORD"], password_confirmation: ENV["UA_PASSWORD_CONFIRMATION"])
       if user.save
-        puts '✅ User created successfully'
+        puts "✅ User created successfully"
       else
-        puts '❌ Failed: ' + user.errors.full_messages.join(', ')
+        puts "❌ Failed: " + user.errors.full_messages.join(", ")
       end
-    "
+    '
     ;;
-    
-  "delete") 
-    EMAIL=$2
-    if [ -z "$EMAIL" ]; then
+
+  "delete")
+    if [ -z "$2" ]; then
       echo "Usage: $0 delete user@example.com"
       exit 1
     fi
-    echo "Deleting user: $EMAIL"
-    bundle exec rails runner "
-      user = User.find_by(email: '$EMAIL')
+    export UA_EMAIL="$2"
+    echo "Deleting user: $UA_EMAIL"
+    bundle exec rails runner '
+      user = User.find_by(email: ENV["UA_EMAIL"])
       if user&.destroy
-        puts '✅ User deleted successfully'
+        puts "✅ User deleted successfully"
       else
-        puts '❌ User not found'
+        puts "❌ User not found"
       end
-    "
+    '
     ;;
-    
+
   "password")
-    EMAIL=$2
-    NEW_PASS=$3
-    if [ -z "$EMAIL" ] || [ -z "$NEW_PASS" ]; then
-      echo "Usage: $0 password user@example.com newpassword123"
+    if [ -z "$2" ]; then
+      echo "Usage: $0 password user@example.com"
       exit 1
     fi
-    echo "Changing password for: $EMAIL"
-    bundle exec rails runner "
-      user = User.find_by(email: '$EMAIL')
+    export UA_EMAIL="$2"
+    read_password
+    echo "Changing password for: $UA_EMAIL"
+    bundle exec rails runner '
+      user = User.find_by(email: ENV["UA_EMAIL"])
       if user
-        if user.update(password: '$NEW_PASS', password_confirmation: '$NEW_PASS')
-          puts '✅ Password updated successfully'
+        if user.update(password: ENV["UA_PASSWORD"], password_confirmation: ENV["UA_PASSWORD_CONFIRMATION"])
+          puts "✅ Password updated successfully"
         else
-          puts '❌ Update failed: ' + user.errors.full_messages.join(', ')
+          puts "❌ Update failed: " + user.errors.full_messages.join(", ")
         end
       else
-        puts '❌ User not found'
+        puts "❌ User not found"
       end
-    "
+    '
     ;;
-    
+
   "list")
     echo "All users:"
-    bundle exec rails runner "
+    bundle exec rails runner '
       User.find_each do |user|
-        puts \"  #{user.email} (ID: #{user.id})\"
+        puts "  #{user.email} (ID: #{user.id})"
       end
-    "
+    '
     ;;
-    
+
   *)
     echo "Usage: $0 [create|delete|password|list]"
     echo "Examples:"
-    echo "  $0 create test@example.com mypass123"
-    echo "  $0 delete test@example.com" 
-    echo "  $0 password test@example.com newpass456"
+    echo "  $0 create test@example.com      # prompts for the password"
+    echo "  $0 delete test@example.com"
+    echo "  $0 password test@example.com    # prompts for the new password"
     echo "  $0 list"
     exit 1
     ;;

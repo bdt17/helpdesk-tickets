@@ -24,7 +24,7 @@ class DashboardTest < ApplicationSystemTestCase
   def sign_in_via_form(user)
     visit new_user_session_path
     fill_in "Email", with: user.email
-    fill_in "Password", with: "password123"
+    fill_in "Password", with: "password1234"
     click_button "Log In"
   end
 end

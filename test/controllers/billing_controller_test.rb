@@ -122,4 +122,22 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to billing_url
     assert_equal "Only the account owner can manage billing.", flash[:alert]
   end
+
+  test "a Stripe failure shows a generic alert, not Stripe's own error text" do
+    client = users(:client)
+    organization = Organization.create!(name: "Existing Org", stripe_customer_id: "cus_existing")
+    client.update!(organization: organization, org_role: "owner")
+    sign_in client
+    failing = ->(**) { raise Stripe::InvalidRequestError.new("No such price: price_secret_internal_id", "price") }
+
+    Plan.stub(:price_id_for, "price_basic_test") do
+      Stripe::Checkout::Session.stub(:create, failing) do
+        post billing_checkout_url(plan: "basic")
+      end
+    end
+
+    assert_redirected_to billing_url
+    assert_equal "Couldn't start checkout. Please try again or contact support.", flash[:alert]
+    assert_no_match(/price_secret_internal_id/, flash[:alert])
+  end
 end

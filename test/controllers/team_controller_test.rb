@@ -23,7 +23,7 @@ class TeamControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "a team member (not owner) cannot manage the team" do
-    member = User.create!(email: "member@example.com", password: "password123", role: :client, organization: @organization, org_role: "member")
+    member = User.create!(email: "member@example.com", password: "password1234", role: :client, organization: @organization, org_role: "member")
     sign_in member
     get team_url
     assert_redirected_to billing_url
@@ -63,7 +63,7 @@ class TeamControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "owner can remove a teammate" do
-    member = User.create!(email: "member@example.com", password: "password123", role: :client, organization: @organization, org_role: "member")
+    member = User.create!(email: "member@example.com", password: "password1234", role: :client, organization: @organization, org_role: "member")
     sign_in @owner
 
     delete team_member_url(member)
@@ -96,7 +96,7 @@ class TeamControllerTest < ActionDispatch::IntegrationTest
 
   test "the invite rate limit is per owner, not global" do
     other_organization = Organization.create!(name: "Globex", plan: "business", subscription_status: "active")
-    other_owner = User.create!(email: "other-owner@example.com", password: "password123", role: :client, organization: other_organization, org_role: "owner")
+    other_owner = User.create!(email: "other-owner@example.com", password: "password1234", role: :client, organization: other_organization, org_role: "owner")
 
     sign_in @owner
     10.times { |n| post team_invite_url, params: { email: "rl-#{n}@example.com" } }
@@ -109,7 +109,7 @@ class TeamControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "removing a teammate isn't affected by the invite rate limit" do
-    member = User.create!(email: "member@example.com", password: "password123", role: :client, organization: @organization, org_role: "member")
+    member = User.create!(email: "member@example.com", password: "password1234", role: :client, organization: @organization, org_role: "member")
     sign_in @owner
 
     10.times { |n| post team_invite_url, params: { email: "rl-#{n}@example.com" } }
@@ -120,8 +120,8 @@ class TeamControllerTest < ActionDispatch::IntegrationTest
 
   test "cannot invite past the plan's seat limit" do
     organization = Organization.create!(name: "Small Co", plan: "basic", subscription_status: "active") # max_seats: 3
-    owner = User.create!(email: "small-owner@example.com", password: "password123", role: :client, organization: organization, org_role: "owner")
-    2.times { |n| User.create!(email: "seat#{n}@example.com", password: "password123", role: :client, organization: organization, org_role: "member") }
+    owner = User.create!(email: "small-owner@example.com", password: "password1234", role: :client, organization: organization, org_role: "owner")
+    2.times { |n| User.create!(email: "seat#{n}@example.com", password: "password1234", role: :client, organization: organization, org_role: "member") }
     # 3 seats used (owner + 2 members) out of 3 allowed on Basic
 
     sign_in owner
@@ -136,9 +136,9 @@ class TeamControllerTest < ActionDispatch::IntegrationTest
 
   test "removing a teammate frees a seat back up" do
     organization = Organization.create!(name: "Small Co", plan: "basic", subscription_status: "active")
-    owner = User.create!(email: "small-owner@example.com", password: "password123", role: :client, organization: organization, org_role: "owner")
-    member1 = User.create!(email: "seat0@example.com", password: "password123", role: :client, organization: organization, org_role: "member")
-    User.create!(email: "seat1@example.com", password: "password123", role: :client, organization: organization, org_role: "member")
+    owner = User.create!(email: "small-owner@example.com", password: "password1234", role: :client, organization: organization, org_role: "owner")
+    member1 = User.create!(email: "seat0@example.com", password: "password1234", role: :client, organization: organization, org_role: "member")
+    User.create!(email: "seat1@example.com", password: "password1234", role: :client, organization: organization, org_role: "member")
     # full at 3/3
 
     sign_in owner
@@ -151,8 +151,8 @@ class TeamControllerTest < ActionDispatch::IntegrationTest
 
   test "the team page shows seat usage and hides the invite form once full" do
     organization = Organization.create!(name: "Small Co", plan: "basic", subscription_status: "active")
-    owner = User.create!(email: "small-owner@example.com", password: "password123", role: :client, organization: organization, org_role: "owner")
-    2.times { |n| User.create!(email: "seat#{n}@example.com", password: "password123", role: :client, organization: organization, org_role: "member") }
+    owner = User.create!(email: "small-owner@example.com", password: "password1234", role: :client, organization: organization, org_role: "owner")
+    2.times { |n| User.create!(email: "seat#{n}@example.com", password: "password1234", role: :client, organization: organization, org_role: "member") }
 
     sign_in owner
     get team_url

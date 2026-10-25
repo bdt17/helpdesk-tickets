@@ -1,11 +1,18 @@
+# Demo accounts with a shared, known password - development only. Running
+# this against production would create a real admin account anyone who
+# has read this file can sign into.
+abort "Refusing to seed demo accounts in production." if Rails.env.production?
+
+seed_password = ENV.fetch("SEED_PASSWORD", "changeme-dev-only")
+
 {
   "employee@thomasit.com" => "employee",
   "agent@thomasit.com" => "agent",
   "admin@thomasit.com" => "admin"
 }.each do |email, role|
   User.find_or_create_by!(email: email) do |user|
-    user.password = "changeme123"
-    user.password_confirmation = "changeme123"
+    user.password = seed_password
+    user.password_confirmation = seed_password
     user.role = role
   end
 end

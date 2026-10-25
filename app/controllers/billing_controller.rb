@@ -37,7 +37,10 @@ class BillingController < ApplicationController
 
     redirect_to session.url, allow_other_host: true
   rescue Stripe::StripeError => e
-    redirect_to billing_path, alert: "Couldn't start checkout: #{e.message}"
+    # Stripe's own message can include account/request details meant for
+    # us, not the client - log it, show something generic.
+    Rails.logger.error "Stripe error (start checkout): #{e.class} #{e.message}"
+    redirect_to billing_path, alert: "Couldn't start checkout. Please try again or contact support."
   end
 
   def success
@@ -56,7 +59,10 @@ class BillingController < ApplicationController
 
     redirect_to session.url, allow_other_host: true
   rescue Stripe::StripeError => e
-    redirect_to billing_path, alert: "Couldn't open billing portal: #{e.message}"
+    # Stripe's own message can include account/request details meant for
+    # us, not the client - log it, show something generic.
+    Rails.logger.error "Stripe error (open billing portal): #{e.class} #{e.message}"
+    redirect_to billing_path, alert: "Couldn't open billing portal. Please try again or contact support."
   end
 
   private

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, skip: [ :registrations ]
+  devise_for :users, skip: [ :registrations ], controllers: { sessions: "sessions", passwords: "passwords" }
   # Routed through RegistrationsController, which hardcodes new accounts to
   # the client role. Sign-up and account-edit share the "/signup" path
   # (POST vs PATCH) so both resolve to Devise's single `user_registration`

@@ -91,6 +91,10 @@ Devise.setup do |config|
   # to behave the same regardless if the e-mail provided was right or wrong.
   # Does not affect registerable.
   # config.paranoid = true
+  # On: the password-reset and unlock forms otherwise say "Email not found"
+  # for an unknown address, which lets anyone check whether a given email
+  # has an account here (i.e. is a client of this help desk).
+  config.paranoid = true
 
   # By default Devise will store the user in session. You can skip storage for
   # particular strategies by setting this option.
@@ -178,7 +182,9 @@ Devise.setup do |config|
 
   # ==> Configuration for :validatable
   # Range for password length.
-  config.password_length = 6..128
+  # 12, not Devise's default 6 - this app holds client billing and
+  # support history, and staff accounts can see every client's tickets.
+  config.password_length = 12..128
 
   # Email regex used to validate email formats. It simply asserts that
   # one (and only one) @ exists in the given string. This is mainly
