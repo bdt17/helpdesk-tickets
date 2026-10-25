@@ -1,4 +1,18 @@
-<% content_for :title, "Thomas Information Technology — Managed IT Help Desk" %>
+<% content_for :title, "Thomas Information Technology — Managed IT Help Desk#{ServicePage.area_suffix}" %>
+<% content_for :description, "Managed IT help desk for small businesses#{ServicePage.area_suffix}: ticket tracking, real technicians and response times you can hold us to. No in-house IT team required." %>
+<% content_for :head do %>
+  <%# Structured data so search engines know this is an IT services business. %>
+  <script type="application/ld+json">
+    <%= {
+      "@context" => "https://schema.org",
+      "@type" => "ProfessionalService",
+      "name" => "Thomas Information Technology",
+      "url" => public_url(root_path),
+      "description" => "Managed IT help desk and support plans for small businesses.",
+      "areaServed" => ServicePage.service_area
+    }.compact.to_json.html_safe %>
+  </script>
+<% end %>
 
 <main class="landing-page">
   <section class="hero text-center py-5 px-3">
@@ -25,32 +39,33 @@
         <div class="col-md-3 col-6">
           <div class="card h-100 p-3 text-center">
             <i class="fas fa-desktop fa-2x brand mb-2"></i>
-            <h5>Hardware</h5>
+            <h5><%= link_to "Hardware", service_path("computer-repair"), class: "stretched-link text-decoration-none text-dark" %></h5>
             <p class="text-muted small mb-0">Workstations, peripherals, on-site repairs</p>
           </div>
         </div>
         <div class="col-md-3 col-6">
           <div class="card h-100 p-3 text-center">
             <i class="fas fa-laptop-code fa-2x brand mb-2"></i>
-            <h5>Software</h5>
+            <h5><%= link_to "Software", service_path("software-support"), class: "stretched-link text-decoration-none text-dark" %></h5>
             <p class="text-muted small mb-0">Installs, licensing, day-to-day troubleshooting</p>
           </div>
         </div>
         <div class="col-md-3 col-6">
           <div class="card h-100 p-3 text-center">
             <i class="fas fa-network-wired fa-2x brand mb-2"></i>
-            <h5>Network</h5>
+            <h5><%= link_to "Network", service_path("network-support"), class: "stretched-link text-decoration-none text-dark" %></h5>
             <p class="text-muted small mb-0">Connectivity, Wi-Fi, VPN, outages</p>
           </div>
         </div>
         <div class="col-md-3 col-6">
           <div class="card h-100 p-3 text-center">
             <i class="fas fa-user-shield fa-2x brand mb-2"></i>
-            <h5>Access</h5>
+            <h5><%= link_to "Access", service_path("accounts-and-security"), class: "stretched-link text-decoration-none text-dark" %></h5>
             <p class="text-muted small mb-0">Accounts, permissions, password resets</p>
           </div>
         </div>
       </div>
+      <p class="text-center mt-4 mb-0"><%= link_to "All services", services_path %></p>
     </div>
   </section>
 

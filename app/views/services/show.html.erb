@@ -1,0 +1,46 @@
+<% content_for :title, "#{@service.name}#{ServicePage.area_suffix} | Thomas Information Technology" %>
+<% content_for :description, @service.summary %>
+
+<div class="container py-5" style="max-width: 860px;">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb small">
+      <li class="breadcrumb-item"><%= link_to "Home", root_path %></li>
+      <li class="breadcrumb-item"><%= link_to "Services", services_path %></li>
+      <li class="breadcrumb-item active" aria-current="page"><%= @service.name %></li>
+    </ol>
+  </nav>
+
+  <i class="fas <%= @service.icon %> fa-3x brand mb-3"></i>
+  <h1 class="fw-bold mb-3"><%= @service.headline %><%= ServicePage.area_suffix %></h1>
+  <p class="lead mb-4"><%= @service.summary %></p>
+
+  <div class="card p-4 mb-4">
+    <h2 class="h5 mb-3">What's included</h2>
+    <ul class="mb-0">
+      <% @service.includes.each do |item| %>
+        <li class="mb-1"><%= item %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="card p-4 mb-4">
+    <h2 class="h5 mb-3">How it works</h2>
+    <ol class="mb-0">
+      <li class="mb-1">Pick a support plan, or start with a free account to try us.</li>
+      <li class="mb-1">Your team opens tickets online whenever something breaks.</li>
+      <li class="mb-1">A technician responds within your plan's response time and keeps you updated until it's fixed.</li>
+    </ol>
+  </div>
+
+  <div class="d-flex gap-3 flex-wrap">
+    <%= link_to "See plans and pricing", root_path(anchor: "plans"), class: "btn btn-primary btn-lg px-4" %>
+    <%= link_to "Talk to us", root_path(anchor: "contact"), class: "btn btn-outline-primary btn-lg px-4" %>
+  </div>
+
+  <h2 class="h6 text-muted mt-5">Other services</h2>
+  <ul class="list-inline">
+    <% (ServicePage::ALL - [ @service ]).each do |other| %>
+      <li class="list-inline-item"><%= link_to other.name, service_path(other.slug) %></li>
+    <% end %>
+  </ul>
+</div>

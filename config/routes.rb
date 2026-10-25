@@ -17,6 +17,9 @@ Rails.application.routes.draw do
   root "home#index"
   get "/health", to: ->(_env) { [ 200, { "Content-Type" => "text/plain" }, [ "OK" ] ] }
   get "/home", to: "home#index", as: :home_index
+  get "/services", to: "services#index", as: :services
+  get "/services/:slug", to: "services#show", as: :service
+  get "/sitemap.xml", to: "sitemaps#show", defaults: { format: :xml }, as: :sitemap
   get "/dashboard", to: "dashboard#index", as: :dashboard
 
   resources :tickets do
