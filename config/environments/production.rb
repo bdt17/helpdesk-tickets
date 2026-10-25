@@ -42,7 +42,9 @@ Rails.application.configure do
   # connects_to override is needed.
   config.active_job.queue_adapter = :solid_queue
 
-  # Ticket attachments (see Ticket#attachments). Local disk, same as
+  # Ticket attachments (see Ticket#attachments). Durable once
+  # ACTIVE_STORAGE_ROOT points at a persistent disk (see config/storage.yml);
+  # the rest of this note describes the default without it. Local disk, same as
   # dev/test - this makes uploads work immediately, but Render's web
   # service filesystem is ephemeral by default: anything under `storage/`
   # is wiped on every redeploy unless a persistent disk is attached
