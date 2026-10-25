@@ -40,4 +40,14 @@ namespace :stripe do
 
     puts "\nAdd the lines above to your .env (development) and to your Render environment variables (production)."
   end
+
+  desc "Create the 50%-off-for-2-months coupon offered on the cancel page and print the env var to set"
+  task setup_retention_coupon: :environment do
+    abort "STRIPE_SECRET_KEY is not set" if ENV["STRIPE_SECRET_KEY"].blank?
+
+    # Must match Plan::RETENTION_OFFER, which is what the cancel page says.
+    coupon = Stripe::Coupon.create(name: "Stay with us - 50% off 2 months", percent_off: 50, duration: "repeating", duration_in_months: 2)
+    puts "STRIPE_RETENTION_COUPON=#{coupon.id}"
+    puts "\nAdd the line above to your Render environment variables."
+  end
 end

@@ -9,6 +9,30 @@ class Organization < ApplicationRecord
 
   validates :name, presence: true
 
+  # Shown on the cancel page. Keys are Stripe's own
+  # cancellation_details.feedback values, so the reason is also recorded
+  # on the subscription in the Stripe dashboard.
+  CANCELLATION_REASONS = {
+    "too_expensive" => "It's too expensive",
+    "unused" => "We don't use it enough",
+    "switched_service" => "We're switching to another provider",
+    "missing_features" => "It's missing something we need",
+    "customer_service" => "We weren't happy with the support",
+    "other" => "Something else"
+  }.freeze
+
+  # Set (from Stripe) when the plan is scheduled to end - the client keeps
+  # full support until then and can still change their mind.
+  def canceling?
+    cancel_at.present? && subscribed?
+  end
+
+  # The one-time "stay and get a discount" offer on the cancel page, when
+  # a retention coupon is configured (see Plan.retention_coupon_id).
+  def retention_offer_available?
+    Plan.retention_coupon_id.present? && retention_offer_used_at.nil?
+  end
+
   # past_due is Stripe's retry window after a declined card (it retries
   # for up to a couple of weeks, depending on the account's settings).
   # The client keeps full access during it - cutting off a paying client
