@@ -16,6 +16,10 @@ production:
   ticket_escalation_sweep:
     class: TicketEscalationSweepJob
     schedule: every hour
+  # 1st of the month, 13:00 UTC (morning across US time zones).
+  monthly_client_report:
+    class: MonthlyClientReportJob
+    schedule: "0 13 1 * *"
 
 development:
   ticket_escalation_sweep:
