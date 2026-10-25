@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     resources :attachments, only: [ :show ], controller: "ticket_attachments"
     patch "satisfaction", to: "tickets#rate", as: :satisfaction
   end
+  resources :leads, only: [ :index, :create, :update ]
   get "/agents", to: "agents#index", as: :agents
   get "/reports", to: "reports#index", as: :reports_index
 

@@ -1,0 +1,10 @@
+New inquiry from the website:
+
+Name:    <%= @lead.name %>
+Email:   <%= @lead.email %>
+Company: <%= @lead.company.presence || "-" %>
+Phone:   <%= @lead.phone.presence || "-" %>
+
+<%= @lead.message %>
+
+All leads: <%= leads_url %>

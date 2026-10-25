@@ -1,0 +1,11 @@
+new_lead:
+  name: Pat Prospect
+  email: pat@prospect.example
+  company: Prospect LLC
+  message: Our printers keep dying.
+  status: new
+
+won_lead:
+  name: Wendy Won
+  email: wendy@won.example
+  status: won
