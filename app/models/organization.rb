@@ -8,8 +8,20 @@ class Organization < ApplicationRecord
 
   validates :name, presence: true
 
+  # past_due is Stripe's retry window after a declined card (it retries
+  # for up to a couple of weeks, depending on the account's settings).
+  # The client keeps full access during it - cutting off a paying client
+  # the moment one charge bounces loses far more than it protects - and
+  # sees a banner asking them to fix their card instead (see
+  # #payment_problem?). Only when Stripe gives up (unpaid / canceled)
+  # does access lapse.
   def subscribed?
-    %w[active trialing].include?(subscription_status)
+    %w[active trialing past_due].include?(subscription_status)
+  end
+
+  # Set by the invoice.payment_failed webhook, cleared by invoice.paid.
+  def payment_problem?
+    payment_failed_at.present? || %w[past_due unpaid].include?(subscription_status)
   end
 
   def plan_definition

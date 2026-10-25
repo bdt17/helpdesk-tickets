@@ -17,6 +17,10 @@ module Webhooks
         handle_checkout_completed(event.data.object)
       when "customer.subscription.updated", "customer.subscription.deleted"
         sync_subscription(event.data.object)
+      when "invoice.payment_failed"
+        handle_payment_failed(event)
+      when "invoice.paid"
+        handle_invoice_paid(event.data.object)
       end
 
       head :ok
@@ -40,6 +44,39 @@ module Webhooks
 
       subscription = Stripe::Subscription.retrieve(session.subscription)
       sync_subscription(subscription)
+    end
+
+    # Subscription status itself (-> past_due) arrives separately via
+    # customer.subscription.updated; this records *that* a charge failed
+    # and tells people, so it doesn't go unnoticed until Stripe cancels.
+    # Stripe redelivers events it isn't sure we got, so the event id is
+    # remembered to avoid emailing twice for one failure.
+    def handle_payment_failed(event)
+      invoice = event.data.object
+      organization = Organization.find_by(stripe_customer_id: invoice.customer)
+      return unless organization
+      return if organization.last_payment_failure_event_id == event.id
+
+      organization.update!(payment_failed_at: Time.current, last_payment_failure_event_id: event.id)
+
+      details = {
+        amount_due: invoice.amount_due,
+        currency: invoice.currency,
+        attempt_count: invoice.attempt_count,
+        next_payment_attempt: invoice.next_payment_attempt,
+        hosted_invoice_url: invoice.hosted_invoice_url
+      }
+      if (owner = organization.owner)
+        BillingMailer.payment_failed(organization, owner, details).deliver_later
+      end
+      User.admin.find_each do |admin|
+        BillingMailer.payment_failed_staff_alert(organization, admin, details).deliver_later
+      end
+    end
+
+    def handle_invoice_paid(invoice)
+      Organization.where(stripe_customer_id: invoice.customer).where.not(payment_failed_at: nil)
+                  .update_all(payment_failed_at: nil, updated_at: Time.current)
     end
 
     def sync_subscription(subscription)

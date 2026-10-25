@@ -1,0 +1,21 @@
+Hi,
+
+We tried to charge <%= formatted_amount %> for <%= @organization.name %>'s
+Thomas IT support plan, but the payment didn't go through - usually an
+expired card or a bank decline.
+
+Your support continues as normal while this gets sorted out.
+<% if next_attempt_on %>We'll automatically try again on <%= next_attempt_on %>.<% end %>
+
+To fix it, update your payment method from your billing page:
+<%= billing_url %>
+<% if @details[:hosted_invoice_url].present? %>
+
+Or pay this invoice directly:
+<%= @details[:hosted_invoice_url] %>
+<% end %>
+
+If we can't collect payment after a few tries, the subscription will be
+canceled and your team will lose priority support.
+
+Questions? Just reply to this email.

@@ -118,6 +118,32 @@
       </div>
     </nav>
 
+    <% if user_signed_in? && current_user.client? && current_user.organization&.payment_problem? %>
+      <%# Failed card (see Organization#payment_problem?). Shown on every
+          page, not just /billing, since nobody visits billing unprompted. %>
+      <div class="container mt-3">
+        <div class="alert alert-danger d-flex justify-content-between align-items-center flex-wrap gap-2 mb-0" role="alert">
+          <span>
+            <strong>Your last payment didn't go through.</strong>
+            <% if current_user.subscribed? %>
+              Support continues for now - please update your card so your plan isn't canceled.
+            <% else %>
+              Your plan was canceled after payment couldn't be collected.
+            <% end %>
+          </span>
+          <% if current_user.org_owner? %>
+            <% if current_user.subscribed? %>
+              <%= button_to "Update payment method", billing_portal_path, method: :post, class: "btn btn-sm btn-light", form: { class: "d-inline" } %>
+            <% else %>
+              <%= link_to "Choose a plan", billing_path, class: "btn btn-sm btn-light" %>
+            <% end %>
+          <% else %>
+            <span class="small">Please ask your account owner (<%= current_user.organization.owner&.email %>) to update it.</span>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
     <% if notice %>
       <div class="container mt-3">
         <div class="alert alert-success alert-dismissible fade show" role="alert">

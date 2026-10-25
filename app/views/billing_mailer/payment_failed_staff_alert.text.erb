@@ -1,0 +1,13 @@
+A client's payment failed.
+
+Organization: <%= @organization.name %>
+Owner:        <%= @organization.owner&.email || "-" %>
+Plan:         <%= @organization.plan_definition&.name || @organization.plan || "-" %>
+Amount:       <%= formatted_amount %>
+Attempt:      <%= @details[:attempt_count] || "-" %>
+Next retry:   <%= next_attempt_on || "none scheduled" %>
+
+The owner has been emailed and sees a banner in the app. Worth a
+personal follow-up if it isn't fixed in a few days.
+
+<%= reports_index_url %>
