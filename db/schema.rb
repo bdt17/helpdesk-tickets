@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_25_193147) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_25_194647) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -65,7 +65,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_25_193147) do
 
   create_table "organizations", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.string "last_payment_failure_event_id"
     t.string "name", null: false
+    t.datetime "payment_failed_at"
     t.string "plan"
     t.string "stripe_customer_id"
     t.string "stripe_subscription_id"

@@ -1,0 +1,11 @@
+<p>A client's payment failed.</p>
+<p>
+  <strong>Organization:</strong> <%= @organization.name %><br>
+  <strong>Owner:</strong> <%= @organization.owner&.email || "-" %><br>
+  <strong>Plan:</strong> <%= @organization.plan_definition&.name || @organization.plan || "-" %><br>
+  <strong>Amount:</strong> <%= formatted_amount %><br>
+  <strong>Attempt:</strong> <%= @details[:attempt_count] || "-" %><br>
+  <strong>Next retry:</strong> <%= next_attempt_on || "none scheduled" %>
+</p>
+<p>The owner has been emailed and sees a banner in the app. Worth a personal follow-up if it isn't fixed in a few days.</p>
+<p><%= link_to "Open reports", reports_index_url %></p>

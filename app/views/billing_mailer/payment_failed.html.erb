@@ -1,0 +1,18 @@
+<p>Hi,</p>
+<p>
+  We tried to charge <strong><%= formatted_amount %></strong> for <%= @organization.name %>'s
+  Thomas IT support plan, but the payment didn't go through - usually an expired card or a bank decline.
+</p>
+<p>
+  Your support continues as normal while this gets sorted out.
+  <% if next_attempt_on %>We'll automatically try again on <%= next_attempt_on %>.<% end %>
+</p>
+<p><%= link_to "Update your payment method", billing_url %></p>
+<% if @details[:hosted_invoice_url].present? %>
+  <p>Or <%= link_to "pay this invoice directly", @details[:hosted_invoice_url] %>.</p>
+<% end %>
+<p>
+  If we can't collect payment after a few tries, the subscription will be canceled and your
+  team will lose priority support.
+</p>
+<p>Questions? Just reply to this email.</p>

@@ -52,6 +52,9 @@ class ReportsController < ApplicationController
       active: paying.where(subscription_status: "active").count,
       trialing: paying.where(subscription_status: "trialing").count,
       past_due: Organization.where(subscription_status: %w[past_due unpaid]).count,
+      payment_problems: Organization.where.not(payment_failed_at: nil)
+                                    .or(Organization.where(subscription_status: %w[past_due unpaid]))
+                                    .order(payment_failed_at: :desc).includes(:users).to_a,
       by_plan: by_plan,
       clients_total: clients.count,
       clients_new_30_days: clients.where(created_at: 30.days.ago..).count,

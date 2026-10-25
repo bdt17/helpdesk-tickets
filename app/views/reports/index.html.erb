@@ -38,6 +38,28 @@
       </div>
     </div>
 
+    <% if @revenue[:payment_problems].any? %>
+      <div class="card border-danger mb-3">
+        <div class="card-body">
+          <h6 class="card-title text-danger">Payment problems - follow up</h6>
+          <table class="table table-sm mb-0">
+            <thead><tr><th>Organization</th><th>Owner</th><th>Plan</th><th>Status</th><th>Failed</th></tr></thead>
+            <tbody>
+              <% @revenue[:payment_problems].each do |org| %>
+                <tr>
+                  <td><%= org.name %></td>
+                  <td><%= (owner = org.users.find { |u| u.org_role == "owner" }) ? mail_to(owner.email) : "-" %></td>
+                  <td><%= org.plan_definition&.name || "-" %></td>
+                  <td><%= org.subscription_status&.humanize || "-" %></td>
+                  <td><%= org.payment_failed_at ? "#{time_ago_in_words(org.payment_failed_at)} ago" : "-" %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
+
     <div class="card mb-4">
       <div class="card-body">
         <h6 class="card-title">System health</h6>

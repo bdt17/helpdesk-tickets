@@ -76,7 +76,73 @@ module Webhooks
       assert_response :ok
     end
 
+    test "invoice.payment_failed records the failure and emails the owner and admins" do
+      organization = Organization.create!(name: "Acme", stripe_customer_id: "cus_123", plan: "business", subscription_status: "active")
+      users(:client).update!(organization: organization, org_role: "owner")
+
+      assert_enqueued_emails 1 + User.admin.count do
+        post_event payment_failed_event("evt_fail_1")
+      end
+
+      assert_response :ok
+      assert organization.reload.payment_failed_at.present?
+      assert organization.payment_problem?
+      assert_equal "evt_fail_1", organization.last_payment_failure_event_id
+    end
+
+    test "a redelivered payment_failed event doesn't email twice" do
+      organization = Organization.create!(name: "Acme", stripe_customer_id: "cus_123", plan: "business", subscription_status: "active")
+      users(:client).update!(organization: organization, org_role: "owner")
+      post_event payment_failed_event("evt_fail_1")
+
+      assert_no_enqueued_emails do
+        post_event payment_failed_event("evt_fail_1")
+      end
+      assert_response :ok
+    end
+
+    test "a later failed retry is a new event and does notify again" do
+      organization = Organization.create!(name: "Acme", stripe_customer_id: "cus_123", plan: "business", subscription_status: "past_due")
+      users(:client).update!(organization: organization, org_role: "owner")
+      post_event payment_failed_event("evt_fail_1")
+
+      assert_enqueued_emails 1 + User.admin.count do
+        post_event payment_failed_event("evt_fail_2")
+      end
+    end
+
+    test "payment_failed for an unknown customer is ignored" do
+      assert_no_enqueued_emails do
+        post_event payment_failed_event("evt_x", customer: "cus_unknown")
+      end
+      assert_response :ok
+    end
+
+    test "invoice.paid clears a recorded payment failure" do
+      organization = Organization.create!(name: "Acme", stripe_customer_id: "cus_123", plan: "business",
+                                          subscription_status: "active", payment_failed_at: 1.day.ago)
+      post_event OpenStruct.new(id: "evt_paid", type: "invoice.paid", data: OpenStruct.new(object: OpenStruct.new(customer: "cus_123")))
+
+      assert_response :ok
+      assert_nil organization.reload.payment_failed_at
+      assert_not organization.payment_problem?
+    end
+
     private
+
+    include ActionMailer::TestHelper
+
+    def post_event(event)
+      Stripe::Webhook.stub(:construct_event, event) do
+        post webhooks_stripe_url, params: "{}", headers: { "Stripe-Signature" => "valid" }
+      end
+    end
+
+    def payment_failed_event(id, customer: "cus_123")
+      invoice = OpenStruct.new(customer: customer, amount_due: 14900, currency: "usd", attempt_count: 1,
+                               next_payment_attempt: 3.days.from_now.to_i, hosted_invoice_url: "https://invoice.stripe.com/i/test")
+      OpenStruct.new(id: id, type: "invoice.payment_failed", data: OpenStruct.new(object: invoice))
+    end
 
     def fake_subscription(customer:, status:, price_id:)
       OpenStruct.new(

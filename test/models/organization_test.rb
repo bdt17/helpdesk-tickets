@@ -51,4 +51,20 @@ class OrganizationTest < ActiveSupport::TestCase
 
     refute organization.seats_available?
   end
+
+  test "past_due keeps access during Stripe's retry window, but flags a payment problem" do
+    org = Organization.create!(name: "Grace", subscription_status: "past_due", plan: "basic")
+    assert org.subscribed?
+    assert org.payment_problem?
+  end
+
+  test "unpaid (Stripe gave up) loses access" do
+    org = Organization.create!(name: "Lapsed", subscription_status: "unpaid", plan: "basic")
+    assert_not org.subscribed?
+    assert org.payment_problem?
+  end
+
+  test "a healthy subscription has no payment problem" do
+    assert_not Organization.create!(name: "Fine", subscription_status: "active", plan: "basic").payment_problem?
+  end
 end
