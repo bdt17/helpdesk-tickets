@@ -94,14 +94,20 @@ Rails.application.configure do
   # Only use :id for inspections in production.
   config.active_record.attributes_for_inspect = [ :id ]
 
-  # Enable DNS rebinding protection and other `Host` header attacks.
-  # config.hosts = [
-  #   "example.com",     # Allow requests from example.com
-  #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
-  # ]
-  #
-  # Skip DNS rebinding protection for the default health check endpoint.
-  # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  # Only answer for our own hostnames (blocks Host-header attacks such as
+  # forged password-reset links and DNS rebinding). Allowed: APP_HOST, its
+  # www. form, Render's own *.onrender.com address (Render sets
+  # RENDER_EXTERNAL_HOSTNAME), and anything extra in ALLOWED_HOSTS
+  # (comma-separated) - add a new domain there before pointing it here.
+  app_host = ENV.fetch("APP_HOST", "thomasinformationtechnology.com")
+  config.hosts = [
+    app_host,
+    "www.#{app_host}",
+    ENV["RENDER_EXTERNAL_HOSTNAME"],
+    *ENV.fetch("ALLOWED_HOSTS", "").split(",").map(&:strip)
+  ].compact_blank
+  # Render's health checks don't send our hostname.
+  config.host_authorization = { exclude: ->(request) { request.path.in?(%w[/health /up]) } }
 
   # Sourced explicitly from ENV rather than relying on master.key-derived
   # credentials - carried over from main's fix, since Render's deployment

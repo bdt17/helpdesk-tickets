@@ -2,7 +2,7 @@
 <% content_for :description, "Managed IT help desk for small businesses#{ServicePage.area_suffix}: ticket tracking, real technicians and response times you can hold us to. No in-house IT team required." %>
 <% content_for :head do %>
   <%# Structured data so search engines know this is an IT services business. %>
-  <script type="application/ld+json">
+  <script type="application/ld+json" nonce="<%= content_security_policy_nonce %>">
     <%= {
       "@context" => "https://schema.org",
       "@type" => "ProfessionalService",
