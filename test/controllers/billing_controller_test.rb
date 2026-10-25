@@ -140,4 +140,28 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Couldn't start checkout. Please try again or contact support.", flash[:alert]
     assert_no_match(/price_secret_internal_id/, flash[:alert])
   end
+
+  test "checkout allows promotion codes, and adds a trial only when STRIPE_TRIAL_DAYS is set" do
+    client = users(:client)
+    organization = Organization.create!(name: "Existing Org", stripe_customer_id: "cus_existing")
+    client.update!(organization: organization, org_role: "owner")
+    sign_in client
+    captured = []
+    fake_session = OpenStruct.new(url: "https://checkout.stripe.com/test-session")
+    capture = ->(**kwargs) { captured << kwargs; fake_session }
+
+    Plan.stub(:price_id_for, "price_basic_test") do
+      Stripe::Checkout::Session.stub(:create, capture) do
+        post billing_checkout_url(plan: "basic")
+        ENV["STRIPE_TRIAL_DAYS"] = "14"
+        post billing_checkout_url(plan: "basic")
+      end
+    end
+
+    assert_equal true, captured[0][:allow_promotion_codes]
+    assert_nil captured[0][:subscription_data]
+    assert_equal({ trial_period_days: 14 }, captured[1][:subscription_data])
+  ensure
+    ENV.delete("STRIPE_TRIAL_DAYS")
+  end
 end

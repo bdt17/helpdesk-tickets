@@ -21,26 +21,31 @@ class Plan
   # to be directionally reasonable (a small safety-net plan needs fewer
   # seats than a "for growing teams" one) but not an actual pricing
   # decision. Revisit before relying on them.
-  Definition = Struct.new(:key, :name, :display_price, :tagline, :features, :price_id_env, :max_priority, :max_seats, keyword_init: true)
+  #
+  # monthly_ticket_limit is the ticket-volume side of the same recurring
+  # plans model (nil = unlimited), counted per organization per calendar
+  # month (see User#monthly_ticket_limit). Also PLACEHOLDERS - same status
+  # as the prices and seat counts above.
+  Definition = Struct.new(:key, :name, :display_price, :tagline, :features, :price_id_env, :max_priority, :max_seats, :monthly_ticket_limit, keyword_init: true)
 
   ALL = [
     Definition.new(
       key: "basic", name: "Basic", display_price: "$49/mo",
       tagline: "For small teams that need a safety net",
       features: [ "Business-hours ticket support", "High priority: 24 hr response", "Low priority: 7 day response" ],
-      price_id_env: "STRIPE_PRICE_BASIC", max_priority: "high", max_seats: 3
+      price_id_env: "STRIPE_PRICE_BASIC", max_priority: "high", max_seats: 3, monthly_ticket_limit: 10
     ),
     Definition.new(
       key: "business", name: "Business", display_price: "$149/mo",
       tagline: "Our most popular plan for growing teams",
       features: [ "Everything in Basic", "Medium priority: 3 day response", "Dedicated agent assignment" ],
-      price_id_env: "STRIPE_PRICE_BUSINESS", max_priority: "high", max_seats: 10
+      price_id_env: "STRIPE_PRICE_BUSINESS", max_priority: "high", max_seats: 10, monthly_ticket_limit: 40
     ),
     Definition.new(
       key: "priority", name: "Priority", display_price: "$399/mo",
       tagline: "For teams where downtime isn't an option",
       features: [ "Everything in Business", "Critical priority: 4 hr response", "Escalation on missed SLA" ],
-      price_id_env: "STRIPE_PRICE_PRIORITY", max_priority: "critical", max_seats: 25
+      price_id_env: "STRIPE_PRICE_PRIORITY", max_priority: "critical", max_seats: 25, monthly_ticket_limit: nil
     )
   ].freeze
 
@@ -49,6 +54,19 @@ class Plan
   # any coupon/trial) is what's actually charged.
   def self.monthly_dollars(plan)
     plan.display_price.to_s[/\d[\d,]*/].to_s.delete(",").to_i
+  end
+
+  # How many tickets a client who hasn't subscribed (never paid, or
+  # lapsed) may file per calendar month - a free taste of the service
+  # that leads into a plan, rather than unlimited free support. Tunable
+  # from Render's environment without a deploy.
+  def self.free_tickets_per_month
+    ENV.fetch("FREE_TICKETS_PER_MONTH", 1).to_i
+  end
+
+  # Shown on pricing cards next to the seat count.
+  def self.ticket_allowance_label(limit)
+    limit ? "Up to #{limit} tickets/month" : "Unlimited tickets"
   end
 
   def self.find(key)

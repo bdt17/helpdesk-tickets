@@ -44,6 +44,7 @@
             <p class="text-muted small"><%= plan.tagline %></p>
             <ul class="small mb-3">
               <li>Up to <%= plan.max_seats %> seats</li>
+              <li><%= Plan.ticket_allowance_label(plan.monthly_ticket_limit) %></li>
               <% plan.features.each do |feature| %>
                 <li><%= feature %></li>
               <% end %>

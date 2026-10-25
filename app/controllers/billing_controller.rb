@@ -31,6 +31,10 @@ class BillingController < ApplicationController
       client_reference_id: current_user.id.to_s,
       mode: "subscription",
       line_items: [ { price: Plan.price_id_for(plan.key), quantity: 1 } ],
+      # Lets a client enter a coupon created in the Stripe dashboard -
+      # e.g. a launch discount for early clients - without a code change.
+      allow_promotion_codes: true,
+      **trial_options,
       success_url: billing_success_url,
       cancel_url: billing_url
     )
@@ -66,6 +70,14 @@ class BillingController < ApplicationController
   end
 
   private
+
+  # STRIPE_TRIAL_DAYS (unset = no trial) adds a free trial to every new
+  # subscription. Organization#subscribed? already treats "trialing" as
+  # subscribed, so trial users get the full plan immediately.
+  def trial_options
+    days = ENV["STRIPE_TRIAL_DAYS"].to_i
+    days.positive? ? { subscription_data: { trial_period_days: days } } : {}
+  end
 
   def require_client!
     return if current_user.client?

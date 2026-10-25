@@ -48,6 +48,25 @@ class User < ApplicationRecord
     subscribed? ? (plan_definition&.max_priority || "medium") : "medium"
   end
 
+  # Ticket volume allowed per calendar month (Plan#monthly_ticket_limit),
+  # shared across the whole organization the same way seats are. nil means
+  # unlimited - every non-client role, and plans with no cap.
+  def monthly_ticket_limit
+    return nil unless client?
+
+    subscribed? ? plan_definition&.monthly_ticket_limit : Plan.free_tickets_per_month
+  end
+
+  def tickets_filed_this_month
+    filers = organization ? organization.users : User.where(id: id)
+    Ticket.where(user: filers).where(created_at: Time.current.beginning_of_month..).count
+  end
+
+  def ticket_limit_reached?
+    limit = monthly_ticket_limit
+    limit.present? && tickets_filed_this_month >= limit
+  end
+
   def org_owner?
     org_role == "owner"
   end

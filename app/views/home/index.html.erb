@@ -68,6 +68,8 @@
               <p class="text-muted small mb-1"><%= plan.display_price %></p>
               <p class="text-muted small"><%= plan.tagline %></p>
               <ul class="small mb-3">
+                <li>Up to <%= plan.max_seats %> seats</li>
+                <li><%= Plan.ticket_allowance_label(plan.monthly_ticket_limit) %></li>
                 <% plan.features.each do |feature| %>
                   <li><%= feature %></li>
                 <% end %>
@@ -86,6 +88,13 @@
 
   <section class="cta text-center py-5 px-3">
     <h2 class="fw-bold mb-3">Ready to stop firefighting IT issues yourself?</h2>
+    <% if Plan.free_tickets_per_month.positive? %>
+      <p class="text-muted mb-4">
+        Try us first: create a free account and your first
+        <%= Plan.free_tickets_per_month == 1 ? "ticket" : "#{Plan.free_tickets_per_month} tickets" %>
+        each month <%= Plan.free_tickets_per_month == 1 ? "is" : "are" %> on us - no card required.
+      </p>
+    <% end %>
     <div class="d-flex justify-content-center gap-3 flex-wrap">
       <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary btn-lg px-4" %>
       <a href="#contact" class="btn btn-outline-primary btn-lg px-4">Contact Sales</a>

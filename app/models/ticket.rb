@@ -23,6 +23,7 @@ class Ticket < ApplicationRecord
   validates :category, inclusion: { in: CATEGORIES }, allow_nil: true
   validates :satisfaction_rating, inclusion: { in: 1..5 }, allow_nil: true
   validate :priority_allowed_by_plan, if: :will_save_change_to_priority?
+  validate :within_monthly_ticket_limit, on: :create
   validate :attachments_are_valid, if: -> { attachments.attached? }
 
   scope :unresolved, -> { where.not(status: [ :resolved, :closed ]) }
@@ -71,6 +72,15 @@ class Ticket < ApplicationRecord
 
     plan_name = user.plan_definition&.name || "current"
     errors.add(:priority, "of #{priority} exceeds the #{plan_name} plan's limit (up to #{cap})")
+  end
+
+  # The enforced side of Plan#monthly_ticket_limit / the free tier - the
+  # controller also redirects to billing before the form is even shown,
+  # this is what stops a direct POST.
+  def within_monthly_ticket_limit
+    return if user.nil? || !user.ticket_limit_reached?
+
+    errors.add(:base, "You've used all #{user.monthly_ticket_limit} tickets included this month. Upgrade your plan to file more.")
   end
 
   # Only checks the content type the browser declared on upload, not the
