@@ -23,9 +23,9 @@ Rails.application.configure do
   config.content_security_policy_nonce_generator = ->(request) { request.session.id.to_s }
   config.content_security_policy_nonce_directives = %w[script-src]
 
-  # Shipped as report-only: this sandbox has no working browser to verify
-  # the policy against, so it logs violations without blocking anything
-  # until someone confirms a real browser session is clean, then flips
-  # this to false.
-  config.content_security_policy_report_only = true
+  # Enforced since 2026-10-25, after a real browser session on production
+  # (home, dashboard, tickets, new ticket, leads) reported no violations
+  # under report-only. Every <script> must come from 'self'/jsdelivr or
+  # carry the nonce (content_security_policy_nonce); no inline handlers.
+  config.content_security_policy_report_only = false
 end
