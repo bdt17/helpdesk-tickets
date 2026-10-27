@@ -37,7 +37,14 @@ plugin :tmp_restart
 # Run the Solid Queue supervisor inside of Puma for single-server deployments.
 # Always on in development so the escalation sweep actually runs locally;
 # in production this needs SOLID_QUEUE_IN_PUMA=true set as an env var.
-plugin :solid_queue if ENV["SOLID_QUEUE_IN_PUMA"] || Rails.env.development?
+if ENV["SOLID_QUEUE_IN_PUMA"] || Rails.env.development?
+  plugin :solid_queue
+  # Run the job supervisor, dispatcher and workers as threads inside this
+  # Puma process. The default (:fork) starts each as its own full copy of
+  # the app, and on Render's 512MB instance that ran out of memory after a
+  # handful of page loads (2026-10-25).
+  solid_queue_mode :async
+end
 
 # Specify the PID file. Defaults to tmp/pids/server.pid in development.
 # In other environments, only set the PID file if requested.

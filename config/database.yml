@@ -17,3 +17,7 @@ production:
   <<: *default
   adapter: postgresql
   url: <%= ENV['DATABASE_URL'] %>
+  # Background jobs run as threads in the web process (see config/puma.rb),
+  # sharing this pool with Puma's request threads: 3 worker threads plus
+  # the dispatcher, scheduler and heartbeat threads need connections too.
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 }.to_i + 10 %>
