@@ -84,3 +84,7 @@ group :test do
   # minitest 6 dropped Object#stub/Minitest::Mock into this separate gem
   gem "minitest-mock"
 end
+
+# Error alerts (config/initializers/sentry.rb) - only active when SENTRY_DSN is set
+gem "sentry-ruby", "~> 7.1"
+gem "sentry-rails", "~> 7.1"

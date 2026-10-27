@@ -80,6 +80,7 @@ class ReportsController < ApplicationController
       "Stripe keys and all three plan prices set" => ENV["STRIPE_SECRET_KEY"].present? && Plan::ALL.all? { |plan| Plan.price_id_for(plan.key).present? },
       "Stripe webhook secret set (STRIPE_WEBHOOK_SECRET)" => ENV["STRIPE_WEBHOOK_SECRET"].present?,
       "Stripe in live mode (real payments)" => ENV["STRIPE_SECRET_KEY"].to_s.start_with?("sk_live_", "rk_live_"),
+      "Error alerts enabled (SENTRY_DSN)" => ENV["SENTRY_DSN"].present?,
       "AI categorization enabled (ANTHROPIC_API_KEY)" => TicketCategorizer.configured?
     }
   end

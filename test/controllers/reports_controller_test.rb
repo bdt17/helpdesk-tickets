@@ -77,6 +77,7 @@ class ReportsControllerTest < ActionDispatch::IntegrationTest
     get reports_index_url
     assert_select "li.health-check[data-ok=true]", text: /Outgoing email configured/
     assert_select "li.health-check[data-ok=false]", text: /persistent disk/
+    assert_select "li.health-check[data-ok=false]", text: /Error alerts enabled/
   ensure
     ENV.delete("SMTP_ADDRESS")
   end
