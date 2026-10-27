@@ -113,7 +113,10 @@ module Webhooks
         stripe_subscription_id: subscription.id,
         subscription_status: subscription.status,
         plan: Plan.key_for_price_id(price_id),
-        billing_interval: Plan.interval_for_price_id(price_id)
+        billing_interval: Plan.interval_for_price_id(price_id),
+        # Set when the plan is scheduled to end (our cancel page or the
+        # Stripe portal), cleared when the client resumes it.
+        cancel_at: subscription.cancel_at && Time.zone.at(subscription.cancel_at)
       )
     end
   end

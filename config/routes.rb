@@ -36,6 +36,10 @@ Rails.application.routes.draw do
   get "/billing/success", to: "billing#success", as: :billing_success
   post "/billing/portal", to: "billing#portal", as: :billing_portal
   post "/billing/extra_tickets", to: "billing#extra_tickets", as: :billing_extra_tickets
+  get "/billing/cancel", to: "cancellations#new", as: :billing_cancel
+  post "/billing/cancel", to: "cancellations#create"
+  post "/billing/retention_offer", to: "cancellations#accept_offer", as: :billing_retention_offer
+  post "/billing/resume", to: "cancellations#resume", as: :billing_resume
 
   get "/team", to: "team#index", as: :team
   post "/team", to: "team#create", as: :team_invite

@@ -1,0 +1,18 @@
+<% case @outcome %>
+<% when "canceled" %>
+A client canceled their plan. It ends <%= @organization.cancel_at&.strftime("%B %-d, %Y") || "at the end of the billing period" %>.
+
+Reason:  <%= Organization::CANCELLATION_REASONS[@organization.cancellation_reason] || "-" %>
+Comment: <%= @organization.cancellation_comment || "-" %>
+<% when "kept_with_discount" %>
+A client started to cancel, then stayed after taking the retention offer (<%= Plan::RETENTION_OFFER %>).
+<% when "resumed" %>
+A client who had canceled changed their mind; their plan will keep renewing.
+<% end %>
+
+Organization: <%= @organization.name %>
+Owner:        <%= @organization.owner&.email || "-" %>
+Plan:         <%= @organization.plan_definition&.name || @organization.plan || "-" %>
+
+<% if @outcome == "canceled" %>A personal call before the end date sometimes saves these.
+<% end %><%= reports_index_url %>

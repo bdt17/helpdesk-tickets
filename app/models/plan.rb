@@ -49,6 +49,15 @@ class Plan
     )
   ].freeze
 
+  # Stripe coupon offered once to a client who starts canceling (see
+  # CancellationsController). Created by `bin/rails
+  # stripe:setup_retention_coupon`; unset = no offer, straight to cancel.
+  RETENTION_OFFER = "50% off your next 2 months".freeze
+
+  def self.retention_coupon_id
+    ENV["STRIPE_RETENTION_COUPON"].presence
+  end
+
   # Whole dollars per month parsed from display_price, for the admin
   # revenue estimate on /reports. An estimate only - Stripe's Price (and
   # any coupon/trial) is what's actually charged.

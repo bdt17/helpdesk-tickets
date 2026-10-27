@@ -1,4 +1,5 @@
-# Failed-payment notices (see Webhooks::StripeController#handle_payment_failed).
+# Failed-payment notices (see Webhooks::StripeController#handle_payment_failed)
+# and cancellation alerts for staff (see CancellationsController).
 # `details` carries the bits of the Stripe invoice worth showing, as plain
 # values so the job serializes cleanly.
 class BillingMailer < ApplicationMailer
@@ -16,6 +17,20 @@ class BillingMailer < ApplicationMailer
     @details = details.symbolize_keys
 
     mail(to: recipient.email, subject: "Payment failed: #{organization.name} (#{formatted_amount})")
+  end
+
+  # outcome: "canceled", "kept_with_discount" or "resumed" (see
+  # CancellationsController).
+  def cancellation_staff_alert(organization, recipient, outcome)
+    @organization = organization
+    @outcome = outcome
+    subject = {
+      "canceled" => "Cancellation: #{organization.name}",
+      "kept_with_discount" => "Saved: #{organization.name} took the retention discount",
+      "resumed" => "Resumed: #{organization.name} un-canceled their plan"
+    }.fetch(outcome)
+
+    mail(to: recipient.email, subject: subject)
   end
 
   private

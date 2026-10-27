@@ -21,9 +21,24 @@
         Current plan: <%= current_user.plan_definition&.name || @organization.plan&.humanize %>
       </h4>
       <p class="text-muted mb-3">Status: <%= @organization.subscription_status.humanize %></p>
+      <% if @organization.canceling? %>
+        <div class="alert alert-warning">
+          Your plan is canceled and ends on <strong><%= @organization.cancel_at.strftime("%B %-d, %Y") %></strong>.
+          Support continues as normal until then.
+        </div>
+      <% end %>
       <% if current_user.org_owner? %>
-        <%= button_to "Manage Billing", billing_portal_path, method: :post,
-                       class: "btn btn-primary", form: { class: "d-inline" } %>
+        <div class="d-flex align-items-center gap-3 flex-wrap">
+          <% if @organization.canceling? %>
+            <%= button_to "Keep my plan", billing_resume_path, method: :post,
+                           class: "btn btn-success", form: { class: "d-inline" } %>
+          <% end %>
+          <%= button_to "Manage Billing", billing_portal_path, method: :post,
+                         class: "btn btn-primary", form: { class: "d-inline" } %>
+          <% unless @organization.canceling? %>
+            <%= link_to "Cancel plan", billing_cancel_path, class: "small text-muted ms-auto" %>
+          <% end %>
+        </div>
       <% end %>
     </div>
   <% elsif @organization&.stripe_customer_id.present? && current_user.org_owner? %>
