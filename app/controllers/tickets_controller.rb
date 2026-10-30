@@ -12,6 +12,7 @@ class TicketsController < ApplicationController
     @comments = current_user.agent? || current_user.admin? ? @ticket.comments : @ticket.comments.where(internal: false)
     @comments = @comments.order(created_at: :asc)
     @comment = @ticket.comments.build
+    @time_entries = @ticket.time_entries.includes(:user).order(:created_at) if current_user.agent? || current_user.admin?
   end
 
   def new
