@@ -12,6 +12,9 @@
   <% if @stats[:csat_average] %>
     <tr><td>Your team's rating</td><td><strong><%= @stats[:csat_average] %> / 5</strong></td></tr>
   <% end %>
+  <% if @stats[:technician_minutes].to_i.positive? %>
+    <tr><td>Technician time</td><td><strong><%= TimeEntry.format_minutes(@stats[:technician_minutes]) %></strong></td></tr>
+  <% end %>
   <tr><td>Still open right now</td><td><strong><%= @stats[:still_open] %></strong></td></tr>
 </table>
 <% if @stats[:by_category].any? %>

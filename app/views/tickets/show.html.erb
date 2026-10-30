@@ -77,6 +77,43 @@
     </div>
   <% end %>
 
+  <% if @time_entries %>
+    <%# Staff only (see TicketsController#show) - clients never see logged time. %>
+    <div class="card p-3 mb-4">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h2 class="h6 mb-0"><i class="fas fa-stopwatch text-muted me-1"></i> Time spent</h2>
+        <strong><%= TimeEntry.format_minutes(@time_entries.sum(&:minutes)) %></strong>
+      </div>
+      <% if @time_entries.any? %>
+        <ul class="list-unstyled small mb-2">
+          <% @time_entries.each do |entry| %>
+            <li class="d-flex align-items-center gap-2 py-1 border-bottom">
+              <span class="fw-semibold" style="min-width: 4.5rem;"><%= TimeEntry.format_minutes(entry.minutes) %></span>
+              <span class="text-muted"><%= entry.user.email %> · <%= entry.worked_on.strftime("%b %-d") %></span>
+              <span class="flex-grow-1"><%= entry.note %></span>
+              <% if entry.user == current_user || current_user.admin? %>
+                <%= button_to "Remove", ticket_time_entry_path(@ticket, entry), method: :delete, class: "btn btn-link btn-sm text-danger p-0", form: { data: { turbo_confirm: "Remove this time entry?" } } %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+      <%= form_with model: [ @ticket, TimeEntry.new ], class: "row g-2 align-items-end" do |f| %>
+        <div class="col-4 col-md-3">
+          <%= f.label :minutes, "Minutes", class: "form-label small mb-1" %>
+          <%= f.number_field :minutes, class: "form-control form-control-sm", min: 1, max: 1440, step: 1, required: true, placeholder: "30" %>
+        </div>
+        <div class="col-8 col-md-6">
+          <%= f.label :note, "What you did (optional)", class: "form-label small mb-1" %>
+          <%= f.text_field :note, class: "form-control form-control-sm", maxlength: 200 %>
+        </div>
+        <div class="col-12 col-md-3">
+          <%= f.submit "Log time", class: "btn btn-outline-primary btn-sm w-100" %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
   <h2 class="h5 mb-3">Comments</h2>
   <% @comments.each do |comment| %>
     <div class="card p-3 mb-2">

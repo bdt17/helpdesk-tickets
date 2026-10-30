@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_25_232426) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_30_183114) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -37,6 +37,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_25_232426) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "articles", force: :cascade do |t|
+    t.text "body", null: false
+    t.string "category"
+    t.datetime "created_at", null: false
+    t.boolean "published", default: false, null: false
+    t.string "slug"
+    t.string "summary"
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_articles_on_slug", unique: true
   end
 
   create_table "comments", force: :cascade do |t|
@@ -258,6 +270,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_25_232426) do
     t.index ["user_id"], name: "index_tickets_on_user_id"
   end
 
+  create_table "time_entries", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "minutes", null: false
+    t.string "note"
+    t.integer "ticket_id", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.date "worked_on", null: false
+    t.index ["ticket_id"], name: "index_time_entries_on_ticket_id"
+    t.index ["user_id"], name: "index_time_entries_on_user_id"
+    t.index ["worked_on"], name: "index_time_entries_on_worked_on"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email"
@@ -293,5 +318,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_25_232426) do
   add_foreign_key "ticket_credit_purchases", "organizations"
   add_foreign_key "tickets", "users"
   add_foreign_key "tickets", "users", column: "assignee_id"
+  add_foreign_key "time_entries", "tickets"
+  add_foreign_key "time_entries", "users"
   add_foreign_key "users", "organizations"
 end
