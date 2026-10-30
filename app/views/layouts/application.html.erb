@@ -195,6 +195,7 @@
           <% ServicePage::ALL.each do |service| %>
             <li class="list-inline-item"><%= link_to service.name, service_path(service.slug), class: "link-light" %></li>
           <% end %>
+          <li class="list-inline-item"><%= link_to "Help Center", articles_path, class: "link-light" %></li>
           <li class="list-inline-item"><%= link_to "Plans", root_path(anchor: "plans"), class: "link-light" %></li>
           <li class="list-inline-item"><%= link_to "Contact", root_path(anchor: "contact"), class: "link-light" %></li>
         </ul>
