@@ -1,0 +1,37 @@
+<% content_for :title, "#{@article.title} | Thomas IT Help Center" %>
+<% content_for :description, @article.blurb %>
+
+<div class="container py-5" style="max-width: 760px;">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb small">
+      <li class="breadcrumb-item"><%= link_to "Help Center", articles_path %></li>
+      <li class="breadcrumb-item"><%= @article.category %></li>
+    </ol>
+  </nav>
+
+  <% unless @article.published? %>
+    <div class="alert alert-secondary">Draft - only staff can see this. Edit it and tick "Published" to make it public.</div>
+  <% end %>
+
+  <h1 class="fw-bold mb-3"><%= @article.title %></h1>
+  <% if @article.summary.present? %>
+    <p class="lead"><%= @article.summary %></p>
+  <% end %>
+
+  <div class="article-body"><%= article_body(@article.body) %></div>
+
+  <p class="small text-muted mt-4">Last updated <%= @article.updated_at.strftime("%B %-d, %Y") %></p>
+
+  <% if staff? %>
+    <div class="d-flex gap-2 mb-4">
+      <%= link_to "Edit", edit_article_path(@article), class: "btn btn-outline-primary btn-sm" %>
+      <%= button_to "Delete", article_path(@article), method: :delete, class: "btn btn-outline-danger btn-sm", form: { data: { turbo_confirm: "Delete this article?" } } %>
+    </div>
+  <% end %>
+
+  <div class="card p-4 mt-4">
+    <h2 class="h6 mb-2">Didn't fix it?</h2>
+    <p class="text-muted small mb-3">Open a ticket and a technician will pick it up.</p>
+    <div><%= link_to "Open a ticket", user_signed_in? ? new_ticket_path : new_user_registration_path, class: "btn btn-primary btn-sm" %></div>
+  </div>
+</div>

@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get "/services", to: "services#index", as: :services
   get "/services/:slug", to: "services#show", as: :service
   get "/sitemap.xml", to: "sitemaps#show", defaults: { format: :xml }, as: :sitemap
+  resources :articles, path: "help"
   get "/dashboard", to: "dashboard#index", as: :dashboard
 
   resources :tickets do
