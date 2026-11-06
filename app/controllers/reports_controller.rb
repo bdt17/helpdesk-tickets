@@ -18,6 +18,8 @@ class ReportsController < ApplicationController
     if current_user.admin?
       @revenue = revenue_summary
       @health = system_health
+      @profit_month = params[:month] == "last" ? 1.month.ago.to_date : Date.current
+      @profitability = client_profitability(@profit_month.all_month)
     end
 
     # Computed in Ruby, not SQL, since resolution time is a plain
@@ -46,10 +48,7 @@ class ReportsController < ApplicationController
     by_plan = paying.group(:plan).count
     # Annual subscribers count at their monthly equivalent (yearly price / 12).
     mrr = paying.group(:plan, :billing_interval).count.sum do |(key, interval), count|
-      next 0 unless (plan = Plan.find(key))
-
-      per_month = interval == "year" ? Plan.annual_dollars(plan) / 12.0 : Plan.monthly_dollars(plan)
-      per_month * count
+      Plan.monthly_revenue(key, interval) * count
     end.round
     clients = User.client
 
@@ -67,6 +66,40 @@ class ReportsController < ApplicationController
       clients_total: clients.count,
       clients_new_30_days: clients.where(created_at: 30.days.ago..).count,
       clients_never_subscribed: clients.where(organization_id: nil).count
+    }
+  end
+
+  # Logged technician time vs. plan revenue for each client in one month
+  # (admin only), lowest revenue-per-hour first - the clients a plan's
+  # price isn't covering. STAFF_HOURLY_COST (optional, whole dollars) adds
+  # an estimated profit column. Revenue is the listed plan price, like the
+  # MRR estimate above; extra-ticket purchases aren't included.
+  def client_profitability(period)
+    hourly_cost = ENV["STAFF_HOURLY_COST"].to_f
+    minutes_by_org = Hash.new(0)
+    TimeEntry.where(worked_on: period).includes(ticket: { user: :organization }).find_each do |entry|
+      minutes_by_org[entry.ticket.user&.organization] += entry.minutes
+    end
+    organizations = (minutes_by_org.keys.compact + Organization.where(subscription_status: %w[active trialing past_due]).to_a).uniq
+
+    rows = organizations.map do |org|
+      revenue = org.subscribed? ? Plan.monthly_revenue(org.plan, org.billing_interval) : 0
+      minutes = minutes_by_org[org]
+      hours = minutes / 60.0
+      {
+        organization: org,
+        revenue: revenue,
+        minutes: minutes,
+        per_hour: minutes.positive? ? (revenue / hours).round : nil,
+        profit: hourly_cost.positive? ? (revenue - hours * hourly_cost).round : nil
+      }
+    end
+
+    {
+      rows: rows.sort_by { |row| [ row[:per_hour] ? 0 : 1, row[:per_hour].to_i ] },
+      unaffiliated_minutes: minutes_by_org[nil],
+      total_minutes: minutes_by_org.values.sum,
+      hourly_cost: hourly_cost.positive? ? hourly_cost : nil
     }
   end
 

@@ -14,6 +14,7 @@ class Ticket < ApplicationRecord
   belongs_to :user
   belongs_to :assignee, class_name: "User", optional: true
   has_many :comments, dependent: :destroy
+  has_many :time_entries, dependent: :destroy
   has_many_attached :attachments
 
   enum :status, { open: "open", in_progress: "in_progress", resolved: "resolved", closed: "closed" }, default: :open

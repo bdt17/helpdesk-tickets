@@ -15,6 +15,9 @@ class User < ApplicationRecord
   has_many :tickets, dependent: :nullify
   has_many :assigned_tickets, class_name: "Ticket", foreign_key: :assignee_id, dependent: :nullify
   has_many :comments, dependent: :destroy
+  # Deleting a technician removes their logged time too (disable them
+  # instead to keep it - see Admin::UsersController).
+  has_many :time_entries, dependent: :destroy
 
   # Devise calls this to decide whether a disabled account may authenticate,
   # independent of the lockable failed-attempts lock.

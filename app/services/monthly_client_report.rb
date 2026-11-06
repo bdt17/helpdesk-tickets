@@ -31,6 +31,7 @@ class MonthlyClientReport
         sla_met_percent: with_sla.any? ? (with_sla.count { |t| t.resolved_at <= t.due_at } * 100.0 / with_sla.size).round : nil,
         csat_average: rated.any? ? rated.average(:satisfaction_rating).round(1).to_f : nil,
         still_open: tickets.unresolved.count,
+        technician_minutes: TimeEntry.where(ticket: tickets, worked_on: period).sum(:minutes),
         by_category: filed.where.not(category: nil).group(:category).count.sort_by { |_, count| -count }.to_h
       }
     end

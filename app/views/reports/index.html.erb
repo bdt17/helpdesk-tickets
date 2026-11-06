@@ -71,6 +71,53 @@
         </ul>
       </div>
     </div>
+
+    <div class="card mb-4" id="profitability">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+          <h6 class="card-title mb-0">Time &amp; revenue per client · <%= @profit_month.strftime("%B %Y") %></h6>
+          <div class="small">
+            <%= link_to "This month", reports_index_path(anchor: "profitability"), class: ("fw-bold" if params[:month] != "last") %> ·
+            <%= link_to "Last month", reports_index_path(month: "last", anchor: "profitability"), class: ("fw-bold" if params[:month] == "last") %>
+          </div>
+        </div>
+        <% if @profitability[:rows].empty? && @profitability[:total_minutes].zero? %>
+          <p class="small text-muted mb-0">No paying clients or logged time yet. Technicians log time from each ticket's page.</p>
+        <% else %>
+          <div class="table-responsive">
+            <table class="table table-sm small mb-1">
+              <thead>
+                <tr>
+                  <th>Client</th><th>Plan</th><th class="text-end">Revenue/mo</th><th class="text-end">Time logged</th><th class="text-end">Revenue per hour</th>
+                  <% if @profitability[:hourly_cost] %><th class="text-end">Est. profit</th><% end %>
+                </tr>
+              </thead>
+              <tbody>
+                <% @profitability[:rows].each do |row| %>
+                  <tr class="profit-row">
+                    <td><%= row[:organization].name %></td>
+                    <td><%= row[:organization].subscribed? ? (row[:organization].plan_definition&.name || row[:organization].plan) : "No plan" %></td>
+                    <td class="text-end"><%= number_to_currency(row[:revenue], precision: 0) %></td>
+                    <td class="text-end"><%= row[:minutes].positive? ? TimeEntry.format_minutes(row[:minutes]) : "-" %></td>
+                    <td class="text-end"><%= row[:per_hour] ? number_to_currency(row[:per_hour], precision: 0) : "-" %></td>
+                    <% if @profitability[:hourly_cost] %>
+                      <td class="text-end <%= "text-danger" if row[:profit].negative? %>"><%= number_to_currency(row[:profit], precision: 0) %></td>
+                    <% end %>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <p class="small text-muted mb-0">
+            <% if @profitability[:unaffiliated_minutes].positive? %>
+              Plus <%= TimeEntry.format_minutes(@profitability[:unaffiliated_minutes]) %> on tickets from free or internal accounts.
+            <% end %>
+            Lowest revenue per hour first: those clients cost the most to support for what they pay.
+            <% unless @profitability[:hourly_cost] %>Set STAFF_HOURLY_COST in Render to also see estimated profit.<% end %>
+          </p>
+        <% end %>
+      </div>
+    </div>
   <% end %>
 
   <div class="row g-3 mb-4">

@@ -58,6 +58,15 @@ class Plan
     ENV["STRIPE_RETENTION_COUPON"].presence
   end
 
+  # Estimated monthly revenue from one subscription on this plan; annual
+  # subscriptions count at their monthly equivalent (yearly price / 12).
+  def self.monthly_revenue(plan_key, interval)
+    plan = find(plan_key)
+    return 0 unless plan
+
+    interval == "year" ? annual_dollars(plan) / 12.0 : monthly_dollars(plan)
+  end
+
   # Whole dollars per month parsed from display_price, for the admin
   # revenue estimate on /reports. An estimate only - Stripe's Price (and
   # any coupon/trial) is what's actually charged.
