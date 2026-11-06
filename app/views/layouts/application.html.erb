@@ -111,6 +111,9 @@
             <% if current_user.agent? || current_user.admin? %>
               <%= link_to "Leads", leads_path, class: "btn btn-outline-light btn-sm px-4 me-2" %>
             <% end %>
+            <% if current_user.admin? %>
+              <%= link_to "Users", admin_users_path, class: "btn btn-outline-light btn-sm px-4 me-2" %>
+            <% end %>
             <% if current_user.client? %>
               <%= link_to "Billing", billing_path, class: "btn btn-outline-light btn-sm px-4 me-2" %>
               <% if current_user.org_owner? %>

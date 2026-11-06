@@ -29,6 +29,9 @@ Rails.application.routes.draw do
   end
   resources :leads, only: [ :index, :create, :update ]
   get "/agents", to: "agents#index", as: :agents
+  namespace :admin do
+    resources :users, only: [ :index, :create, :update ]
+  end
   get "/reports", to: "reports#index", as: :reports_index
 
   get "/billing", to: "billing#show", as: :billing
