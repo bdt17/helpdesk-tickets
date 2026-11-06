@@ -1,0 +1,45 @@
+<% content_for :title, "Help Center | Thomas Information Technology" %>
+<% content_for :description, "How-to guides and answers to common IT questions for small businesses: Wi-Fi, computers, software, accounts and getting help from our help desk." %>
+
+<div class="container py-5" style="max-width: 860px;">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+    <h1 class="fw-bold mb-0">Help Center</h1>
+    <% if staff? %>
+      <%= link_to "New article", new_article_path, class: "btn btn-primary btn-sm" %>
+    <% end %>
+  </div>
+  <p class="lead text-muted mb-4">Quick answers to common IT problems. Can't find it? Open a ticket and a technician will help.</p>
+
+  <%= form_with url: articles_path, method: :get, class: "d-flex gap-2 mb-4" do %>
+    <%= search_field_tag :q, @query, placeholder: "Search help articles", class: "form-control", "aria-label": "Search help articles" %>
+    <%= submit_tag "Search", class: "btn btn-outline-primary", name: nil %>
+  <% end %>
+
+  <% if @articles_by_category.empty? %>
+    <p class="text-muted"><%= @query.present? ? "No articles match \"#{@query}\"." : "No articles yet." %></p>
+  <% end %>
+
+  <% Article::CATEGORIES.each do |category| %>
+    <% next unless (articles = @articles_by_category[category]) %>
+    <h2 class="h5 mt-4"><%= category %></h2>
+    <div class="list-group mb-3">
+      <% articles.each do |article| %>
+        <%= link_to article_path(article), class: "list-group-item list-group-item-action" do %>
+          <div class="fw-semibold">
+            <%= article.title %>
+            <% unless article.published? %><span class="badge text-bg-secondary ms-1">Draft</span><% end %>
+          </div>
+          <div class="small text-muted"><%= article.blurb %></div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="card p-4 mt-5 text-center">
+    <h2 class="h5">Still stuck?</h2>
+    <p class="text-muted mb-3">Our technicians can take it from here.</p>
+    <div>
+      <%= link_to "Open a ticket", user_signed_in? ? new_ticket_path : new_user_registration_path, class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>

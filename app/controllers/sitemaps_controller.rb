@@ -3,6 +3,7 @@
 class SitemapsController < ApplicationController
   def show
     @services = ServicePage::ALL
+    @articles = Article.published.order(:id)
     respond_to { |format| format.xml }
   end
 end

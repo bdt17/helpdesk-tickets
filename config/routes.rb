@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get "/services", to: "services#index", as: :services
   get "/services/:slug", to: "services#show", as: :service
   get "/sitemap.xml", to: "sitemaps#show", defaults: { format: :xml }, as: :sitemap
+  resources :articles, path: "help"
   get "/dashboard", to: "dashboard#index", as: :dashboard
 
   resources :tickets do
@@ -30,6 +31,9 @@ Rails.application.routes.draw do
   end
   resources :leads, only: [ :index, :create, :update ]
   get "/agents", to: "agents#index", as: :agents
+  namespace :admin do
+    resources :users, only: [ :index, :create, :update ]
+  end
   get "/reports", to: "reports#index", as: :reports_index
 
   get "/billing", to: "billing#show", as: :billing

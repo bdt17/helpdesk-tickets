@@ -1,0 +1,68 @@
+<% content_for :title, "Users — Thomas IT Helpdesk" %>
+
+<div class="container py-4">
+  <h1 class="mb-4">Users</h1>
+
+  <div class="card p-4 mb-4">
+    <h2 class="h5 mb-3">Add a staff member</h2>
+    <%= form_with url: admin_users_path, method: :post, class: "row g-2 align-items-end" do %>
+      <div class="col-md-6">
+        <%= label_tag :email, "Email", class: "form-label" %>
+        <%= email_field_tag :email, nil, class: "form-control", required: true, maxlength: 255 %>
+      </div>
+      <div class="col-md-3">
+        <%= label_tag :role, "Role", class: "form-label" %>
+        <%= select_tag :role, options_for_select(Admin::UsersController::STAFF_ROLES.map { |r| [ r.humanize, r ] }, "agent"), class: "form-select" %>
+      </div>
+      <div class="col-md-3">
+        <%= submit_tag "Add", class: "btn btn-primary w-100" %>
+      </div>
+    <% end %>
+    <p class="small text-muted mt-2 mb-0">They get an email to set their own password (needs email set up). Clients sign up themselves or are invited from their Team page.</p>
+  </div>
+
+  <%= form_with url: admin_users_path, method: :get, class: "d-flex gap-2 flex-wrap mb-3" do %>
+    <%= search_field_tag :q, @query, placeholder: "Search email", class: "form-control", style: "max-width: 260px;" %>
+    <%= select_tag :role, options_for_select([ [ "All roles", "" ] ] + User.roles.keys.map { |r| [ "#{r.humanize} (#{@counts[r] || 0})", r ] }, @role), class: "form-select", style: "max-width: 200px;" %>
+    <%= submit_tag "Filter", class: "btn btn-outline-secondary", name: nil %>
+  <% end %>
+
+  <div class="card">
+    <div class="table-responsive">
+      <table class="table mb-0 align-middle">
+        <thead>
+          <tr><th>Email</th><th>Role</th><th>Organization</th><th>Status</th><th></th></tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr class="<%= "text-muted" if user.disabled? %>">
+              <td><%= user.email %><%= " (you)" if user == current_user %></td>
+              <td>
+                <% if user.client? %>
+                  Client<%= " · owner" if user.org_owner? %>
+                <% else %>
+                  <%= form_with url: admin_user_path(user), method: :patch, class: "d-flex gap-1" do %>
+                    <%= select_tag :role, options_for_select(Admin::UsersController::STAFF_ROLES.map { |r| [ r.humanize, r ] }, user.role), class: "form-select form-select-sm", style: "width: 120px;", "aria-label": "Role for #{user.email}" %>
+                    <%= submit_tag "Save", class: "btn btn-sm btn-outline-primary" %>
+                  <% end %>
+                <% end %>
+              </td>
+              <td><%= user.organization&.name || "-" %></td>
+              <td><%= user.status&.humanize || "-" %></td>
+              <td class="text-end">
+                <% if user.active? %>
+                  <%= button_to "Disable", admin_user_path(user), method: :patch, params: { status: "disabled" }, class: "btn btn-sm btn-outline-danger", form: { data: { turbo_confirm: "Disable #{user.email}? They'll be signed out and can't log in." } } %>
+                <% else %>
+                  <%= button_to "Enable", admin_user_path(user), method: :patch, params: { status: "active" }, class: "btn btn-sm btn-outline-success" %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+          <% if @users.empty? %>
+            <tr><td colspan="5" class="text-muted">No users match.</td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
