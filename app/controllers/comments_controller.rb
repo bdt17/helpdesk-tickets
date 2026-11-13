@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
     @comment.user = current_user
 
     if @comment.save
-      notify_recipients(@comment)
+      TicketNotifier.comment_posted(@comment, current_user)
       redirect_to ticket_path(@ticket), notice: "Comment added."
     else
       redirect_to ticket_path(@ticket), alert: @comment.errors.full_messages.to_sentence
@@ -27,16 +27,5 @@ class CommentsController < ApplicationController
       permitted.merge!(params.require(:comment).permit(:internal))
     end
     permitted
-  end
-
-  def notify_recipients(comment)
-    recipients(comment).each do |recipient|
-      TicketMailer.comment_posted(comment, recipient).deliver_later
-    end
-  end
-
-  def recipients(comment)
-    people = comment.internal? ? [ @ticket.assignee ] : [ @ticket.user, @ticket.assignee ]
-    people.compact.uniq - [ current_user ]
   end
 end

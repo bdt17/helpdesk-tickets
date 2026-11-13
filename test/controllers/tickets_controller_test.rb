@@ -306,4 +306,84 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     get tickets_url
     assert_select ".alert", text: /tickets used this month/, count: 0
   end
+
+  # --- Intake: a new ticket must reach a human, and say when to expect a reply ---
+
+  test "a new unassigned ticket emails every active staff member and confirms to the filer" do
+    sign_in users(:employee)
+
+    assert_enqueued_email_with TicketMailer, :new_ticket, args: ->(args) { args.second == users(:agent) } do
+      assert_enqueued_email_with TicketMailer, :new_ticket, args: ->(args) { args.second == users(:admin) } do
+        assert_enqueued_email_with TicketMailer, :received, args: ->(args) { args.first.title == "Printer on fire" } do
+          post tickets_url, params: { ticket: { title: "Printer on fire" } }
+        end
+      end
+    end
+    assert_enqueued_emails 3 # nobody else
+  end
+
+  test "a disabled staff account is not emailed about new tickets" do
+    users(:admin).update!(status: :disabled)
+    sign_in users(:employee)
+
+    post tickets_url, params: { ticket: { title: "Printer on fire" } }
+
+    recipients = enqueued_jobs.select { |j| j["arguments"][1] == "new_ticket" }
+    assert_equal 1, recipients.size
+  end
+
+  test "staff filing a ticket notify the other staff but get no confirmation themselves" do
+    sign_in users(:agent)
+
+    post tickets_url, params: { ticket: { title: "Internal follow-up" } }
+
+    assert_enqueued_emails 1 # admin only: no new_ticket to the agent, no received
+  end
+
+  test "after filing, the filer lands on their ticket and is told the response window" do
+    sign_in users(:employee)
+    post tickets_url, params: { ticket: { title: "New issue", priority: "high" } }
+
+    assert_redirected_to ticket_url(Ticket.last)
+    assert_match "respond within 24 hours", flash[:notice]
+  end
+
+  test "the filer chooses urgency, which sets the SLA due time" do
+    sign_in users(:employee)
+    freeze_time do
+      post tickets_url, params: { ticket: { title: "Can't log in", priority: "high" } }
+      assert_equal "high", Ticket.last.priority
+      assert_equal 24.hours.from_now, Ticket.last.due_at
+    end
+  end
+
+  test "a client cannot pick an urgency above their plan" do
+    sign_in users(:client) # not subscribed: capped at medium
+
+    assert_no_difference("Ticket.count") do
+      post tickets_url, params: { ticket: { title: "Server down", priority: "critical" } }
+    end
+    assert_response :unprocessable_entity
+  end
+
+  test "a Priority-plan client can file a business-down ticket with a 4-hour SLA" do
+    organization = Organization.create!(name: "Acme", plan: "priority", subscription_status: "active")
+    users(:client).update!(organization: organization, org_role: "owner")
+    sign_in users(:client)
+
+    freeze_time do
+      post tickets_url, params: { ticket: { title: "Server down", priority: "critical" } }
+      assert_equal "critical", Ticket.last.priority
+      assert_equal 4.hours.from_now, Ticket.last.due_at
+    end
+  end
+
+  test "the new-ticket form only offers urgencies the client's plan allows" do
+    sign_in users(:client) # not subscribed: capped at medium
+    get new_ticket_url
+
+    assert_select "select[name='ticket[priority]'] option", count: 2
+    assert_select "select[name='ticket[priority]'] option[selected][value='medium']"
+    assert_includes response.body, "Priority plan"
+  end
 end

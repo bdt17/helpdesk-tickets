@@ -1,0 +1,16 @@
+<p>
+  Hi <%= @recipient.email %>,
+</p>
+
+<p>
+  We've received your ticket <strong>#<%= @ticket.id %> <%= @ticket.title %></strong>.
+</p>
+
+<p>
+  Priority: <strong><%= @ticket.priority.humanize %></strong>. We aim to respond within <%= @response_window %>.
+</p>
+
+<p>
+  You'll get an email when we reply. To add details or screenshots,
+  <%= link_to "open your ticket", ticket_url(@ticket) %>.
+</p>

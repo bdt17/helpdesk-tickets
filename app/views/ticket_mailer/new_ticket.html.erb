@@ -1,0 +1,16 @@
+<p>
+  New ticket <strong>#<%= @ticket.id %></strong> from <%= @ticket.user.email %><%= " (#{@ticket.user.organization.name})" if @ticket.user.organization&.name.present? %>
+</p>
+
+<p><strong><%= @ticket.title %></strong></p>
+
+<p>
+  Priority: <strong><%= @ticket.priority.humanize %></strong><% if @ticket.due_at %> &mdash; respond by <%= l(@ticket.due_at, format: :long) %><% end %>
+  <% if @ticket.assignee %><br>Assigned to: <%= @ticket.assignee.email %><% end %>
+</p>
+
+<% if @ticket.description.present? %>
+  <p style="white-space: pre-wrap;"><%= @ticket.description %></p>
+<% end %>
+
+<p><%= link_to "Open ticket", ticket_url(@ticket) %></p>
