@@ -19,6 +19,29 @@ class User < ApplicationRecord
   # instead to keep it - see Admin::UsersController).
   has_many :time_entries, dependent: :destroy
 
+  # Team invites reuse Devise's reset-password token as the "set your
+  # password" link, but the normal 6-hour reset window is far too short for
+  # an invite someone may not open until tomorrow.
+  INVITE_LINK_VALIDITY = 7.days
+
+  def send_team_invite(inviter)
+    update!(invitation_pending: true)
+    raw_token = send(:set_reset_password_token)
+    UserMailer.team_invite(self, inviter, raw_token).deliver_later
+  end
+
+  def reset_password_period_valid?
+    return super unless invitation_pending?
+
+    reset_password_sent_at.present? && reset_password_sent_at.utc >= INVITE_LINK_VALIDITY.ago.utc
+  end
+
+  # Setting a password through the link accepts the invite.
+  def reset_password(new_password, new_password_confirmation)
+    self.invitation_pending = false if new_password.present?
+    super
+  end
+
   # Devise calls this to decide whether a disabled account may authenticate,
   # independent of the lockable failed-attempts lock.
   def active_for_authentication?

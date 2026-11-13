@@ -54,4 +54,12 @@ class UserTest < ActiveSupport::TestCase
     assert_equal [ member ], owner.teammates.to_a
     assert_empty users(:employee).teammates
   end
+
+  test "an ordinary password-reset link still expires after 6 hours" do
+    user = users(:employee)
+    user.send(:set_reset_password_token)
+
+    travel 5.hours { assert user.reset_password_period_valid? }
+    travel 7.hours { refute user.reset_password_period_valid? }
+  end
 end
