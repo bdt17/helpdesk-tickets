@@ -32,13 +32,13 @@ class Plan
     Definition.new(
       key: "basic", name: "Basic", display_price: "$49/mo",
       tagline: "For small teams that need a safety net",
-      features: [ "Business-hours ticket support", "High priority: 24 hr response", "Low priority: 7 day response" ],
+      features: [ "Online ticket portal with email updates", "High priority: 24 hr response", "Normal: 3 days, Low: 7 days" ],
       price_id_env: "STRIPE_PRICE_BASIC", max_priority: "high", max_seats: 3, monthly_ticket_limit: 10
     ),
     Definition.new(
       key: "business", name: "Business", display_price: "$149/mo",
       tagline: "Our most popular plan for growing teams",
-      features: [ "Everything in Basic", "Medium priority: 3 day response", "Dedicated agent assignment" ],
+      features: [ "Everything in Basic", "More seats and tickets for growing teams" ],
       price_id_env: "STRIPE_PRICE_BUSINESS", max_priority: "high", max_seats: 10, monthly_ticket_limit: 40
     ),
     Definition.new(
