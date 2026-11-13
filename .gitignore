@@ -2,6 +2,10 @@ tmp/cache/*
 tmp/pids/*
 tmp/sessions/*
 tmp/storage/*
+# Anything else dropped at the top of tmp/ (scratch notes, local secrets)
+# stays local. Already-tracked files there are unaffected.
+/tmp/*
+!/tmp/.keep
 log/*.log
 
 # Propshaft's compiled output. A stale copy of this was committed at some
