@@ -28,7 +28,8 @@ class TicketsController < ApplicationController
     authorize @ticket
 
     if @ticket.save
-      redirect_to tickets_path, notice: "Ticket created!"
+      TicketNotifier.ticket_created(@ticket, current_user)
+      redirect_to ticket_path(@ticket), notice: ticket_created_notice(@ticket)
     else
       render :new, status: :unprocessable_entity
     end
@@ -139,10 +140,24 @@ class TicketsController < ApplicationController
 
   def ticket_params
     permitted = params.require(:ticket).permit(:title, :description, :category, attachments: [])
-    if current_user.agent? || current_user.admin?
+    if current_user.staff?
       permitted.merge!(params.require(:ticket).permit(:status, :priority, :assignee_id))
+    elsif action_name == "create"
+      # Whoever files a ticket says how urgent it is - otherwise every
+      # client ticket defaulted to medium (3-day SLA), even "server down",
+      # and a Priority-plan client could never get the 4-hour response they
+      # pay for. Ticket#priority_allowed_by_plan still caps it by plan.
+      # Only on create: after that, staff own the priority.
+      permitted.merge!(params.require(:ticket).permit(:priority))
     end
     permitted
+  end
+
+  def ticket_created_notice(ticket)
+    return "Ticket created." if current_user.staff?
+
+    window = Ticket::SLA_WINDOWS.fetch(ticket.priority.to_sym).inspect
+    "Ticket ##{ticket.id} received. We aim to respond within #{window} - you'll get an email when we reply."
   end
 
   def satisfaction_params

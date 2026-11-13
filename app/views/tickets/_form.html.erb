@@ -19,6 +19,19 @@
     <%= f.text_area :description, class: "form-control", rows: 4 %>
   </div>
 
+  <% unless ticket.persisted? || current_user.staff? %>
+    <div class="form-group mb-3">
+      <%= f.label :priority, "How urgent is this?", class: "form-label" %>
+      <%= f.select :priority, urgency_options_for(current_user), {}, class: "form-select" %>
+      <% if current_user.client? && current_user.max_ticket_priority != "critical" %>
+        <div class="form-text">
+          "Business down" urgency with a 4-hour response is included in the
+          <%= link_to "Priority plan", billing_path %>.
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
   <div class="form-group mb-3">
     <%= f.label :category, class: "form-label" %>
     <%= f.select :category, Ticket::CATEGORIES, { include_blank: true }, class: "form-select" %>

@@ -67,4 +67,23 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
       post ticket_comments_url(tickets(:two)), params: { comment: { body: "internal note", internal: true } }
     end
   end
+
+  test "a client reply on an unassigned ticket reaches every active staff member" do
+    sign_in users(:employee) # owner of ticket one, which is unassigned
+
+    assert_emails 2 do
+      post ticket_comments_url(tickets(:one)), params: { comment: { body: "Still broken" } }
+    end
+    assert_equal [ users(:admin).email, users(:agent).email ].sort,
+                 ActionMailer::Base.deliveries.last(2).flat_map(&:to).sort
+  end
+
+  test "an internal note on an unassigned ticket goes to staff, never the owner" do
+    sign_in users(:agent)
+
+    assert_emails 1 do
+      post ticket_comments_url(tickets(:one)), params: { comment: { body: "note", internal: true } }
+    end
+    assert_equal [ users(:admin).email ], ActionMailer::Base.deliveries.last.to
+  end
 end

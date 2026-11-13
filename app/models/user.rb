@@ -19,6 +19,12 @@ class User < ApplicationRecord
   # instead to keep it - see Admin::UsersController).
   has_many :time_entries, dependent: :destroy
 
+  scope :staff, -> { where(role: [ :agent, :admin ]) }
+
+  def staff?
+    agent? || admin?
+  end
+
   # Devise calls this to decide whether a disabled account may authenticate,
   # independent of the lockable failed-attempts lock.
   def active_for_authentication?

@@ -1,0 +1,9 @@
+New ticket #<%= @ticket.id %> from <%= @ticket.user.email %><%= " (#{@ticket.user.organization.name})" if @ticket.user.organization&.name.present? %>
+
+<%= @ticket.title %>
+Priority: <%= @ticket.priority.humanize %><% if @ticket.due_at %> - respond by <%= l(@ticket.due_at, format: :long) %><% end %>
+<%= "Assigned to: #{@ticket.assignee.email}" if @ticket.assignee %>
+
+<%= @ticket.description %>
+
+Open ticket: <%= ticket_url(@ticket) %>
