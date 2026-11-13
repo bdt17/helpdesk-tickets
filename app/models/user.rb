@@ -19,6 +19,16 @@ class User < ApplicationRecord
   # instead to keep it - see Admin::UsersController).
   has_many :time_entries, dependent: :destroy
 
+  # Devise calls this to decide whether a disabled account may authenticate,
+  # independent of the lockable failed-attempts lock.
+  def active_for_authentication?
+    super && active?
+  end
+
+  def inactive_message
+    active? ? super : :account_disabled
+  end
+
   # Team invites reuse Devise's reset-password token as the "set your
   # password" link, but the normal 6-hour reset window is far too short for
   # an invite someone may not open until tomorrow.
@@ -40,16 +50,6 @@ class User < ApplicationRecord
   def reset_password(new_password, new_password_confirmation)
     self.invitation_pending = false if new_password.present?
     super
-  end
-
-  # Devise calls this to decide whether a disabled account may authenticate,
-  # independent of the lockable failed-attempts lock.
-  def active_for_authentication?
-    super && active?
-  end
-
-  def inactive_message
-    active? ? super : :account_disabled
   end
 
   # Billing lives on Organization, not User (Phase 12) - a client with no
