@@ -1,0 +1,13 @@
+<p>Hi <%= @user.email %>,</p>
+
+<p>
+  <strong><%= @inviter.email %></strong> invited you to join <strong><%= @organization.name %></strong>
+  on Thomas IT Helpdesk, the support portal you'll use to get IT help from Thomas Information Technology.
+</p>
+
+<p><%= link_to "Set your password to get started", @set_password_url %></p>
+
+<p style="color: #666; font-size: 0.9em;">
+  This link works for <%= @valid_for %>. Once you're in, you can open tickets and see your team's tickets.
+  If the link has expired, use "Forgot password" on the sign-in page with this email address.
+</p>

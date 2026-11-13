@@ -42,7 +42,7 @@ class TeamController < ApplicationController
     )
 
     if member.save
-      member.send_reset_password_instructions
+      member.send_team_invite(current_user)
       redirect_to team_path, notice: "Invited #{email} — they'll get an email to set their password."
     else
       redirect_to team_path, alert: member.errors.full_messages.to_sentence

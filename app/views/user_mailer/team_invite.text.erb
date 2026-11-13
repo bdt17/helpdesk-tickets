@@ -1,0 +1,10 @@
+Hi <%= @user.email %>,
+
+<%= @inviter.email %> invited you to join <%= @organization.name %> on Thomas IT Helpdesk,
+the support portal you'll use to get IT help from Thomas Information Technology.
+
+Set your password to get started (this link works for <%= @valid_for %>):
+<%= @set_password_url %>
+
+Once you're in, you can open tickets and see your team's tickets.
+If the link has expired, use "Forgot password" on the sign-in page with this email address.

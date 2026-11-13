@@ -160,4 +160,52 @@ class TeamControllerTest < ActionDispatch::IntegrationTest
     assert_includes @response.body, "3 of 3 seats used"
     assert_not_includes @response.body, "teammate@company.com" # the invite form's placeholder
   end
+
+  test "an invite says who invited them to which team, not 'reset password'" do
+    sign_in @owner
+    perform_enqueued_jobs do
+      post team_invite_url, params: { email: "new-teammate@example.com" }
+    end
+
+    mail = ActionMailer::Base.deliveries.last
+    assert_equal "#{@owner.email} invited you to Acme on Thomas IT Helpdesk", mail.subject
+    assert_match "invite=1", mail.text_part.body.to_s
+    assert_match "7 days", mail.text_part.body.to_s
+    assert User.find_by(email: "new-teammate@example.com").invitation_pending?
+  end
+
+  test "an invite link still works 3 days later and accepts the invite" do
+    sign_in @owner
+    perform_enqueued_jobs do
+      post team_invite_url, params: { email: "new-teammate@example.com" }
+    end
+    sign_out @owner
+    token = ActionMailer::Base.deliveries.last.text_part.body.to_s[/reset_password_token=([^&\s]+)/, 1]
+
+    travel 3.days do
+      get edit_user_password_url(reset_password_token: token, invite: 1)
+      assert_includes response.body, "Set your password to join your team"
+
+      put user_password_url, params: { user: { reset_password_token: token, password: "a-long-new-password", password_confirmation: "a-long-new-password" } }
+      assert_response :redirect
+    end
+
+    invited = User.find_by(email: "new-teammate@example.com")
+    assert invited.valid_password?("a-long-new-password")
+    refute invited.invitation_pending?
+  end
+
+  test "an invite link expires after 7 days" do
+    sign_in @owner
+    perform_enqueued_jobs do
+      post team_invite_url, params: { email: "new-teammate@example.com" }
+    end
+    sign_out @owner
+    token = ActionMailer::Base.deliveries.last.text_part.body.to_s[/reset_password_token=([^&\s]+)/, 1]
+
+    travel 8.days do
+      put user_password_url, params: { user: { reset_password_token: token, password: "a-long-new-password", password_confirmation: "a-long-new-password" } }
+    end
+    refute User.find_by(email: "new-teammate@example.com").valid_password?("a-long-new-password")
+  end
 end
