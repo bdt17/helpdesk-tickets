@@ -17,4 +17,14 @@ class UserMailer < ApplicationMailer
 
     mail(to: user.email, subject: "#{inviter.email} invited you to #{@organization.name} on Thomas IT Helpdesk")
   end
+
+  # Staff added by an admin at /admin/users.
+  def staff_invite(user, inviter, raw_token)
+    @user = user
+    @inviter = inviter
+    @set_password_url = edit_user_password_url(reset_password_token: raw_token, invite: 1)
+    @valid_for = User::INVITE_LINK_VALIDITY.inspect
+
+    mail(to: user.email, subject: "#{inviter.email} added you to the Thomas IT Helpdesk team")
+  end
 end

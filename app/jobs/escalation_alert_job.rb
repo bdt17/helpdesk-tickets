@@ -34,6 +34,6 @@ class EscalationAlertJob < ApplicationJob
   private
 
   def recipients(ticket)
-    ticket.assignee ? [ ticket.assignee ] : User.agent.or(User.admin).to_a
+    TicketNotifier.staff_recipients(ticket)
   end
 end

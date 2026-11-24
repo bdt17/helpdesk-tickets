@@ -41,9 +41,12 @@ class User < ApplicationRecord
   INVITE_LINK_VALIDITY = 7.days
 
   def send_team_invite(inviter)
-    update!(invitation_pending: true)
-    raw_token = send(:set_reset_password_token)
-    UserMailer.team_invite(self, inviter, raw_token).deliver_later
+    UserMailer.team_invite(self, inviter, start_invitation!).deliver_later
+  end
+
+  # Same idea for staff added at /admin/users (no organization involved).
+  def send_staff_invite(inviter)
+    UserMailer.staff_invite(self, inviter, start_invitation!).deliver_later
   end
 
   def reset_password_period_valid?
@@ -57,6 +60,12 @@ class User < ApplicationRecord
     self.invitation_pending = false if new_password.present?
     super
   end
+
+  def start_invitation!
+    update!(invitation_pending: true)
+    send(:set_reset_password_token)
+  end
+  private :start_invitation!
 
   # Billing lives on Organization, not User (Phase 12) - a client with no
   # organization yet (never subscribed) is simply not subscribed.

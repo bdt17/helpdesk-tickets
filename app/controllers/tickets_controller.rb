@@ -42,6 +42,7 @@ class TicketsController < ApplicationController
   def update
     authorize @ticket
     was_open = !(@ticket.resolved? || @ticket.closed?)
+    previous_assignee_id = @ticket.assignee_id
     # Attached separately from the rest of ticket_params, and always via
     # .attach (append), never mass-assignment (which would replace every
     # existing attachment) - see attach_uploaded_files. Short-circuits
@@ -49,6 +50,7 @@ class TicketsController < ApplicationController
     # was rejected, so nothing about a bad upload gets a false "Updated!".
     if attach_uploaded_files(@ticket) && @ticket.update(ticket_params.except(:attachments))
       notify_resolution(@ticket) if was_open && (@ticket.resolved? || @ticket.closed?)
+      TicketNotifier.ticket_assigned(@ticket, current_user) if @ticket.assignee_id != previous_assignee_id
       redirect_to tickets_path, notice: "Updated!"
     else
       render :edit, status: :unprocessable_entity

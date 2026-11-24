@@ -33,7 +33,14 @@ module Admin
         end
       end
       assert_redirected_to admin_users_url
-      assert User.find_by(email: "new.tech@example.com").agent?
+      user = User.find_by(email: "new.tech@example.com")
+      assert user.agent?
+      assert user.invitation_pending?
+
+      mail = ActionMailer::Base.deliveries.last
+      assert_match "added you to the Thomas IT Helpdesk team", mail.subject
+      assert_match "invite=1", mail.text_part.body.to_s
+      assert_match "7 days", mail.text_part.body.to_s
     end
 
     test "staff can't be created as clients or duplicated" do

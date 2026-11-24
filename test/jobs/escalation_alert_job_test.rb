@@ -24,6 +24,17 @@ class EscalationAlertJobTest < ActiveJob::TestCase
     end
   end
 
+  test "falls back to the whole active team when the assignee is disabled" do
+    ticket = tickets(:two)
+    ticket.update_columns(due_at: 1.hour.ago, status: "open")
+    users(:agent).update!(status: :disabled)
+
+    assert_emails User.staff.active.count do
+      EscalationAlertJob.perform_now(ticket.id)
+    end
+    assert_not_includes ActionMailer::Base.deliveries.flat_map(&:to), users(:agent).email
+  end
+
   test "does not escalate a ticket that is not overdue" do
     ticket = tickets(:one)
     assert_no_emails do

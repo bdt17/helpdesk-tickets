@@ -15,7 +15,7 @@
     <p class="text-muted small mb-3">
       <%= @ticket.category&.humanize || "Uncategorized" %>
       &middot; Submitted by <%= @ticket.user&.email || "unknown" %>
-      &middot; Assigned to <%= @ticket.assignee&.email || "Unassigned" %>
+      &middot; <%= @ticket.assignee ? "Assigned to #{@ticket.assignee.email}" : "Not assigned yet" %>
       &middot; <%= time_ago_in_words(@ticket.created_at) %> ago
       <% if @ticket.resolved_at %>
         &middot; Resolved <%= time_ago_in_words(@ticket.resolved_at) %> ago
