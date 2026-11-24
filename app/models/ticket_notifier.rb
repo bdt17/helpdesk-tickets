@@ -3,8 +3,9 @@
 # on an unassigned ticket also notified nobody - staff only found out when
 # the hourly SLA sweep escalated it, 4 hours to 7 days later.
 #
-# Rule: an assigned ticket goes to its assignee; an unassigned one goes to
-# every active staff member, so something always reaches a human.
+# Rule: an assigned ticket goes to its assignee; an unassigned one (or one
+# whose assignee was disabled) goes to every active staff member, so
+# something always reaches a human.
 class TicketNotifier
   def self.ticket_created(ticket, actor)
     staff_recipients(ticket, except: actor).each do |recipient|
@@ -29,8 +30,19 @@ class TicketNotifier
     end
   end
 
+  # Someone else handed this ticket to a staff member - tell them, since
+  # nothing else would until the client replies or the SLA sweep fires.
+  def self.ticket_assigned(ticket, actor)
+    assignee = ticket.assignee
+    return if assignee.nil? || assignee == actor || !assignee.active?
+
+    TicketMailer.assigned(ticket, assignee, actor).deliver_later
+  end
+
   def self.staff_recipients(ticket, except: nil)
-    people = ticket.assignee ? [ ticket.assignee ] : User.staff.active.to_a
-    people.select(&:active?) - [ except ]
+    # A disabled assignee can't act on it, so fall back to the whole team.
+    assignee = ticket.assignee if ticket.assignee&.active?
+    people = assignee ? [ assignee ] : User.staff.active.to_a
+    people - [ except ]
   end
 end

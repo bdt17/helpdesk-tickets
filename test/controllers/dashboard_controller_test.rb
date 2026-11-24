@@ -33,4 +33,18 @@ class DashboardControllerTest < ActionDispatch::IntegrationTest
       sign_out :user
     end
   end
+
+  test "staff dashboard lists open critical and high tickets first" do
+    tickets(:one).update_columns(priority: "critical")
+    sign_in users(:agent)
+    get dashboard_url
+    assert_select "h5", text: /Needs attention now \(3\)/
+    assert_select "tr.table-danger", text: /Printer not working/
+  end
+
+  test "clients and employees don't get the staff urgent list" do
+    sign_in users(:employee)
+    get dashboard_url
+    assert_select "h5", text: /Needs attention now/, count: 0
+  end
 end

@@ -1,0 +1,9 @@
+Hi <%= @user.email %>,
+
+<%= @inviter.email %> added you to the Thomas Information Technology support team
+on Thomas IT Helpdesk, where client tickets come in and get answered.
+
+Set your password to get started (this link works for <%= @valid_for %>):
+<%= @set_password_url %>
+
+If the link has expired, use "Forgot password" on the sign-in page with this email address.

@@ -32,11 +32,11 @@ module Admin
       return redirect_to admin_users_path, alert: "That email already has an account." if User.exists?(email: email)
 
       # Random password nobody knows; the new staff member sets their own
-      # from the reset email (same approach as TeamController#create).
+      # from the invite email (same approach as TeamController#create).
       temp_password = SecureRandom.hex(16)
       user = User.new(email: email, role: role, password: temp_password, password_confirmation: temp_password)
       if user.save
-        user.send_reset_password_instructions
+        user.send_staff_invite(current_user)
         redirect_to admin_users_path, notice: "Added #{email} as #{role}. They'll get an email to set their password."
       else
         redirect_to admin_users_path, alert: user.errors.full_messages.to_sentence

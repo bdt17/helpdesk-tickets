@@ -59,7 +59,7 @@ class UserTest < ActiveSupport::TestCase
     user = users(:employee)
     user.send(:set_reset_password_token)
 
-    travel 5.hours { assert user.reset_password_period_valid? }
-    travel 7.hours { refute user.reset_password_period_valid? }
+    travel(5.hours) { assert user.reset_password_period_valid? }
+    travel(7.hours) { refute user.reset_password_period_valid? }
   end
 end

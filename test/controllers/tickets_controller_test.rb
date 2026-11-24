@@ -386,4 +386,31 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_select "select[name='ticket[priority]'] option[selected][value='medium']"
     assert_includes response.body, "Priority plan"
   end
+
+  test "assigning a ticket to someone else emails them" do
+    sign_in users(:admin)
+    ticket = tickets(:one)
+    assert_enqueued_emails 1 do
+      patch ticket_url(ticket), params: { ticket: { assignee_id: users(:agent).id } }
+    end
+    perform_enqueued_jobs
+    mail = ActionMailer::Base.deliveries.last
+    assert_equal [ users(:agent).email ], mail.to
+    assert_match "Assigned to you: ##{ticket.id}", mail.subject
+  end
+
+  test "taking a ticket yourself, or saving without changing the assignee, sends nothing" do
+    sign_in users(:agent)
+    assert_no_enqueued_emails do
+      patch ticket_url(tickets(:one)), params: { ticket: { assignee_id: users(:agent).id } }
+      patch ticket_url(tickets(:two)), params: { ticket: { title: "VPN access request (renamed)" } }
+    end
+  end
+
+  test "ticket page says 'Not assigned yet' instead of 'Assigned to Unassigned'" do
+    sign_in users(:agent)
+    get ticket_url(tickets(:one))
+    assert_includes @response.body, "Not assigned yet"
+    assert_not_includes @response.body, "Assigned to Unassigned"
+  end
 end

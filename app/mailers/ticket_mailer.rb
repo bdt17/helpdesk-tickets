@@ -17,6 +17,16 @@ class TicketMailer < ApplicationMailer
     mail(to: @recipient.email, subject: "We received your ticket ##{ticket.id} #{ticket.title}")
   end
 
+  # To a staff member someone else just assigned the ticket to.
+  def assigned(ticket, recipient, assigner)
+    @ticket = ticket
+    @recipient = recipient
+    @assigner = assigner
+
+    prefix = ticket.critical? || ticket.high? ? "[#{ticket.priority.upcase}] " : ""
+    mail(to: recipient.email, subject: "#{prefix}Assigned to you: ##{ticket.id} #{ticket.title}")
+  end
+
   def comment_posted(comment, recipient)
     @comment = comment
     @ticket = comment.ticket
