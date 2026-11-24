@@ -1,0 +1,39 @@
+<% content_for :title, "Two-factor sign-in — Thomas IT Helpdesk" %>
+<div class="container py-4" style="max-width: 640px;">
+  <h1 class="mb-4">Two-factor sign-in</h1>
+
+  <% if current_user.two_factor_enabled? %>
+    <div class="card p-4 mb-4">
+      <p class="mb-2"><strong>On</strong> since <%= l(current_user.otp_enabled_at.to_date, format: :long) %>.</p>
+      <p class="mb-0">Backup codes left: <strong><%= current_user.backup_codes_remaining %></strong> of <%= TwoFactorAuthenticatable::BACKUP_CODE_COUNT %>.</p>
+    </div>
+
+    <div class="card p-4">
+      <h2 class="h5">Make new backup codes</h2>
+      <p class="small text-muted">Your old backup codes stop working. Enter a current code from your app to confirm.</p>
+      <%= form_with url: two_factor_backup_codes_path, method: :post, class: "d-flex gap-2" do %>
+        <%= text_field_tag :code, nil, class: "form-control", required: true, autocomplete: "one-time-code",
+                           inputmode: "numeric", maxlength: 6, placeholder: "123456", "aria-label": "Authenticator code" %>
+        <%= submit_tag "Make new codes", class: "btn btn-outline-primary" %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="card p-4">
+      <p>Staff accounts need a code from your phone as well as your password. This stops anyone who learns your password from seeing client tickets.</p>
+      <ol>
+        <li class="mb-2">Install an authenticator app on your phone: Google Authenticator, Microsoft Authenticator, 1Password, or similar.</li>
+        <li class="mb-2">In the app, add an account and scan this QR code:
+          <div class="my-3 p-2 bg-white d-inline-block border rounded" style="width: 220px;"><%= image_tag @qr_data_uri, alt: "QR code for your authenticator app", class: "img-fluid" %></div>
+          <div class="small text-muted">Can't scan? Type this key instead: <code class="user-select-all"><%= @secret.scan(/.{1,4}/).join(" ") %></code></div>
+        </li>
+        <li>Enter the 6-digit code the app shows:</li>
+      </ol>
+      <%= form_with url: two_factor_setup_path, method: :post, class: "d-flex gap-2" do %>
+        <%= text_field_tag :code, nil, class: "form-control form-control-lg", required: true, autofocus: true,
+                           autocomplete: "one-time-code", inputmode: "numeric", maxlength: 6, placeholder: "123456",
+                           "aria-label": "Authenticator code" %>
+        <%= submit_tag "Turn on", class: "btn btn-primary btn-lg" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

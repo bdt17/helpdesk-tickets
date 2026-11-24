@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_13_190000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_24_221211) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -292,6 +292,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_13_190000) do
     t.datetime "locked_at"
     t.string "org_role"
     t.integer "organization_id"
+    t.text "otp_backup_code_digests"
+    t.datetime "otp_enabled_at"
+    t.integer "otp_last_used_step"
+    t.string "otp_secret"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"

@@ -88,3 +88,6 @@ end
 # Error alerts (config/initializers/sentry.rb) - only active when SENTRY_DSN is set
 gem "sentry-ruby", "~> 7.1"
 gem "sentry-rails", "~> 7.1"
+
+gem "rotp", "~> 6.4"
+gem "rqrcode", "~> 3.2"

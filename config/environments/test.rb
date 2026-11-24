@@ -4,6 +4,9 @@
 # and recreated between test runs. Don't rely on the data there!
 
 Rails.application.configure do
+  # Fixtures hold plain values for encrypted attributes (User#otp_secret).
+  config.active_record.encryption.encrypt_fixtures = true
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # While tests run files are not watched, reloading is not necessary.

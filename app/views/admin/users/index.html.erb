@@ -31,7 +31,7 @@
     <div class="table-responsive">
       <table class="table mb-0 align-middle">
         <thead>
-          <tr><th>Email</th><th>Role</th><th>Organization</th><th>Status</th><th></th></tr>
+          <tr><th>Email</th><th>Role</th><th>Organization</th><th>Status</th><th>2FA</th><th></th></tr>
         </thead>
         <tbody>
           <% @users.each do |user| %>
@@ -49,6 +49,18 @@
               </td>
               <td><%= user.organization&.name || "-" %></td>
               <td><%= user.status&.humanize || "-" %></td>
+              <td>
+                <% if user.two_factor_enabled? %>
+                  On
+                  <% unless user == current_user %>
+                    <%= button_to "Reset", admin_user_path(user), method: :patch, params: { reset_two_factor: "1" }, class: "btn btn-sm btn-link p-0 ms-1", form: { class: "d-inline", data: { turbo_confirm: "Reset two-factor for #{user.email}? Only do this after confirming it's really them (e.g. by phone). They'll set it up again on next sign-in." } } %>
+                  <% end %>
+                <% elsif user.two_factor_required? %>
+                  <span class="text-warning">Not set up</span>
+                <% else %>
+                  -
+                <% end %>
+              </td>
               <td class="text-end">
                 <% if user.active? %>
                   <%= button_to "Disable", admin_user_path(user), method: :patch, params: { status: "disabled" }, class: "btn btn-sm btn-outline-danger", form: { data: { turbo_confirm: "Disable #{user.email}? They'll be signed out and can't log in." } } %>
@@ -59,7 +71,7 @@
             </tr>
           <% end %>
           <% if @users.empty? %>
-            <tr><td colspan="5" class="text-muted">No users match.</td></tr>
+            <tr><td colspan="6" class="text-muted">No users match.</td></tr>
           <% end %>
         </tbody>
       </table>

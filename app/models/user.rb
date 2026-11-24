@@ -1,5 +1,7 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :recoverable, :rememberable, :validatable, :lockable, :registerable
+  # After `devise` so its overrides of Devise's lockable methods win.
+  include TwoFactorAuthenticatable
 
   enum :role, { employee: "employee", agent: "agent", admin: "admin", client: "client" }, default: :employee
   enum :status, { disabled: 0, active: 1 }, default: :active

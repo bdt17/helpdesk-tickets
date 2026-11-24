@@ -14,11 +14,17 @@ agent:
   email: agent-fixture@thomasit.com
   encrypted_password: <%= Devise::Encryptor.digest(User, "password1234") %>
   role: agent
+  # Staff must have 2FA on (ApplicationController#require_two_factor_setup!).
+  otp_secret: JBSWY3DPEHPK3PXP
+  otp_enabled_at: <%= 1.day.ago.to_fs(:db) %>
 
 admin:
   email: admin-fixture@thomasit.com
   encrypted_password: <%= Devise::Encryptor.digest(User, "password1234") %>
   role: admin
+  # Staff must have 2FA on (ApplicationController#require_two_factor_setup!).
+  otp_secret: JBSWY3DPEHPK3PXP
+  otp_enabled_at: <%= 1.day.ago.to_fs(:db) %>
 
 client:
   email: client-fixture@example.com

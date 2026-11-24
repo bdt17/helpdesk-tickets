@@ -26,6 +26,12 @@ class DashboardTest < ApplicationSystemTestCase
     fill_in "Email", with: user.email
     fill_in "Password", with: "password1234"
     click_button "Log In"
+    if user.two_factor_enabled?
+      # Staff fixtures have 2FA on: the password step leads to the code step.
+      assert_text "Two-factor sign-in"
+      fill_in "Code", with: ROTP::TOTP.new(user.otp_secret).now
+      click_button "Verify"
+    end
     # Wait for the sign-in to actually land before the caller's next
     # visit - otherwise that visit can race the form submission, arrive
     # without the session cookie, and get bounced back to the login page.
