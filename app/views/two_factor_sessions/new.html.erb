@@ -1,0 +1,28 @@
+<% content_for :title, "Two-factor sign-in — Thomas IT Helpdesk" %>
+<div class="login-container">
+  <div class="login-form card p-4 shadow-lg">
+    <div class="text-center mb-4">
+      <i class="fas fa-shield-halved fa-3x brand mb-3"></i>
+      <h2 class="brand mb-1">Two-factor sign-in</h2>
+      <p class="text-muted mb-0">Enter the 6-digit code from your authenticator app.</p>
+    </div>
+
+    <%= form_with url: two_factor_session_path, method: :post, class: "text-center" do %>
+      <div class="form-group mb-4">
+        <%= label_tag :code, "Code", class: "form-label fw-bold text-center d-block" %>
+        <%= text_field_tag :code, nil, class: "form-control form-control-lg text-center mt-2",
+                           required: true, autofocus: true, autocomplete: "one-time-code",
+                           inputmode: "text", maxlength: 20, placeholder: "123456" %>
+      </div>
+      <%= submit_tag "Verify", class: "btn btn-primary btn-lg w-100 py-3 fw-bold" %>
+    <% end %>
+
+    <p class="small text-muted mt-3 mb-0 text-center">
+      Lost your phone? Type one of your backup codes (like <code>a1b2c-d3e4f</code>) instead.
+      No backup codes left? Ask an admin to reset your two-factor.
+    </p>
+    <div class="mt-3 text-center">
+      <%= link_to "Start over", new_user_session_path %>
+    </div>
+  </div>
+</div>

@@ -44,6 +44,8 @@ module Admin
     end
 
     def update
+      return reset_two_factor if params[:reset_two_factor].present?
+
       attrs = {}
       attrs[:role] = params[:role] if params[:role].present?
       attrs[:status] = params[:status] if params[:status].present?
@@ -57,6 +59,16 @@ module Admin
     end
 
     private
+
+    # Lost phone and no backup codes left. They set 2FA up again on their
+    # next sign-in - so check it's really them (call them) before resetting.
+    def reset_two_factor
+      return redirect_to admin_users_path, alert: "You can't reset your own two-factor here - use a backup code, or ask another admin." if @user == current_user
+      return redirect_to admin_users_path, alert: "#{@user.email} doesn't have two-factor on." unless @user.two_factor_enabled?
+
+      @user.reset_two_factor!
+      redirect_to admin_users_path, notice: "Reset two-factor for #{@user.email}. They'll set it up again next time they sign in."
+    end
 
     def set_user
       @user = User.find(params[:id])

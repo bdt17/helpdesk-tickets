@@ -14,6 +14,11 @@ Rails.application.routes.draw do
     get "account", to: "registrations#edit", as: :edit_user_registration
   end
 
+  get "two_factor/verify", to: "two_factor_sessions#new", as: :new_two_factor_session
+  post "two_factor/verify", to: "two_factor_sessions#create", as: :two_factor_session
+  resource :two_factor_setup, only: [ :show, :create ], path: "account/two_factor"
+  post "account/two_factor/backup_codes", to: "two_factor_setups#backup_codes", as: :two_factor_backup_codes
+
   root "home#index"
   get "/health", to: ->(_env) { [ 200, { "Content-Type" => "text/plain" }, [ "OK" ] ] }
   get "/home", to: "home#index", as: :home_index
